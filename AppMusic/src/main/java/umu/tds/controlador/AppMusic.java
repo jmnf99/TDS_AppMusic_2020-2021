@@ -7,7 +7,6 @@ import umu.tds.modelo.Usuario;
 public class AppMusic {
 	
 	private static AppMusic unicaInstancia = null;
-	
 	private AppMusic() {}
 	
 	public static AppMusic getInstancia() {
