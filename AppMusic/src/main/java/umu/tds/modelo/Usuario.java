@@ -3,46 +3,41 @@ package umu.tds.modelo;
 import java.time.LocalDate;
 
 public class Usuario {
-	private String usuario, clave, mail, nombre, apellidos;
+	private String nUsuario, clave, mail, nombre, apellidos;
 	private LocalDate fechaNacim;
+	
+	public Usuario(String nUsuario, String clave, String mail, String nombre, String apellidos, LocalDate fechaNacim) {
+		this.nUsuario = nUsuario;
+		this.clave = clave;
+		this.mail = mail;
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.fechaNacim = fechaNacim;
+	}
 	
 	//Getters y setters
 	public String getUsuario() {
-		return usuario;
+		return nUsuario;
 	}
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
 	public String getClave() {
 		return clave;
 	}
-	public void setClave(String clave) {
-		this.clave = clave;
-	}
+	
 	public String getMail() {
 		return mail;
 	}
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
+	
 	public String getNombre() {
 		return nombre;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+	
 	public String getApellidos() {
 		return apellidos;
 	}
-	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
-	}
+	
 	public LocalDate getFechaNacim() {
 		return fechaNacim;
-	}
-	public void setFechaNacim(LocalDate fechaNacim) {
-		this.fechaNacim = fechaNacim;
 	}
 	
 	public boolean login(String clave) {
