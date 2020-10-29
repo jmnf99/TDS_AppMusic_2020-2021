@@ -10,4 +10,24 @@ public class Cancion {
 		this.estilo = estilo;
 		this.rutaFichero = rutaFichero;
 	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public String getInteprete() {
+		return inteprete;
+	}
+
+	public String getEstilo() {
+		return estilo;
+	}
+
+	public String getRutaFichero() {
+		return rutaFichero;
+	}
+
+	public int getNumReproducciones() {
+		return numReproducciones;
+	}
 }
