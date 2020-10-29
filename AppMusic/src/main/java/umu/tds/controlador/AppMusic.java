@@ -17,7 +17,6 @@ public class AppMusic {
 	
 	private Usuario usuarioActual;
 	
-	
 	public boolean login(String usuario, String clave) {
 		//if usuario exite en Catalogo o BBDD
 		// 	if clave es igual a clave de usuario: usuario.login(clave)
