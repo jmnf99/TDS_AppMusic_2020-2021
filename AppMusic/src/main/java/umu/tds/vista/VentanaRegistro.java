@@ -28,8 +28,9 @@ import com.toedter.calendar.JDateChooser;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class VentanaRegistro extends JFrame {
+public class VentanaRegistro {
 
+	private JFrame frame;
 	private JPanel contentPane;
 	private JTextField textNombre;
 	private JTextField textApellidos;
@@ -38,6 +39,14 @@ public class VentanaRegistro extends JFrame {
 	private JPasswordField textPassword2;
 	private JTextField textMail;
 	private JDateChooser textFecha;
+	private JLabel lblUsuario;
+	private JLabel lblClave;
+	private JLabel lblRepetirClave;
+	private JLabel lblMail;
+	private JLabel lblFecha;
+	private JButton btnCancelar;
+	private JLabel lblApellidos;
+	private JLabel lblNombre;
 
 	/**
 	 * Launch the application.
@@ -55,24 +64,24 @@ public class VentanaRegistro extends JFrame {
 		});
 	}
 
+	public void mostrarVentana() {
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+	}
+	
 	/**
 	 * Create the frame.
 	 */
-	public VentanaRegistro(final JFrame vLogin) {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				vLogin.setVisible(true);
-			}
-		});
+	public VentanaRegistro() {
 		
-		vLogin.setVisible(false);
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		frame = new JFrame();
+			
+		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		frame.setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+		frame.setContentPane(contentPane);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
@@ -86,7 +95,7 @@ public class VentanaRegistro extends JFrame {
 		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		panel.setLayout(gbl_panel);
 
-		JLabel lblNombre = new JLabel("Nombre");
+		lblNombre = new JLabel("Nombre");
 		GridBagConstraints gbc_lblNombre = new GridBagConstraints();
 		gbc_lblNombre.anchor = GridBagConstraints.EAST;
 		gbc_lblNombre.insets = new Insets(0, 0, 5, 5);
@@ -104,7 +113,7 @@ public class VentanaRegistro extends JFrame {
 		panel.add(textNombre, gbc_textNombre);
 		textNombre.setColumns(10);
 
-		JLabel lblApellidos = new JLabel("Apellidos");
+		lblApellidos = new JLabel("Apellidos");
 		GridBagConstraints gbc_lblApellidos = new GridBagConstraints();
 		gbc_lblApellidos.anchor = GridBagConstraints.EAST;
 		gbc_lblApellidos.insets = new Insets(0, 0, 5, 5);
@@ -122,7 +131,7 @@ public class VentanaRegistro extends JFrame {
 		panel.add(textApellidos, gbc_textApellidos);
 		textApellidos.setColumns(10);
 
-		JLabel lblUsuario = new JLabel("Usuario");
+		lblUsuario = new JLabel("Usuario");
 		GridBagConstraints gbc_lblUsuario = new GridBagConstraints();
 		gbc_lblUsuario.anchor = GridBagConstraints.EAST;
 		gbc_lblUsuario.insets = new Insets(0, 0, 5, 5);
@@ -139,7 +148,7 @@ public class VentanaRegistro extends JFrame {
 		panel.add(textUsuario, gbc_textUsuario);
 		textUsuario.setColumns(10);
 
-		JLabel lblClave = new JLabel("Clave");
+		lblClave = new JLabel("Clave");
 		GridBagConstraints gbc_lblClave = new GridBagConstraints();
 		gbc_lblClave.anchor = GridBagConstraints.EAST;
 		gbc_lblClave.insets = new Insets(0, 0, 5, 5);
@@ -156,7 +165,7 @@ public class VentanaRegistro extends JFrame {
 		gbc_textPassword.gridy = 4;
 		panel.add(textPassword, gbc_textPassword);
 
-		JLabel lblRepetirClave = new JLabel("Repetir");
+		lblRepetirClave = new JLabel("Repetir");
 		GridBagConstraints gbc_lblRepetirClave = new GridBagConstraints();
 		gbc_lblRepetirClave.anchor = GridBagConstraints.EAST;
 		gbc_lblRepetirClave.insets = new Insets(0, 0, 5, 5);
@@ -173,7 +182,7 @@ public class VentanaRegistro extends JFrame {
 		panel.add(textPassword2, gbc_textPassword2);
 		textPassword2.setColumns(10);
 
-		JLabel lblMail = new JLabel("Mail");
+		lblMail = new JLabel("Mail");
 		GridBagConstraints gbc_lblMail = new GridBagConstraints();
 		gbc_lblMail.anchor = GridBagConstraints.EAST;
 		gbc_lblMail.insets = new Insets(0, 0, 5, 5);
@@ -191,7 +200,7 @@ public class VentanaRegistro extends JFrame {
 		panel.add(textMail, gbc_textMail);
 		textMail.setColumns(10);
 
-		JLabel lblFecha = new JLabel("Fecha");
+		lblFecha = new JLabel("Fecha");
 		GridBagConstraints gbc_lblFecha = new GridBagConstraints();
 		gbc_lblFecha.anchor = GridBagConstraints.EAST;
 		gbc_lblFecha.insets = new Insets(0, 0, 5, 5);
@@ -207,7 +216,7 @@ public class VentanaRegistro extends JFrame {
 		gbc_textFecha.gridy = 6;
 		panel.add(textFecha, gbc_textFecha);
 
-		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar = new JButton("Cancelar");
 		GridBagConstraints gbc_btnCancelar = new GridBagConstraints();
 		gbc_btnCancelar.anchor = GridBagConstraints.WEST;
 		gbc_btnCancelar.insets = new Insets(0, 0, 0, 5);
@@ -219,23 +228,18 @@ public class VentanaRegistro extends JFrame {
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				String nombre = textNombre.getText();
-				String apellidos = textApellidos.getText();
-				String usuario = textUsuario.getText();
-				String clave = new String(textPassword.getPassword());
-				String clave2 = new String(textPassword2.getPassword());
-				String mail = textMail.getText();
 				Calendar fechaNacim = textFecha.getCalendar();
-				if (!clave.equals(clave2)) {
-					JOptionPane.showMessageDialog(btnRegistrar, "Error de datos de registro", "Fallo Registro", JOptionPane.ERROR_MESSAGE, null);
-
-				} else {
-
-					Usuario usu = AppMusic.getInstancia().registrarUsuario(usuario, clave, nombre, apellidos, mail,
-							LocalDate.now());
-					AppMusic.getInstancia().setUsuarioActual(usu);
-					// crear ventanaMain y mostrarla (ocultar ventana registro)
-				}
+				
+//				if (!clave.equals(clave2)) {
+//					JOptionPane.showMessageDialog(btnRegistrar, "Error de datos de registro", "Fallo Registro", JOptionPane.ERROR_MESSAGE, null);
+//
+//				} else {
+//
+//					Usuario usu = AppMusic.getInstancia().registrarUsuario(textUsuario.getText(), new String(textPassword.getPassword()), textNombre.getText(), textApellidos.getText(), textMail.getText(),
+//							LocalDate.now());
+//					AppMusic.getInstancia().setUsuarioActual(usu);
+//					// crear ventanaMain y mostrarla (ocultar ventana registro)
+//				}
 			}
 		});
 		GridBagConstraints gbc_btnRegistrar = new GridBagConstraints();
@@ -244,6 +248,10 @@ public class VentanaRegistro extends JFrame {
 		gbc_btnRegistrar.gridx = 4;
 		gbc_btnRegistrar.gridy = 8;
 		panel.add(btnRegistrar, gbc_btnRegistrar);
+	}
+	
+	private boolean fieldsOK() {
+		return false;
 	}
 
 }
