@@ -40,12 +40,17 @@ public class VentanaLogin {
 			public void run() {
 				try {
 					VentanaLogin window = new VentanaLogin();
-					window.frame.setVisible(true);
+					window.mostrarVentana();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+	}
+	
+	public void mostrarVentana() {
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
 	}
 
 	/**
@@ -159,8 +164,9 @@ public class VentanaLogin {
 		btnRegistro.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				VentanaRegistro vRegistro = new VentanaRegistro(frame);
-				vRegistro.setVisible(true);
+				VentanaRegistro vRegistro = new VentanaRegistro();
+				vRegistro.mostrarVentana();
+				frame.dispose();
 			}
 		});
 		GridBagConstraints gbc_btnRegistro = new GridBagConstraints();
