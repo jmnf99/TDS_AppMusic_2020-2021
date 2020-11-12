@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import umu.tds.modelo.Usuario;
 
 public class AppMusic {
-	
+	private final double precioPremium  = 10;
 	private static AppMusic unicaInstancia = null;
 	private AppMusic() {}
 	
@@ -41,5 +41,9 @@ public class AppMusic {
 
 	public void setUsuarioActual(Usuario usuarioActual) {
 		this.usuarioActual = usuarioActual;
+	}
+
+	public double getPrecioPremium() {
+		return precioPremium;
 	}
 }

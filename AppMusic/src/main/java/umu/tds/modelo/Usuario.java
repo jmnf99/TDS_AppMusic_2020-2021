@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class Usuario {
 	private String nUsuario, clave, mail, nombre, apellidos;
 	private LocalDate fechaNacim;
+	private boolean premium;
 	
 	public Usuario(String nUsuario, String clave, String mail, String nombre, String apellidos, LocalDate fechaNacim) {
 		this.nUsuario = nUsuario;
@@ -13,9 +14,10 @@ public class Usuario {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.fechaNacim = fechaNacim;
+		this.premium = false;
 	}
 	
-	//Getters y setters
+	//Getters
 	public String getUsuario() {
 		return nUsuario;
 	}
@@ -38,6 +40,10 @@ public class Usuario {
 	
 	public LocalDate getFechaNacim() {
 		return fechaNacim;
+	}
+	
+	public boolean isPremium() {
+		return premium;
 	}
 	
 	public boolean login(String clave) {
