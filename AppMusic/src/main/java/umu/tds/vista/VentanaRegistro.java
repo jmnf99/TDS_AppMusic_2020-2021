@@ -71,6 +71,7 @@ public class VentanaRegistro {
 	
 	/**
 	 * Create the frame.
+	 * @wbp.parser.entryPoint
 	 */
 	public VentanaRegistro() {
 		

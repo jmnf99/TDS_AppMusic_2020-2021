@@ -5,7 +5,7 @@ import tds.driver.ServicioPersistencia;
 
 public class AdaptadorListaCancionesTDS implements IAdaptadorListaCancionesDAO {
 	private static ServicioPersistencia servPersistencia;
-	private static AdaptadorListaCancionesTDS unicaInstancia;
+	private static AdaptadorListaCancionesTDS unicaInstancia = null;
 
 	public static AdaptadorListaCancionesTDS getUnicaInstancia() { // patron singleton
 		if (unicaInstancia == null)
