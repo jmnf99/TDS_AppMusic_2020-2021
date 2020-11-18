@@ -84,6 +84,7 @@ public class VentanaPrincipal {
 		panel.add(lblBienvenida, gbc_lblBienvenida);
 		
 		JButton btnPremium = new JButton("Mejora tu cuenta");
+		btnPremium.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/crown.png")));
 		GridBagConstraints gbc_btnPremium = new GridBagConstraints();
 		gbc_btnPremium.insets = new Insets(0, 0, 0, 5);
 		gbc_btnPremium.gridx = 1;
