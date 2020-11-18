@@ -31,6 +31,8 @@ import java.awt.event.ActionEvent;
 public class VentanaPrincipal {
 
 	private JFrame frame;
+	private PanelExplorarCanciones panel1;
+	//private PanelFiltroCanciones panel2;
 
 	/**
 	 * Launch the application.
@@ -52,6 +54,8 @@ public class VentanaPrincipal {
 	 * Create the application.
 	 */
 	public VentanaPrincipal() {
+		panel1 = new PanelExplorarCanciones();
+		//panel2 = new PanelFiltroCanciones();
 		initialize();
 	}
 
@@ -112,6 +116,15 @@ public class VentanaPrincipal {
 		panelFuncionalidad.setLayout(gbl_panelFuncionalidad);
 		
 		JButton btnExplorar = new JButton("Explorar");
+		btnExplorar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.getContentPane().add(panel1, BorderLayout.CENTER);
+				//frame.getContentPane().add(panel2, BorderLayout.CENTER);
+				frame.validate();				
+			}
+		});
+		
+		
 		btnExplorar.setHorizontalAlignment(SwingConstants.LEFT);
 		btnExplorar.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/magnifier-1_icon-icons.com_56924.png")));
 		GridBagConstraints gbc_btnExplorar = new GridBagConstraints();
@@ -149,6 +162,9 @@ public class VentanaPrincipal {
 		gbc_btnMisPlaylists.gridx = 1;
 		gbc_btnMisPlaylists.gridy = 4;
 		panelFuncionalidad.add(btnMisPlaylists, gbc_btnMisPlaylists);
+		
+		//JPanel panelCentro = new JPanel();
+		//frame.getContentPane().add(panelCentro, BorderLayout.CENTER);
 	}
 
 }
