@@ -1,6 +1,7 @@
 package umu.tds.vista;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -19,6 +20,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -229,7 +231,9 @@ public class VentanaRegistro {
 			public void actionPerformed(ActionEvent e) {
 
 				Calendar fechaNacim = textFecha.getCalendar();
-				
+				if(fieldsOK()) {
+					JOptionPane.showMessageDialog(btnRegistrar, "Error de datos de registro", "Fallo Registro", JOptionPane.ERROR_MESSAGE, null);
+				}
 //				if (!clave.equals(clave2)) {
 //					JOptionPane.showMessageDialog(btnRegistrar, "Error de datos de registro", "Fallo Registro", JOptionPane.ERROR_MESSAGE, null);
 //
@@ -251,7 +255,23 @@ public class VentanaRegistro {
 	}
 	
 	private boolean fieldsOK() {
-		return false;
+		boolean ok = true;
+		
+		if(textNombre.getText().trim().isEmpty()) {
+			lblNombre.setForeground(Color.RED);
+			textNombre.setBorder(BorderFactory.createLineBorder(Color.RED));
+			ok=false;
+		}
+		if(textApellidos.getText().trim().isEmpty()) {
+			lblApellidos.setForeground(Color.RED);
+			textApellidos.setBorder(BorderFactory.createLineBorder(Color.RED));
+			ok=false;
+		}
+		if(textMail.getText().trim().isEmpty()) {
+			ok=false;
+		}
+		
+		return ok;
 	}
 
 }
