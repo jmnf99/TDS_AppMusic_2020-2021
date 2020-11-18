@@ -11,19 +11,14 @@ import javax.swing.JButton;
 public class PanelExplorarCanciones extends JPanel {
 	private JTextField textInterprete;
 	private JTextField textTitulo;
-
 	/**
 	 * Create the panel.
 	 */
 	public PanelExplorarCanciones() {
 		setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new JPanel();
-		add(panel, BorderLayout.NORTH);
-		panel.setLayout(new BorderLayout(0, 0));
-		
 		JPanel panelNorte = new JPanel();
-		panel.add(panelNorte, BorderLayout.NORTH);
+		add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		textInterprete = new JTextField();
@@ -42,7 +37,7 @@ public class PanelExplorarCanciones extends JPanel {
 		panelNorte.add(comboBoxEstilo);
 		
 		JPanel panelCentral = new JPanel();
-		panel.add(panelCentral, BorderLayout.CENTER);
+		add(panelCentral, BorderLayout.CENTER);
 		
 		JButton btnBuscar = new JButton("Buscar");
 		panelCentral.add(btnBuscar);
