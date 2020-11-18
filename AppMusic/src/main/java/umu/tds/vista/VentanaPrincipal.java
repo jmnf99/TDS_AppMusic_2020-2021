@@ -16,12 +16,17 @@ import java.awt.Component;
 import java.awt.Insets;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
+
+import umu.tds.vista.Constantes;
+
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import javax.swing.border.BevelBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaPrincipal {
 
@@ -55,22 +60,46 @@ public class VentanaPrincipal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100,Constantes.x_size,Constantes.y_size);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.NORTH);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[]{374, 53, 111, 10, 0};
+		gbl_panel.rowHeights = new int[]{10, 21, 0};
+		gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		panel.setLayout(gbl_panel);
 		
 		JLabel lblBienvenida = new JLabel("Bienvenid@");
 		lblBienvenida.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblBienvenida);
+		GridBagConstraints gbc_lblBienvenida = new GridBagConstraints();
+		gbc_lblBienvenida.anchor = GridBagConstraints.EAST;
+		gbc_lblBienvenida.insets = new Insets(0, 0, 0, 5);
+		gbc_lblBienvenida.gridx = 0;
+		gbc_lblBienvenida.gridy = 1;
+		panel.add(lblBienvenida, gbc_lblBienvenida);
 		
 		JButton btnPremium = new JButton("Mejora tu cuenta");
-		panel.add(btnPremium);
+		GridBagConstraints gbc_btnPremium = new GridBagConstraints();
+		gbc_btnPremium.insets = new Insets(0, 0, 0, 5);
+		gbc_btnPremium.gridx = 1;
+		gbc_btnPremium.gridy = 1;
+		panel.add(btnPremium, gbc_btnPremium);
 		
 		JButton btnLogout = new JButton("Logout");
-		panel.add(btnLogout);
+		btnLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		GridBagConstraints gbc_btnLogout = new GridBagConstraints();
+		gbc_btnLogout.insets = new Insets(0, 0, 0, 5);
+		gbc_btnLogout.gridx = 2;
+		gbc_btnLogout.gridy = 1;
+		panel.add(btnLogout, gbc_btnLogout);
 		
 		JPanel panelFuncionalidad = new JPanel();
 		panelFuncionalidad.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));

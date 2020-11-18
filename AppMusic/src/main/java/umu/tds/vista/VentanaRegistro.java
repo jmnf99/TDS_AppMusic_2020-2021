@@ -78,7 +78,8 @@ public class VentanaRegistro {
 		frame = new JFrame();
 			
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100,Constantes.x_size,Constantes.y_size);
+		frame.setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
