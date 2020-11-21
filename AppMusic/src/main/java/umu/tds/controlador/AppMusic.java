@@ -28,9 +28,10 @@ public class AppMusic {
 	public Usuario registrarUsuario(String usuario, String clave, String nombre, String apellidos, String mail,
 			LocalDate fechaNacim) {
 		Usuario usu = new Usuario(usuario, clave, mail, nombre, apellidos, fechaNacim);
-		
 		//registrar usuario en BBDD
+		//adaptadorUsuario.registrarUsuario(usu);
 		//meter usuario registrado en CatalogoUsuarios
+		//catalogoUsuarios.addUsuario(usu);
 		return usu;
 
 	}

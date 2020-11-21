@@ -5,7 +5,7 @@ import javax.swing.JScrollPane;
 
 import java.awt.GridBagLayout;
 import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
+import umu.tds.modelo.TablaModelo;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -18,13 +18,13 @@ public class PanelFiltroCanciones extends JPanel {
 	 */
 	public PanelFiltroCanciones() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 20, 110, 110, 110, 20, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 10, 0 };
-		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.columnWidths = new int[] { 7, 130, 130, 130, 15 };
+		gridBagLayout.rowHeights = new int[] { 5, 0, 0, 0, 10 };
+		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0 };
+		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 0.0 };
 		setLayout(gridBagLayout);
 
-		JTable table = new JTable(new MiTableModel());
+		JTable table = new JTable(new TablaModelo());
 		JScrollPane scrollPane = new JScrollPane(table);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.gridwidth = 3;
@@ -70,25 +70,4 @@ public class PanelFiltroCanciones extends JPanel {
 		add(btnAvanzar, gbc_btnAvanzar);
 
 	}
-
-	private class MiTableModel extends AbstractTableModel {
-		private String[] columnNames = { "Título", "Intérprete" };
-
-		@Override
-		public int getRowCount() {
-			return 0;
-		}
-
-		@Override
-		public int getColumnCount() {
-			return columnNames.length;
-		}
-
-		@Override
-		public Object getValueAt(int rowIndex, int columnIndex) {
-			return null;
-		}
-
-	}
-
 }
