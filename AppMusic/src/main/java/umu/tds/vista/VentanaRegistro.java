@@ -29,6 +29,8 @@ import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class VentanaRegistro {
 
@@ -79,7 +81,7 @@ public class VentanaRegistro {
 		
 		frame = new JFrame();
 			
-		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setBounds(100, 100,Constantes.x_size,Constantes.y_size);
 		frame.setResizable(false);
 		contentPane = new JPanel();
@@ -221,6 +223,15 @@ public class VentanaRegistro {
 		panel.add(textFecha, gbc_textFecha);
 
 		btnCancelar = new JButton("Cancelar");
+		btnCancelar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				VentanaLogin login = new VentanaLogin();
+				login.mostrarVentana();
+				frame.dispose();
+			}
+		});
 		GridBagConstraints gbc_btnCancelar = new GridBagConstraints();
 		gbc_btnCancelar.anchor = GridBagConstraints.WEST;
 		gbc_btnCancelar.insets = new Insets(0, 0, 0, 5);
@@ -233,7 +244,7 @@ public class VentanaRegistro {
 			public void actionPerformed(ActionEvent e) {
 
 				Calendar fechaNacim = textFecha.getCalendar();
-				if(fieldsOK()) {
+				if(!fieldsOK()) {
 					JOptionPane.showMessageDialog(btnRegistrar, "Error de datos de registro", "Fallo Registro", JOptionPane.ERROR_MESSAGE, null);
 				}
 //				if (!clave.equals(clave2)) {
@@ -270,8 +281,31 @@ public class VentanaRegistro {
 			ok=false;
 		}
 		if(textMail.getText().trim().isEmpty()) {
+			lblMail.setForeground(Color.RED);
+			textMail.setBorder(BorderFactory.createLineBorder(Color.RED));
 			ok=false;
 		}
+		if(textUsuario.getText().trim().isEmpty()) {
+			lblUsuario.setForeground(Color.RED);
+			textUsuario.setBorder(BorderFactory.createLineBorder(Color.RED));
+			ok=false;
+		}
+		
+		String passwd = new String(textPassword.getPassword());
+		String passwd2 = new String(textPassword2.getPassword());
+		
+		if(passwd.isEmpty()) {
+			lblClave.setForeground(Color.RED);
+			textPassword.setBorder(BorderFactory.createLineBorder(Color.RED));
+			ok=false;
+		}
+		
+		if(passwd2.isEmpty()) {
+			lblRepetirClave.setForeground(Color.RED);
+			textPassword2.setBorder(BorderFactory.createLineBorder(Color.RED));
+			ok=false;
+		}
+		
 		
 		return ok;
 	}

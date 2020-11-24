@@ -32,7 +32,8 @@ public class VentanaPrincipal {
 
 	private JFrame frame;
 	private PanelExplorarCanciones panel1;
-	//private PanelFiltroCanciones panel2;
+	private PanelFiltroCanciones panel2;
+	private JPanel panelCentro;
 
 	/**
 	 * Launch the application.
@@ -55,7 +56,7 @@ public class VentanaPrincipal {
 	 */
 	public VentanaPrincipal() {
 		panel1 = new PanelExplorarCanciones();
-		//panel2 = new PanelFiltroCanciones();
+		panel2 = new PanelFiltroCanciones();
 		initialize();
 	}
 
@@ -106,6 +107,10 @@ public class VentanaPrincipal {
 		gbc_btnLogout.gridy = 1;
 		panel.add(btnLogout, gbc_btnLogout);
 		
+		panelCentro = new JPanel();
+		panelCentro.setLayout(new BorderLayout(0,0));
+		frame.getContentPane().add(panelCentro, BorderLayout.CENTER);
+		
 		JPanel panelFuncionalidad = new JPanel();
 		panelFuncionalidad.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		frame.getContentPane().add(panelFuncionalidad, BorderLayout.WEST);
@@ -119,8 +124,8 @@ public class VentanaPrincipal {
 		JButton btnExplorar = new JButton("Explorar");
 		btnExplorar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.getContentPane().add(panel1, BorderLayout.CENTER);
-				//frame.getContentPane().add(panel2, BorderLayout.CENTER);
+				panelCentro.add(panel1, BorderLayout.NORTH);
+				panelCentro.add(panel2, BorderLayout.CENTER);
 				frame.validate();				
 			}
 		});
@@ -163,6 +168,8 @@ public class VentanaPrincipal {
 		gbc_btnMisPlaylists.gridx = 1;
 		gbc_btnMisPlaylists.gridy = 4;
 		panelFuncionalidad.add(btnMisPlaylists, gbc_btnMisPlaylists);
+		
+
 		
 		//JPanel panelCentro = new JPanel();
 		//frame.getContentPane().add(panelCentro, BorderLayout.CENTER);

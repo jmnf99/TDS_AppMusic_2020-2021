@@ -18,10 +18,10 @@ public class PanelFiltroCanciones extends JPanel {
 	 */
 	public PanelFiltroCanciones() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 20, 110, 110, 110, 20, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 10, 0 };
-		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.columnWidths = new int[] { 7, 130, 130, 130, 15 };
+		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 10 };
+		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0 };
+		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 0.0 };
 		setLayout(gridBagLayout);
 
 		JTable table = new JTable(new MiTableModel());
@@ -74,6 +74,10 @@ public class PanelFiltroCanciones extends JPanel {
 	private class MiTableModel extends AbstractTableModel {
 		private String[] columnNames = { "Título", "Intérprete" };
 
+		public String getColumnName(int column) {
+			return columnNames[column];
+		}
+		
 		@Override
 		public int getRowCount() {
 			return 0;
