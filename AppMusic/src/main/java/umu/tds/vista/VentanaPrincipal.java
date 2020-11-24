@@ -17,24 +17,35 @@ import java.awt.Insets;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
+import umu.tds.controlador.AppMusic;
 import umu.tds.vista.Constantes;
 
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 import javax.swing.ImageIcon;
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JToggleButton;
+import javax.swing.JList;
+import javax.swing.ListSelectionModel;
+import javax.swing.AbstractListModel;
 
 public class VentanaPrincipal {
 
 	private JFrame frame;
-	private PanelExplorarCanciones panel1;
-	private PanelFiltroCanciones panel2;
-	private JPanel panelCentro;
-
+	private JPanel panelPrincipal;
+	
+	private PanelExplorarCanciones panelExplorarCanciones;
+	private PanelFiltroCanciones panelFiltroCanciones;
+	private PanelNuevaPlaylist panelNuevaPlaylist;
+	private PanelCreacionPlaylist panelCreacionPlaylist;
+	private PanelFiltroCanciones panelMisListasDetalladas;
+	private PanelFiltroCanciones panelRecientes;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -55,8 +66,12 @@ public class VentanaPrincipal {
 	 * Create the application.
 	 */
 	public VentanaPrincipal() {
-		panel1 = new PanelExplorarCanciones();
-		panel2 = new PanelFiltroCanciones();
+		panelExplorarCanciones = new PanelExplorarCanciones();
+		panelFiltroCanciones = new PanelFiltroCanciones();
+		panelNuevaPlaylist = new PanelNuevaPlaylist();
+		panelCreacionPlaylist = new PanelCreacionPlaylist();
+		panelMisListasDetalladas = new PanelFiltroCanciones();
+		panelRecientes = new PanelFiltroCanciones();
 		initialize();
 	}
 
@@ -79,7 +94,8 @@ public class VentanaPrincipal {
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
-		JLabel lblBienvenida = new JLabel("Bienvenid@");
+		
+		JLabel lblBienvenida = new JLabel("Bienvenid@ " + AppMusic.getInstancia().getUsuarioActual());
 		lblBienvenida.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_lblBienvenida = new GridBagConstraints();
 		gbc_lblBienvenida.anchor = GridBagConstraints.EAST;
@@ -89,7 +105,7 @@ public class VentanaPrincipal {
 		panel.add(lblBienvenida, gbc_lblBienvenida);
 		
 		JButton btnPremium = new JButton("Mejora tu cuenta");
-		btnPremium.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/crown.png")));
+		btnPremium.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/Crown-icon.png")));
 		GridBagConstraints gbc_btnPremium = new GridBagConstraints();
 		gbc_btnPremium.insets = new Insets(0, 0, 0, 5);
 		gbc_btnPremium.gridx = 1;
@@ -107,26 +123,29 @@ public class VentanaPrincipal {
 		gbc_btnLogout.gridy = 1;
 		panel.add(btnLogout, gbc_btnLogout);
 		
-		panelCentro = new JPanel();
-		panelCentro.setLayout(new BorderLayout(0,0));
-		frame.getContentPane().add(panelCentro, BorderLayout.CENTER);
-		
-		JPanel panelFuncionalidad = new JPanel();
+		panelPrincipal = new JPanel();
+		panelPrincipal.setLayout(new BorderLayout(0,0));
+        frame.getContentPane().add(panelPrincipal, BorderLayout.CENTER);
+        
+		final JPanel panelFuncionalidad = new JPanel();
 		panelFuncionalidad.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		frame.getContentPane().add(panelFuncionalidad, BorderLayout.WEST);
 		GridBagLayout gbl_panelFuncionalidad = new GridBagLayout();
 		gbl_panelFuncionalidad.columnWidths = new int[]{0, 0, 0};
-		gbl_panelFuncionalidad.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
-		gbl_panelFuncionalidad.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_panelFuncionalidad.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panelFuncionalidad.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
+		gbl_panelFuncionalidad.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gbl_panelFuncionalidad.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		panelFuncionalidad.setLayout(gbl_panelFuncionalidad);
 		
 		JButton btnExplorar = new JButton("Explorar");
 		btnExplorar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelCentro.add(panel1, BorderLayout.NORTH);
-				panelCentro.add(panel2, BorderLayout.CENTER);
-				frame.validate();				
+				panelPrincipal.removeAll();
+				panelPrincipal.add(panelExplorarCanciones, BorderLayout.NORTH);
+				panelPrincipal.add(panelFiltroCanciones, BorderLayout.CENTER);
+				panelPrincipal.revalidate();
+				panelPrincipal.repaint();
+				frame.validate();
 			}
 		});
 		
@@ -141,6 +160,16 @@ public class VentanaPrincipal {
 		panelFuncionalidad.add(btnExplorar, gbc_btnExplorar);
 		
 		JButton btnNuevaPlaylist = new JButton("Nueva Playlist");
+		btnNuevaPlaylist.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelPrincipal.removeAll();
+				panelPrincipal.add(panelNuevaPlaylist, BorderLayout.NORTH);
+				panelPrincipal.add(panelCreacionPlaylist, BorderLayout.CENTER);
+				panelPrincipal.revalidate();
+				panelPrincipal.repaint();
+				frame.validate();
+			}
+		});
 		btnNuevaPlaylist.setHorizontalAlignment(SwingConstants.LEFT);
 		btnNuevaPlaylist.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/-playlist-add_90050.png")));
 		GridBagConstraints gbc_btnNuevaPlaylist = new GridBagConstraints();
@@ -151,6 +180,15 @@ public class VentanaPrincipal {
 		panelFuncionalidad.add(btnNuevaPlaylist, gbc_btnNuevaPlaylist);
 		
 		JButton btnReciente = new JButton("Reciente");
+		btnReciente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelPrincipal.removeAll();
+				panelPrincipal.add(panelRecientes,BorderLayout.CENTER);
+				panelPrincipal.revalidate();
+				panelPrincipal.repaint();
+				frame.validate();
+			}
+		});
 		btnReciente.setHorizontalAlignment(SwingConstants.LEFT);
 		btnReciente.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/1491254405-recenttimesearchreloadtime_82966.png")));
 		GridBagConstraints gbc_btnReciente = new GridBagConstraints();
@@ -161,18 +199,42 @@ public class VentanaPrincipal {
 		panelFuncionalidad.add(btnReciente, gbc_btnReciente);
 		
 		JButton btnMisPlaylists = new JButton("Mis Playlists");
+		btnMisPlaylists.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				panelPrincipal.removeAll();
+				panelPrincipal.add(panelMisListasDetalladas,BorderLayout.CENTER);
+				panelPrincipal.revalidate();
+				panelPrincipal.repaint();
+				frame.validate();
+				//Anadir al panel funcionalidad la lista de playlists
+				JList listMisListas = new JList();
+				listMisListas.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+				listMisListas.setModel(new AbstractListModel() {
+					String[] values = new String[] {"Alternatively", "DeepHouse2020", "Electro"};
+					public int getSize() {
+						return values.length;
+					}
+					public Object getElementAt(int index) {
+						return values[index];
+					}
+				});
+				listMisListas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				GridBagConstraints gbc_listMisListas = new GridBagConstraints();
+				gbc_listMisListas.fill = GridBagConstraints.BOTH;
+				gbc_listMisListas.gridx = 1;
+				gbc_listMisListas.gridy = 5;
+				panelFuncionalidad.add(listMisListas, gbc_listMisListas);
+			}
+		});
 		btnMisPlaylists.setHorizontalAlignment(SwingConstants.LEFT);
 		btnMisPlaylists.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/playlist_121110.png")));
 		GridBagConstraints gbc_btnMisPlaylists = new GridBagConstraints();
+		gbc_btnMisPlaylists.insets = new Insets(0, 0, 5, 0);
 		gbc_btnMisPlaylists.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnMisPlaylists.gridx = 1;
 		gbc_btnMisPlaylists.gridy = 4;
 		panelFuncionalidad.add(btnMisPlaylists, gbc_btnMisPlaylists);
-		
-
-		
-		//JPanel panelCentro = new JPanel();
-		//frame.getContentPane().add(panelCentro, BorderLayout.CENTER);
 	}
 
 }

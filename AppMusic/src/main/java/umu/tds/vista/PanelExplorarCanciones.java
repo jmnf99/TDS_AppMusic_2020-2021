@@ -7,6 +7,8 @@ import java.awt.FlowLayout;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.DropMode;
+import java.awt.Cursor;
 
 public class PanelExplorarCanciones extends JPanel {
 	private JTextField textInterprete;
