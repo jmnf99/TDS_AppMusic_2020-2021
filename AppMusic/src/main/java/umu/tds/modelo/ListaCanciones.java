@@ -4,10 +4,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ListaCanciones {
+	private int codigo;
 	private String nombrePlaylist;
-	LinkedList<Cancion> canciones;
+	List<Cancion> canciones;
 
 	public ListaCanciones(String nombrePlaylist) {
+		this.codigo = 0;
 		this.nombrePlaylist = nombrePlaylist;
 		this.canciones = new LinkedList<Cancion>();
 	}
@@ -22,7 +24,13 @@ public class ListaCanciones {
 			return true;
 	}
 	
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
 	//Getters
+	public int getCodigo() {
+		return codigo;
+	}
 	public String getNombrePlaylist() {
 		return nombrePlaylist;
 	}

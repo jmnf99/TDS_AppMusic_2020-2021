@@ -1,5 +1,8 @@
 package umu.tds.persistencia;
 
-public interface IAdaptadorCancionDAO {
+import umu.tds.modelo.Cancion;
 
+public interface IAdaptadorCancionDAO {
+	public void registrarCancion(Cancion cancion);
+	public Cancion recuperarCancion(int codigo);
 }
