@@ -244,25 +244,28 @@ public class VentanaRegistro {
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				Calendar fechaNacim = textFecha.getCalendar();
-				
 				//obtener los campos con calendar.get(mes, dia, año)
-				//crear una local date con locadate.of(dia mes y año)
-				//registrars
-				
-				if(!fieldsOK()) {
-					JOptionPane.showMessageDialog(btnRegistrar, "Error de datos de registro", "Fallo Registro", JOptionPane.ERROR_MESSAGE, null);
+				Calendar calendario = textFecha.getCalendar();
+				int dia = calendario.get(Calendar.DAY_OF_MONTH);
+				int mes = calendario.get(Calendar.MONTH);
+				int anyo = calendario.get(Calendar.YEAR);
+				LocalDate fechaNacim = LocalDate.of(anyo, mes, dia);
+
+				if (!fieldsOK()) {
+					JOptionPane.showMessageDialog(btnRegistrar, "Error de datos de registro", "Fallo Registro",
+							JOptionPane.ERROR_MESSAGE, null);
+				} else {
+					// Registramos al usuario
+					Usuario usu = AppMusic.getInstancia().registrarUsuario(textUsuario.getText(),
+							new String(textPassword.getPassword()), textNombre.getText(), textApellidos.getText(),
+							textMail.getText(), fechaNacim);
+					if (usu == null) {
+						JOptionPane.showMessageDialog(btnRegistrar, "Error, el nombre de usuario no esta disponible",
+								"Fallo Registro", JOptionPane.ERROR_MESSAGE, null);
+					} else {
+						AppMusic.getInstancia().setUsuarioActual(usu);
+					}
 				}
-//				if (!clave.equals(clave2)) {
-//					JOptionPane.showMessageDialog(btnRegistrar, "Error de datos de registro", "Fallo Registro", JOptionPane.ERROR_MESSAGE, null);
-//
-//				} else {
-//
-//					Usuario usu = AppMusic.getInstancia().registrarUsuario(textUsuario.getText(), new String(textPassword.getPassword()), textNombre.getText(), textApellidos.getText(), textMail.getText(),
-//							LocalDate.now());
-//					AppMusic.getInstancia().setUsuarioActual(usu);
-//					// crear ventanaMain y mostrarla (ocultar ventana registro)
-//				}
 			}
 		});
 		GridBagConstraints gbc_btnRegistrar = new GridBagConstraints();

@@ -67,8 +67,9 @@ public class VentanaPrincipal {
 	 * Create the application.
 	 */
 	public VentanaPrincipal() {
-		panelExplorarCanciones = new PanelExplorarCanciones();
+		
 		panelFiltroCanciones = new PanelFiltroCanciones();
+		panelExplorarCanciones = new PanelExplorarCanciones(panelFiltroCanciones);
 		panelNuevaPlaylist = new PanelNuevaPlaylist();
 		panelCreacionPlaylist = new PanelCreacionPlaylist();
 		panelMisListasDetalladas = new PanelFiltroCanciones();
