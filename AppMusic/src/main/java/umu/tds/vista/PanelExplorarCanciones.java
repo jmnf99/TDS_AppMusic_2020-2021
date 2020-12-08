@@ -9,14 +9,18 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.DropMode;
 import java.awt.Cursor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PanelExplorarCanciones extends JPanel {
 	private JTextField textInterprete;
 	private JTextField textTitulo;
 	/**
 	 * Create the panel.
+	 * 
 	 */
-	public PanelExplorarCanciones() {
+	public PanelExplorarCanciones(final PanelFiltroCanciones filtro) {
+		
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelNorte = new JPanel();
@@ -42,6 +46,13 @@ public class PanelExplorarCanciones extends JPanel {
 		add(panelCentral, BorderLayout.CENTER);
 		
 		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				filtro.mostrarPanel();
+			}
+		});
 		panelCentral.add(btnBuscar);
 		
 		JButton btnCancelar = new JButton("Cancelar");

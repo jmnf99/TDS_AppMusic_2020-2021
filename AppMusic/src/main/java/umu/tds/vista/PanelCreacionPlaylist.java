@@ -23,10 +23,13 @@ public class PanelCreacionPlaylist extends JPanel {
 	private JTextField textInterprete;
 	private JTextField txtTitulo;
 
+	
 	/**
 	 * Create the panel.
 	 */
 	public PanelCreacionPlaylist() {
+		setVisible(false);
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{7, 60, 60, 60, 5, 5, 50, 50, 0, 40, 0};
 		gridBagLayout.rowHeights = new int[]{20, 0, 62, 32, 32, 58, 37, 17, 0};

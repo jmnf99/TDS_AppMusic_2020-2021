@@ -54,7 +54,7 @@ public class CatalogoCanciones {
 	}
 	
 	private void cargarCatalogo() {
-		List<Cancion> cancionesBD = adaptadorCanciones.recuperarTodasCanciones();
+		List<Cancion> cancionesBD = adaptadorCanciones.recuperarTodasCanciones());
 		for(Cancion c : cancionesBD)
 			canciones.put(c.getCodigo(), c);
 	}
