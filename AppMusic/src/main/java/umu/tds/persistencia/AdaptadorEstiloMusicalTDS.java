@@ -2,6 +2,8 @@ package umu.tds.persistencia;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import beans.Entidad;
 import beans.Propiedad;
@@ -58,5 +60,15 @@ public class AdaptadorEstiloMusicalTDS implements IAdaptadorEstiloMusicalDAO {
 		estiloMusical.setCodigo(codigo);
 
 		return estiloMusical;
+	}
+	
+	public List<EstiloMusical> recuperarTodosEstilosMusicales() {
+		List<EstiloMusical> estilosMusicales = new LinkedList<EstiloMusical>();
+		List<Entidad> entidades = servPersistencia.recuperarEntidades("estiloMusical");
+
+		for (Entidad eEstiloMusical : entidades) {
+			estilosMusicales.add(recuperarEstiloMusical(eEstiloMusical.getId()));
+		}
+		return estilosMusicales;
 	}
 }

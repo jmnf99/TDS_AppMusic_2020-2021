@@ -2,6 +2,8 @@ package umu.tds.persistencia;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import beans.Entidad;
 import beans.Propiedad;
@@ -46,18 +48,27 @@ public class AdaptadorInterpreteTDS implements IAdaptadorInterpreteDAO {
 		eInterprete.setPropiedades(
 				new ArrayList<Propiedad>(Arrays.asList(new Propiedad("nombre", interprete.getNombre()))));
 	}
-	
+
 	public Interprete recuperarInterprete(int codigo) {
 		Entidad eInterprete;
 		String nombre;
-		
+
 		eInterprete = servPersistencia.recuperarEntidad(codigo);
 		nombre = servPersistencia.recuperarPropiedadEntidad(eInterprete, "nombre");
-		
+
 		Interprete interprete = new Interprete(nombre);
 		interprete.setCodigo(codigo);
-		
+
 		return interprete;
 	}
 
+	public List<Interprete> recuperarTodosInterpretes() {
+		List<Interprete> interpretes = new LinkedList<Interprete>();
+		List<Entidad> entidades = servPersistencia.recuperarEntidades("interprete");
+
+		for (Entidad eInterprete : entidades) {
+			interpretes.add(recuperarInterprete(eInterprete.getId()));
+		}
+		return interpretes;
+	}
 }
