@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import umu.tds.controlador.AppMusic;
@@ -274,7 +275,7 @@ public class VentanaRegistro {
 	
 	private boolean fieldsOK() {
 		boolean ok = true;
-		
+		ocultarErrores();
 		if(textNombre.getText().trim().isEmpty()) {
 			lblNombre.setForeground(Color.RED);
 			textNombre.setBorder(BorderFactory.createLineBorder(Color.RED));
@@ -313,8 +314,40 @@ public class VentanaRegistro {
 			ok=false;
 		}
 		
+		if(!passwd.equals(passwd2)) {
+			lblClave.setForeground(Color.RED);
+			lblRepetirClave.setForeground(Color.RED);
+			textPassword.setBorder(BorderFactory.createLineBorder(Color.RED));
+			textPassword2.setBorder(BorderFactory.createLineBorder(Color.RED));
+			ok=false;
+		}
+		
+		if(textFecha.getDate() == null) {
+			textFecha.setForeground(Color.RED);
+			textFecha.setBorder(BorderFactory.createLineBorder(Color.RED));
+			ok=false;
+		}
 		
 		return ok;
+	}
+	
+	private void ocultarErrores() {
+		Border border = new JTextField().getBorder();
+		textNombre.setBorder(border);
+		textApellidos.setBorder(border);
+		textUsuario.setBorder(border);
+		textMail.setBorder(border);
+		textPassword.setBorder(border);
+		textPassword2.setBorder(border);
+		textFecha.setBorder(border);
+		
+		textNombre.setForeground(Color.BLACK);
+		textApellidos.setForeground(Color.BLACK);
+		textUsuario.setForeground(Color.BLACK);
+		textMail.setForeground(Color.BLACK);
+		textPassword.setForeground(Color.BLACK);
+		textPassword2.setForeground(Color.BLACK);
+		textFecha.setForeground(Color.BLACK);
 	}
 
 }
