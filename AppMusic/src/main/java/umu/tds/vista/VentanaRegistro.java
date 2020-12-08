@@ -242,8 +242,13 @@ public class VentanaRegistro {
 		final JButton btnRegistrar = new JButton("Registrar");
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				
 				Calendar fechaNacim = textFecha.getCalendar();
+				
+				//obtener los campos con calendar.get(mes, dia, año)
+				//crear una local date con locadate.of(dia mes y año)
+				//registrars
+				
 				if(!fieldsOK()) {
 					JOptionPane.showMessageDialog(btnRegistrar, "Error de datos de registro", "Fallo Registro", JOptionPane.ERROR_MESSAGE, null);
 				}
@@ -285,6 +290,8 @@ public class VentanaRegistro {
 			textMail.setBorder(BorderFactory.createLineBorder(Color.RED));
 			ok=false;
 		}
+		
+		//añadir comprobacion de si ya esta registrado el nombre
 		if(textUsuario.getText().trim().isEmpty()) {
 			lblUsuario.setForeground(Color.RED);
 			textUsuario.setBorder(BorderFactory.createLineBorder(Color.RED));

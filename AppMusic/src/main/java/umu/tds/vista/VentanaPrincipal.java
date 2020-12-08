@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
 import umu.tds.controlador.AppMusic;
+import umu.tds.modelo.ListaCanciones;
 import umu.tds.vista.Constantes;
 
 import javax.swing.border.EtchedBorder;
@@ -90,7 +91,7 @@ public class VentanaPrincipal {
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{374, 53, 111, 10, 0};
 		gbl_panel.rowHeights = new int[]{10, 21, 0};
-		gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
@@ -208,7 +209,7 @@ public class VentanaPrincipal {
 				panelPrincipal.repaint();
 				frame.validate();
 				//Anadir al panel funcionalidad la lista de playlists
-				JList listMisListas = new JList();
+				JList<ListaCanciones> listMisListas = new JList();
 				listMisListas.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 				listMisListas.setModel(new AbstractListModel() {
 					String[] values = new String[] {"Alternatively", "DeepHouse2020", "Electro"};
@@ -235,6 +236,11 @@ public class VentanaPrincipal {
 		gbc_btnMisPlaylists.gridx = 1;
 		gbc_btnMisPlaylists.gridy = 4;
 		panelFuncionalidad.add(btnMisPlaylists, gbc_btnMisPlaylists);
+	}
+
+	public void mostrarVentana() {
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
 	}
 
 }

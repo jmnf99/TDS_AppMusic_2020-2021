@@ -28,10 +28,10 @@ public class PanelCreacionPlaylist extends JPanel {
 	 */
 	public PanelCreacionPlaylist() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{7, 60, 60, 60, 5, 5, 50, 50, 40, 0};
+		gridBagLayout.columnWidths = new int[]{7, 60, 60, 60, 5, 5, 50, 50, 0, 40, 0};
 		gridBagLayout.rowHeights = new int[]{20, 0, 62, 32, 32, 58, 37, 17, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		textInterprete = new JTextField();
@@ -58,6 +58,7 @@ public class PanelCreacionPlaylist extends JPanel {
 		JComboBox comboBoxEstilos = new JComboBox();
 		comboBoxEstilos.setModel(new DefaultComboBoxModel(new String[] {"Bolero", "Cantautor", "Clasica", "Flamenco", "Jazz", "Opera", "Pop", "Rock", "Romantica"}));
 		GridBagConstraints gbc_comboBoxEstilos = new GridBagConstraints();
+		gbc_comboBoxEstilos.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBoxEstilos.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBoxEstilos.gridx = 6;
 		gbc_comboBoxEstilos.gridy = 1;
@@ -111,8 +112,7 @@ public class PanelCreacionPlaylist extends JPanel {
 		
 		JButton btnAceptar = new JButton("Aceptar");
 		GridBagConstraints gbc_btnAceptar = new GridBagConstraints();
-		gbc_btnAceptar.anchor = GridBagConstraints.EAST;
-		gbc_btnAceptar.gridwidth = 3;
+		gbc_btnAceptar.gridwidth = 2;
 		gbc_btnAceptar.insets = new Insets(0, 0, 5, 5);
 		gbc_btnAceptar.gridx = 2;
 		gbc_btnAceptar.gridy = 6;
@@ -120,10 +120,9 @@ public class PanelCreacionPlaylist extends JPanel {
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		GridBagConstraints gbc_btnCancelar = new GridBagConstraints();
-		gbc_btnCancelar.anchor = GridBagConstraints.WEST;
 		gbc_btnCancelar.gridwidth = 2;
 		gbc_btnCancelar.insets = new Insets(0, 0, 5, 5);
-		gbc_btnCancelar.gridx = 5;
+		gbc_btnCancelar.gridx = 6;
 		gbc_btnCancelar.gridy = 6;
 		add(btnCancelar, gbc_btnCancelar);
 

@@ -151,6 +151,9 @@ public class VentanaLogin {
 				} else {
 					// AppMusic.getInstancia().setUsuarioActual(usuarioActual);
 					// crear ventanaMain y hacerla visible (ocultar la de login)
+					VentanaPrincipal vPrincipal = new VentanaPrincipal();
+					vPrincipal.mostrarVentana();
+					frame.dispose();
 				}
 			}
 		});
