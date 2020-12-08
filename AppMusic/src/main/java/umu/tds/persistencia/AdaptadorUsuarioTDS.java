@@ -98,6 +98,15 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		return usuario;
 	}
 
+	public List<Usuario> recuperarTodosUsuarios() {
+		List<Usuario> usuarios = new LinkedList<Usuario>();
+		List<Entidad> entidades = servPersistencia.recuperarEntidades("usuario");
+		for (Entidad eUsuario : entidades) {
+			usuarios.add(recuperarUsuario(eUsuario.getId()));
+		}
+		return usuarios;
+	}
+
 	// -------------------Funciones auxiliares-----------------------------
 
 	// Obtener ids a partir de una lista de objetos al registrar
@@ -115,8 +124,8 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		List<ListaCanciones> aux = new LinkedList<ListaCanciones>();
 		StringTokenizer tokens = new StringTokenizer(listas, " ");
 		AdaptadorListaCancionesTDS adaptadorListaCanciones = AdaptadorListaCancionesTDS.getUnicaInstancia();
-		while(tokens.hasMoreTokens()) {
-			aux.add(adaptadorListaCanciones.recuperarListaCanciones(Integer.valueOf((String) tokens.nextElement())));	
+		while (tokens.hasMoreTokens()) {
+			aux.add(adaptadorListaCanciones.recuperarListaCanciones(Integer.valueOf((String) tokens.nextElement())));
 		}
 		return aux;
 	}

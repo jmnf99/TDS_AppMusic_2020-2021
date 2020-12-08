@@ -2,6 +2,8 @@ package umu.tds.persistencia;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import beans.Entidad;
 import beans.Propiedad;
@@ -80,8 +82,10 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO {
 		AdaptadorInterpreteTDS adaptadorInterpreteTDS = AdaptadorInterpreteTDS.getUnicaInstancia();
 		AdaptadorEstiloMusicalTDS adaptadorEstiloMusicalTDS = AdaptadorEstiloMusicalTDS.getUnicaInstancia();
 
-		interprete = adaptadorInterpreteTDS.recuperarInterprete(Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(eCancion, "interprete")));
-		estilo = adaptadorEstiloMusicalTDS.recuperarEstiloMusical(Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(eCancion, "estilo")));
+		interprete = adaptadorInterpreteTDS.recuperarInterprete(
+				Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(eCancion, "interprete")));
+		estilo = adaptadorEstiloMusicalTDS.recuperarEstiloMusical(
+				Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(eCancion, "estilo")));
 
 		// creamos el objeto a recuperar
 		Cancion cancion = new Cancion(titulo, interprete, estilo, rutaFichero);
@@ -90,4 +94,12 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO {
 		return cancion;
 	}
 
+	public List<Cancion> recuperarTodasCanciones() {
+		List<Cancion> canciones = new LinkedList<Cancion>();
+		List<Entidad> entidades = servPersistencia.recuperarEntidades("cancion");
+		for (Entidad eCancion : entidades) {
+			canciones.add(recuperarCancion(eCancion.getId()));
+		}
+		return canciones;
+	}
 }
