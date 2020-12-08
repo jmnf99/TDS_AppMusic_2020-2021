@@ -341,13 +341,13 @@ public class VentanaRegistro {
 		textPassword2.setBorder(border);
 		textFecha.setBorder(border);
 		
-		textNombre.setForeground(Color.BLACK);
-		textApellidos.setForeground(Color.BLACK);
-		textUsuario.setForeground(Color.BLACK);
-		textMail.setForeground(Color.BLACK);
-		textPassword.setForeground(Color.BLACK);
-		textPassword2.setForeground(Color.BLACK);
-		textFecha.setForeground(Color.BLACK);
+		lblNombre.setForeground(Color.BLACK);
+		lblApellidos.setForeground(Color.BLACK);
+		lblUsuario.setForeground(Color.BLACK);
+		lblMail.setForeground(Color.BLACK);
+		lblClave.setForeground(Color.BLACK);
+		lblRepetirClave.setForeground(Color.BLACK);
+		lblFecha.setForeground(Color.BLACK);
 	}
 
 }
