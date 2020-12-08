@@ -54,7 +54,7 @@ public class CatalogoUsuarios {
 	private void cargarCatalogo() {
 		List<Usuario> usuariosDB = adaptadorUsuario.recuperarTodosUsuarios();
 		for(Usuario u : usuariosDB) 
-			usuarios.put(u.getNusuario, u);
+			usuarios.put(u.getNusuario(), u);
 		
 	}
 	

@@ -96,7 +96,7 @@ public class VentanaPrincipal {
 		panel.setLayout(gbl_panel);
 		
 		
-		JLabel lblBienvenida = new JLabel("Bienvenid@ " + AppMusic.getInstancia().getUsuarioActual());
+		JLabel lblBienvenida = new JLabel("Bienvenid@ " + AppMusic.getInstancia().getUsuarioActual().getNombre() + " " + AppMusic.getInstancia().getUsuarioActual().getApellidos());
 		lblBienvenida.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_lblBienvenida = new GridBagConstraints();
 		gbc_lblBienvenida.anchor = GridBagConstraints.EAST;
