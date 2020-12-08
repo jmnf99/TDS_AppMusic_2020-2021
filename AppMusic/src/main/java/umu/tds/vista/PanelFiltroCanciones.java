@@ -13,6 +13,16 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 
 public class PanelFiltroCanciones extends JPanel {
+	
+	public void mostrarPanel() {
+		setVisible(true);
+	}
+	
+	public void esconderPanel() {
+		setVisible(false);
+	}
+	
+	
 	/**
 	 * Create the panel.
 	 */
