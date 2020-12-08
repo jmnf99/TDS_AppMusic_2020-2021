@@ -74,7 +74,7 @@ public class VentanaLogin {
 		frame = new JFrame();
 		frame.setBounds(100, 100,Constantes.x_size,Constantes.y_size);
 		frame.setResizable(false);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JPanel panelFormulario = new JPanel();
@@ -151,6 +151,9 @@ public class VentanaLogin {
 				} else {
 					// AppMusic.getInstancia().setUsuarioActual(usuarioActual);
 					// crear ventanaMain y hacerla visible (ocultar la de login)
+					VentanaPrincipal vPrincipal = new VentanaPrincipal();
+					vPrincipal.mostrarVentana();
+					frame.dispose();
 				}
 			}
 		});

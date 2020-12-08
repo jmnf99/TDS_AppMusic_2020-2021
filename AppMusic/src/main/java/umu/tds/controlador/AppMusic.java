@@ -21,7 +21,7 @@ public class AppMusic {
 		// 	if clave es igual a clave de usuario: usuario.login(clave)
 		//		return true;
 		//return false;
-		return false;
+		return true;
 
 	}
 
