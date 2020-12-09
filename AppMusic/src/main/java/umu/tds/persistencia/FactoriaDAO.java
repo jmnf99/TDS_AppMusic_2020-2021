@@ -35,5 +35,7 @@ public abstract class FactoriaDAO {
 	public abstract IAdaptadorCancionDAO getCancionDAO();
 	public abstract IAdaptadorListaCancionesDAO getListaCancionesDAO();
 	public abstract IAdaptadorUsuarioDAO getUsuarioDAO();
+	public abstract IAdaptadorEstiloMusicalDAO getEstiloDAO();
+	public abstract IAdaptadorInterpreteDAO getInterpreteDAO();
 
 }
