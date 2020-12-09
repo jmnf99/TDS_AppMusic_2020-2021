@@ -67,7 +67,6 @@ public class VentanaPrincipal {
 	 * Create the application.
 	 */
 	public VentanaPrincipal() {
-		
 		panelFiltroCanciones = new PanelFiltroCanciones();
 		panelExplorarCanciones = new PanelExplorarCanciones(panelFiltroCanciones);
 		panelNuevaPlaylist = new PanelNuevaPlaylist();
@@ -86,6 +85,7 @@ public class VentanaPrincipal {
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
+		frame.setTitle("AppMusic");
 		
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.NORTH);
@@ -139,12 +139,33 @@ public class VentanaPrincipal {
 		gbl_panelFuncionalidad.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		panelFuncionalidad.setLayout(gbl_panelFuncionalidad);
 		
+		final JList<ListaCanciones> listMisListas = new JList<ListaCanciones>();
+		listMisListas.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		listMisListas.setModel(new AbstractListModel() {
+			String[] values = new String[] {"Alternatively", "DeepHouse2020", "Electro"};
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
+		listMisListas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		GridBagConstraints gbc_listMisListas = new GridBagConstraints();
+		gbc_listMisListas.fill = GridBagConstraints.BOTH;
+		gbc_listMisListas.gridx = 1;
+		gbc_listMisListas.gridy = 5;
+		panelFuncionalidad.add(listMisListas, gbc_listMisListas);
+		listMisListas.setVisible(false);
+		
 		JButton btnExplorar = new JButton("Explorar");
 		btnExplorar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelPrincipal.removeAll();
 				panelPrincipal.add(panelExplorarCanciones, BorderLayout.NORTH);
 				panelPrincipal.add(panelFiltroCanciones, BorderLayout.CENTER);
+				listMisListas.setVisible(false);
+				panelFiltroCanciones.esconderPanel();
 				panelPrincipal.revalidate();
 				panelPrincipal.repaint();
 				frame.validate();
@@ -167,6 +188,7 @@ public class VentanaPrincipal {
 				panelPrincipal.removeAll();
 				panelPrincipal.add(panelNuevaPlaylist, BorderLayout.NORTH);
 				panelPrincipal.add(panelCreacionPlaylist, BorderLayout.CENTER);
+				listMisListas.setVisible(false);
 				panelPrincipal.revalidate();
 				panelPrincipal.repaint();
 				frame.validate();
@@ -186,6 +208,7 @@ public class VentanaPrincipal {
 			public void actionPerformed(ActionEvent e) {
 				panelPrincipal.removeAll();
 				panelPrincipal.add(panelRecientes,BorderLayout.CENTER);
+				listMisListas.setVisible(false);
 				panelPrincipal.revalidate();
 				panelPrincipal.repaint();
 				frame.validate();
@@ -200,33 +223,21 @@ public class VentanaPrincipal {
 		gbc_btnReciente.gridy = 3;
 		panelFuncionalidad.add(btnReciente, gbc_btnReciente);
 		
+
+		
 		JButton btnMisPlaylists = new JButton("Mis Playlists");
 		btnMisPlaylists.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				panelPrincipal.removeAll();
 				panelPrincipal.add(panelMisListasDetalladas,BorderLayout.CENTER);
+				listMisListas.setVisible(true);
 				panelPrincipal.revalidate();
 				panelPrincipal.repaint();
 				frame.validate();
 				//Anadir al panel funcionalidad la lista de playlists
-				JList<ListaCanciones> listMisListas = new JList();
-				listMisListas.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-				listMisListas.setModel(new AbstractListModel() {
-					String[] values = new String[] {"Alternatively", "DeepHouse2020", "Electro"};
-					public int getSize() {
-						return values.length;
-					}
-					public Object getElementAt(int index) {
-						return values[index];
-					}
-				});
-				listMisListas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-				GridBagConstraints gbc_listMisListas = new GridBagConstraints();
-				gbc_listMisListas.fill = GridBagConstraints.BOTH;
-				gbc_listMisListas.gridx = 1;
-				gbc_listMisListas.gridy = 5;
-				panelFuncionalidad.add(listMisListas, gbc_listMisListas);
+
+				
 			}
 		});
 		btnMisPlaylists.setHorizontalAlignment(SwingConstants.LEFT);
