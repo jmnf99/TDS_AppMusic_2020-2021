@@ -34,6 +34,7 @@ import javax.swing.JToggleButton;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import javax.swing.AbstractListModel;
+import java.awt.Toolkit;
 
 public class VentanaPrincipal {
 
@@ -81,11 +82,12 @@ public class VentanaPrincipal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPrincipal.class.getResource(Constantes.icono)));
 		frame.setBounds(100, 100,Constantes.x_size,Constantes.y_size);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
-		frame.setTitle("AppMusic");
+		frame.setTitle(Constantes.titulo);
 		
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.NORTH);
