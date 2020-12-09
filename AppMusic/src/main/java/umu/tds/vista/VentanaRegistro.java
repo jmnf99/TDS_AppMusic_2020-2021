@@ -245,16 +245,18 @@ public class VentanaRegistro {
 			public void actionPerformed(ActionEvent e) {
 				
 				//obtener los campos con calendar.get(mes, dia, año)
-				Calendar calendario = textFecha.getCalendar();
-				int dia = calendario.get(Calendar.DAY_OF_MONTH);
-				int mes = calendario.get(Calendar.MONTH);
-				int anyo = calendario.get(Calendar.YEAR);
-				LocalDate fechaNacim = LocalDate.of(anyo, mes, dia);
+
 
 				if (!fieldsOK()) {
 					JOptionPane.showMessageDialog(btnRegistrar, "Error de datos de registro", "Fallo Registro",
 							JOptionPane.ERROR_MESSAGE, null);
 				} else {
+					Calendar calendario = textFecha.getCalendar();
+					int dia = calendario.get(Calendar.DAY_OF_MONTH);
+					int mes = calendario.get(Calendar.MONTH);
+					int anyo = calendario.get(Calendar.YEAR);
+					LocalDate fechaNacim = LocalDate.of(anyo, mes, dia);
+					
 					// Registramos al usuario
 					Usuario usu = AppMusic.getInstancia().registrarUsuario(textUsuario.getText(),
 							new String(textPassword.getPassword()), textNombre.getText(), textApellidos.getText(),
