@@ -30,7 +30,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	}
 
 	// cuando se registra un usuario se le asigna un identificador único
-	public void registrarUsuario(Usuario usuario) {
+	public Usuario registrarUsuario(Usuario usuario) {
 		Entidad eUsuario;
 		boolean existe = true;
 
@@ -41,7 +41,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 			existe = false;
 		}
 		if (existe)
-			return;
+			return usuario;
 
 		// Se registran sus objetos agregados
 		AdaptadorListaCancionesTDS adaptadorListaCanciones = AdaptadorListaCancionesTDS.getUnicaInstancia();
@@ -64,6 +64,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		// Se registra la entidad eUsuario asignandole un identificador unico
 		eUsuario = servPersistencia.registrarEntidad(eUsuario);
 		usuario.setCodigo(eUsuario.getId());
+		return usuario;
 	}
 
 	public Usuario recuperarUsuario(int codigo) {

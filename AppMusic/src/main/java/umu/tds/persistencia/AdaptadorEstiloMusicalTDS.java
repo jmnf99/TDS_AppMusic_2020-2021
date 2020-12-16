@@ -27,7 +27,7 @@ public class AdaptadorEstiloMusicalTDS implements IAdaptadorEstiloMusicalDAO {
 	}
 
 	// cuando se registra un estilo musical se le asigna un identificador único
-	public void registrarEstiloMusical(EstiloMusical estiloMusical) {
+	public EstiloMusical registrarEstiloMusical(EstiloMusical estiloMusical) {
 		Entidad eEstiloMusical;
 		boolean existe = true;
 		// Si la entidad está registrada no la registra de nuevo
@@ -37,7 +37,7 @@ public class AdaptadorEstiloMusicalTDS implements IAdaptadorEstiloMusicalDAO {
 			existe = false;
 		}
 		if (existe)
-			return;
+			return estiloMusical;
 
 		// el estilo musical ya existe
 		// Se crea la entidad eEstiloMusical
@@ -47,6 +47,11 @@ public class AdaptadorEstiloMusicalTDS implements IAdaptadorEstiloMusicalDAO {
 		// Se le anaden las propiedades a la entidad creada
 		eEstiloMusical.setPropiedades(
 				new ArrayList<Propiedad>(Arrays.asList(new Propiedad("nombre", estiloMusical.getNombre()))));
+		
+		// Se registra la entidad eEstiloMusical asignandole un identificador unico
+		eEstiloMusical = servPersistencia.registrarEntidad(eEstiloMusical);
+		estiloMusical.setCodigo(eEstiloMusical.getId());
+		return estiloMusical;
 	}
 
 	public EstiloMusical recuperarEstiloMusical(int codigo) {
@@ -61,7 +66,7 @@ public class AdaptadorEstiloMusicalTDS implements IAdaptadorEstiloMusicalDAO {
 
 		return estiloMusical;
 	}
-	
+
 	public List<EstiloMusical> recuperarTodosEstilosMusicales() {
 		List<EstiloMusical> estilosMusicales = new LinkedList<EstiloMusical>();
 		List<Entidad> entidades = servPersistencia.recuperarEntidades("estiloMusical");

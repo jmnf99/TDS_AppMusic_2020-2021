@@ -35,6 +35,7 @@ import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import javax.swing.AbstractListModel;
 import java.awt.Toolkit;
+import pulsador.Luz;
 
 public class VentanaPrincipal {
 
@@ -70,8 +71,8 @@ public class VentanaPrincipal {
 	public VentanaPrincipal() {
 		panelFiltroCanciones = new PanelFiltroCanciones();
 		panelExplorarCanciones = new PanelExplorarCanciones(panelFiltroCanciones);
-		panelNuevaPlaylist = new PanelNuevaPlaylist();
 		panelCreacionPlaylist = new PanelCreacionPlaylist();
+		panelNuevaPlaylist = new PanelNuevaPlaylist(panelCreacionPlaylist);
 		panelMisListasDetalladas = new PanelFiltroCanciones();
 		panelRecientes = new PanelFiltroCanciones();
 		initialize();
@@ -92,9 +93,9 @@ public class VentanaPrincipal {
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.NORTH);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{374, 53, 111, 10, 0};
+		gbl_panel.columnWidths = new int[]{0, 0, 374, 0, 53, 111, 10, 0};
 		gbl_panel.rowHeights = new int[]{10, 21, 0};
-		gbl_panel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
@@ -104,26 +105,40 @@ public class VentanaPrincipal {
 		GridBagConstraints gbc_lblBienvenida = new GridBagConstraints();
 		gbc_lblBienvenida.anchor = GridBagConstraints.EAST;
 		gbc_lblBienvenida.insets = new Insets(0, 0, 0, 5);
-		gbc_lblBienvenida.gridx = 0;
+		gbc_lblBienvenida.gridx = 2;
 		gbc_lblBienvenida.gridy = 1;
 		panel.add(lblBienvenida, gbc_lblBienvenida);
+		
+		Luz luz = new Luz();
+		GridBagConstraints gbc_luz = new GridBagConstraints();
+		luz.setColor(Color.CYAN);
+		gbc_luz.insets = new Insets(0, 0, 0, 5);
+		gbc_luz.gridx = 3;
+		gbc_luz.gridy = 1;
+		panel.add(luz, gbc_luz);
 		
 		JButton btnPremium = new JButton("Mejora tu cuenta");
 		btnPremium.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/Crown-icon.png")));
 		GridBagConstraints gbc_btnPremium = new GridBagConstraints();
+		gbc_btnPremium.anchor = GridBagConstraints.EAST;
 		gbc_btnPremium.insets = new Insets(0, 0, 0, 5);
-		gbc_btnPremium.gridx = 1;
+		gbc_btnPremium.gridx = 4;
 		gbc_btnPremium.gridy = 1;
 		panel.add(btnPremium, gbc_btnPremium);
 		
 		JButton btnLogout = new JButton("Logout");
 		btnLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				AppMusic.getInstancia().logout();
+				VentanaLogin vLogin = new VentanaLogin();
+				vLogin.mostrarVentana();
+				frame.dispose();
 			}
 		});
 		GridBagConstraints gbc_btnLogout = new GridBagConstraints();
+		gbc_btnLogout.anchor = GridBagConstraints.WEST;
 		gbc_btnLogout.insets = new Insets(0, 0, 0, 5);
-		gbc_btnLogout.gridx = 2;
+		gbc_btnLogout.gridx = 5;
 		gbc_btnLogout.gridy = 1;
 		panel.add(btnLogout, gbc_btnLogout);
 		
@@ -191,6 +206,7 @@ public class VentanaPrincipal {
 				panelPrincipal.add(panelNuevaPlaylist, BorderLayout.NORTH);
 				panelPrincipal.add(panelCreacionPlaylist, BorderLayout.CENTER);
 				listMisListas.setVisible(false);
+				panelCreacionPlaylist.esconderPanel();
 				panelPrincipal.revalidate();
 				panelPrincipal.repaint();
 				frame.validate();

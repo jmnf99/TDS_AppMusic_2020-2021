@@ -30,7 +30,7 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO {
 	}
 
 	// cuando se registra un cancion se le asigna un identificador único
-	public void registrarCancion(Cancion cancion) {
+	public Cancion registrarCancion(Cancion cancion) {
 		Entidad eCancion;
 		boolean existe = true;
 
@@ -41,7 +41,7 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO {
 			existe = false;
 		}
 		if (existe)
-			return;
+			return cancion;
 
 		// Se registran sus objetos agregados
 		AdaptadorInterpreteTDS adaptadorInterprete = AdaptadorInterpreteTDS.getUnicaInstancia();
@@ -61,6 +61,10 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO {
 				new Propiedad("numReproducciones", Integer.toString(cancion.getNumReproducciones())),
 				new Propiedad("interprete", Integer.toString(cancion.getInterprete().getCodigo())),
 				new Propiedad("estilo", Integer.toString(cancion.getEstilo().getCodigo())))));
+		// Se registra la entidad eCancion asignandole un identificador unico
+		eCancion = servPersistencia.registrarEntidad(eCancion);
+		cancion.setCodigo(eCancion.getId());
+		return cancion;
 	}
 
 	public Cancion recuperarCancion(int codigo) {

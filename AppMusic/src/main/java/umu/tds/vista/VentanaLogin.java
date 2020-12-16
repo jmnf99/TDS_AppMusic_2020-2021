@@ -30,7 +30,7 @@ import java.awt.Toolkit;
 
 public class VentanaLogin {
 
-	private JFrame frmAppmusic;
+	private JFrame frame;
 	private JTextField textUsuario;
 	private JPasswordField textPassword;
 
@@ -51,8 +51,8 @@ public class VentanaLogin {
 	}
 	
 	public void mostrarVentana() {
-		frmAppmusic.setLocationRelativeTo(null);
-		frmAppmusic.setVisible(true);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
 	}
 
 	/**
@@ -68,22 +68,23 @@ public class VentanaLogin {
 	private void initialize() {
 		try {
 			UIManager.setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
+			//UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 				| UnsupportedLookAndFeelException e1) {
 			e1.printStackTrace();
 		}
 
-		frmAppmusic = new JFrame();
-		frmAppmusic.setTitle(Constantes.titulo);
-		frmAppmusic.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaLogin.class.getResource(Constantes.icono)));
-		frmAppmusic.setBounds(100, 100,Constantes.x_size,Constantes.y_size);
-		frmAppmusic.setResizable(false);
-		frmAppmusic.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frmAppmusic.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		frame = new JFrame();
+		frame.setTitle(Constantes.titulo);
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaLogin.class.getResource(Constantes.icono)));
+		frame.setBounds(100, 100,Constantes.x_size,Constantes.y_size);
+		frame.setResizable(false);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JPanel panelFormulario = new JPanel();
 		panelFormulario.setPreferredSize(new Dimension(Constantes.x_size, Constantes.y_size - Constantes.barra));
-		frmAppmusic.getContentPane().add(panelFormulario);
+		frame.getContentPane().add(panelFormulario);
 		GridBagLayout gbl_panelFormulario = new GridBagLayout();
 		gbl_panelFormulario.columnWidths = new int[] { 10, 10, 0, 301, 10, 10, 0 };
 		gbl_panelFormulario.rowHeights = new int[] { 0, 0, 20, 10, 20, 0, 0, 0, 0, 0 };
@@ -150,7 +151,7 @@ public class VentanaLogin {
 			public void mouseClicked(MouseEvent e) {
 				VentanaRegistro vRegistro = new VentanaRegistro();
 				vRegistro.mostrarVentana();
-				frmAppmusic.dispose();
+				frame.dispose();
 			}
 		});
 		
@@ -175,7 +176,7 @@ public class VentanaLogin {
 							// DONE crear ventanaMain y hacerla visible (ocultar la de login)
 							VentanaPrincipal vPrincipal = new VentanaPrincipal();
 							vPrincipal.mostrarVentana();
-							frmAppmusic.dispose();
+							frame.dispose();
 						}
 					}
 				});

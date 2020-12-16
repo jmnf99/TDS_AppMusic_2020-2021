@@ -47,6 +47,9 @@ public class AdaptadorInterpreteTDS implements IAdaptadorInterpreteDAO {
 		// Se le anaden las propiedades a la entidad creada
 		eInterprete.setPropiedades(
 				new ArrayList<Propiedad>(Arrays.asList(new Propiedad("nombre", interprete.getNombre()))));
+		// Se registra la entidad eInterprete asignandole un identificador unico
+		eInterprete = servPersistencia.registrarEntidad(eInterprete);
+		interprete.setCodigo(eInterprete.getId());
 	}
 
 	public Interprete recuperarInterprete(int codigo) {

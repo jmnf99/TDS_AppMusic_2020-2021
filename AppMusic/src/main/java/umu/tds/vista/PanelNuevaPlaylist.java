@@ -2,13 +2,10 @@ package umu.tds.vista;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-import java.awt.Component;
-import javax.swing.Box;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -21,7 +18,7 @@ public class PanelNuevaPlaylist extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelNuevaPlaylist() {
+	public PanelNuevaPlaylist(final PanelCreacionPlaylist playlist) {
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelNorte = new JPanel();
@@ -46,7 +43,10 @@ public class PanelNuevaPlaylist extends JPanel {
 		btnCrearPlaylist.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				Object[] options = {"Si", "No"};
-				JOptionPane.showOptionDialog(btnCrearPlaylist, "¿Deseas crear una nueva playlist?", "Crear nueva playlist", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+				int opcion = JOptionPane.showOptionDialog(btnCrearPlaylist, "¿Deseas crear una nueva playlist?", "Crear nueva playlist", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+				if(opcion == JOptionPane.YES_OPTION) {
+					playlist.mostrarPanel();
+				}
 			}
 		});
 		GridBagConstraints gbc_btnCrearPlaylist = new GridBagConstraints();
