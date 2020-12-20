@@ -23,6 +23,13 @@ public class PanelCreacionPlaylist extends JPanel {
 	private JTextField textInterprete;
 	private JTextField txtTitulo;
 
+	public void mostrarPanel() {
+		setVisible(true);
+	}
+	
+	public void esconderPanel() {
+		setVisible(false);
+	}
 	
 	/**
 	 * Create the panel.
@@ -31,10 +38,10 @@ public class PanelCreacionPlaylist extends JPanel {
 		setVisible(false);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{7, 60, 60, 60, 5, 5, 50, 50, 0, 40, 0};
-		gridBagLayout.rowHeights = new int[]{20, 0, 62, 32, 32, 58, 37, 17, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[]{7, 60, 60, 60, 5, 5, 50, 50, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{20, 0, 62, 32, 32, 58, 37, 0, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		textInterprete = new JTextField();
@@ -50,7 +57,7 @@ public class PanelCreacionPlaylist extends JPanel {
 		txtTitulo = new JTextField();
 		txtTitulo.setText("Título");
 		GridBagConstraints gbc_txtTitulo = new GridBagConstraints();
-		gbc_txtTitulo.gridwidth = 2;
+		gbc_txtTitulo.gridwidth = 3;
 		gbc_txtTitulo.insets = new Insets(0, 0, 5, 5);
 		gbc_txtTitulo.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtTitulo.gridx = 3;

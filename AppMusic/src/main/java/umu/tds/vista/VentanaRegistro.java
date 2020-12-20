@@ -32,10 +32,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Toolkit;
 
 public class VentanaRegistro {
 
-	private JFrame frame;
+	private JFrame frmAppmusic;
 	private JPanel contentPane;
 	private JTextField textNombre;
 	private JTextField textApellidos;
@@ -70,8 +71,8 @@ public class VentanaRegistro {
 	}
 
 	public void mostrarVentana() {
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
+		frmAppmusic.setLocationRelativeTo(null);
+		frmAppmusic.setVisible(true);
 	}
 	
 	/**
@@ -80,15 +81,17 @@ public class VentanaRegistro {
 	 */
 	public VentanaRegistro() {
 		
-		frame = new JFrame();
+		frmAppmusic = new JFrame();
+		frmAppmusic.setTitle(Constantes.titulo);
+		frmAppmusic.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaRegistro.class.getResource(Constantes.icono)));
 			
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setBounds(100, 100,Constantes.x_size,Constantes.y_size);
-		frame.setResizable(false);
+		frmAppmusic.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmAppmusic.setBounds(100, 100,Constantes.x_size,Constantes.y_size);
+		frmAppmusic.setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
-		frame.setContentPane(contentPane);
+		frmAppmusic.setContentPane(contentPane);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
@@ -230,7 +233,7 @@ public class VentanaRegistro {
 				
 				VentanaLogin login = new VentanaLogin();
 				login.mostrarVentana();
-				frame.dispose();
+				frmAppmusic.dispose();
 			}
 		});
 		GridBagConstraints gbc_btnCancelar = new GridBagConstraints();
