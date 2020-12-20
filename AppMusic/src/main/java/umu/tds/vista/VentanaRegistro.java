@@ -328,7 +328,7 @@ public class VentanaRegistro {
 		}
 		
 		if(textFecha.getDate() == null) {
-			textFecha.setForeground(Color.RED);
+			lblFecha.setForeground(Color.RED);
 			textFecha.setBorder(BorderFactory.createLineBorder(Color.RED));
 			ok=false;
 		}

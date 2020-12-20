@@ -2,6 +2,7 @@ package umu.tds.controlador;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import com.jtattoo.plaf.aluminium.AluminiumSplitPaneDivider;
 
@@ -15,6 +16,7 @@ import umu.tds.persistencia.IAdaptadorUsuarioDAO;
 
 public class AppMusic {
 	private final double precioPremium = 10;
+	private Usuario usuarioActual;
 	private static AppMusic unicaInstancia = null;
 	private IAdaptadorUsuarioDAO adaptadorUsuario;
 	private IAdaptadorEstiloMusicalDAO adaptadorEstilo;
@@ -37,7 +39,6 @@ public class AppMusic {
 		return unicaInstancia;
 	}
 
-	private Usuario usuarioActual;
 
 	public boolean login(String usuario, String clave) {
 		// Comprobamos que el usuario exite en Catalogo
@@ -51,13 +52,17 @@ public class AppMusic {
 		}
 		return false;
 	}
+	
+	public void logout() {
+		setUsuarioActual(null);
+	}
 
 	public Usuario registrarUsuario(String usuario, String clave, String nombre, String apellidos, String mail,
 			LocalDate fechaNacim) {
 		// Comprobar que el nombre del usuario no existe ya en la aplicacion
 		if (catalogoUsuarios.getUsuario(usuario) != null)
 			return null;
-		// Creamos al ususario
+		// Creamos al usuario
 		Usuario usu = new Usuario(usuario, clave, mail, nombre, apellidos, fechaNacim);
 		// Lo registramos en BBDD
 		adaptadorUsuario.registrarUsuario(usu);
@@ -98,8 +103,13 @@ public class AppMusic {
 	private void obtenerEstilosMusicales() {
 		File carpeta = new File("./src/main/java/umu.tds.catalogo.canciones");
 		String[] listado = carpeta.list();
+		
+		
+		
+		
 	    for (int i=0; i< listado.length; i++) {
-	        System.out.println(listado[i].substring(0, 1) + listado[i].substring(1).toLowerCase());
+	        //System.out.println(listado[i].substring(0, 1) + listado[i].substring(1).toLowerCase());
+	    	catalogoEstilos.addEstilo(new EstiloMusical);
 	    }
 				
 	}
