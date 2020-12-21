@@ -17,7 +17,10 @@ import java.awt.Insets;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
+import pulsador.Luz;
 import umu.tds.controlador.AppMusic;
+import umu.tds.modelo.CatalogoEstilos;
+import umu.tds.modelo.EstiloMusical;
 import umu.tds.modelo.ListaCanciones;
 import umu.tds.vista.Constantes;
 
@@ -29,19 +32,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JToggleButton;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import javax.swing.AbstractListModel;
 import java.awt.Toolkit;
-import pulsador.Luz;
 
 public class VentanaPrincipal {
 
 	private JFrame frame;
 	private JPanel panelPrincipal;
 	
+	private CatalogoEstilos catalogoEstilos;
 	private PanelExplorarCanciones panelExplorarCanciones;
 	private PanelFiltroCanciones panelFiltroCanciones;
 	private PanelNuevaPlaylist panelNuevaPlaylist;
@@ -69,6 +73,7 @@ public class VentanaPrincipal {
 	 * Create the application.
 	 */
 	public VentanaPrincipal() {
+		catalogoEstilos = CatalogoEstilos.getUnicaInstancia();
 		panelFiltroCanciones = new PanelFiltroCanciones();
 		panelExplorarCanciones = new PanelExplorarCanciones(panelFiltroCanciones);
 		panelCreacionPlaylist = new PanelCreacionPlaylist();
@@ -156,9 +161,11 @@ public class VentanaPrincipal {
 		gbl_panelFuncionalidad.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		panelFuncionalidad.setLayout(gbl_panelFuncionalidad);
 		
+		//List<EstiloMusical> lista = catalogoEstilos.getEstilos();
 		final JList<ListaCanciones> listMisListas = new JList<ListaCanciones>();
 		listMisListas.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		listMisListas.setModel(new AbstractListModel() {
+			//catalogoEstilos
 			String[] values = new String[] {"Alternatively", "DeepHouse2020", "Electro"};
 			public int getSize() {
 				return values.length;

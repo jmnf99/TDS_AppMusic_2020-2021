@@ -12,10 +12,10 @@ public class CatalogoEstilos {
 
 	private Map<Integer, EstiloMusical> estilos;
 	private static CatalogoEstilos unicaInstancia = new CatalogoEstilos();
-	
+
 	private FactoriaDAO dao;
 	private IAdaptadorEstiloMusicalDAO adaptadorEstilos;
-	
+
 	private CatalogoEstilos() {
 		try {
 			dao = FactoriaDAO.getInstancia();
@@ -26,11 +26,11 @@ public class CatalogoEstilos {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static CatalogoEstilos getUnicaInstancia() {
 		return unicaInstancia;
 	}
-	
+
 	public List<EstiloMusical> getEstilos() {
 		ArrayList<EstiloMusical> lista = new ArrayList<EstiloMusical>();
 		for (EstiloMusical estiloMusical : estilos.values()) {
@@ -38,22 +38,34 @@ public class CatalogoEstilos {
 		}
 		return lista;
 	}
-	
+
 	public EstiloMusical getEstiloMusical(int codigo) {
 		return estilos.get(codigo);
 	}
-	
+
+	public boolean existeEstilo(int codigo) {
+		return estilos.containsKey(codigo);
+	}
+
+	public boolean existeEstilo(String nombre) {
+		for (EstiloMusical e : estilos.values()) {
+			if (e.getNombre().equalsIgnoreCase(nombre))
+				return true;
+		}
+		return false;
+	}
+
 	public void addEstilo(EstiloMusical estilo) {
 		estilos.put(estilo.getCodigo(), estilo);
 	}
-	
+
 	public void removeEstilo(int codigo) {
 		estilos.remove(codigo);
 	}
-	
+
 	private void cargarCatalogo() {
 		List<EstiloMusical> estilosBD = adaptadorEstilos.recuperarTodosEstilosMusicales();
-		for(EstiloMusical e : estilosBD)
+		for (EstiloMusical e : estilosBD)
 			estilos.put(e.getCodigo(), e);
 	}
 }

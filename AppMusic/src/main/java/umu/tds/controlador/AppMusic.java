@@ -1,5 +1,6 @@
 package umu.tds.controlador;
 
+import java.util.List;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -8,6 +9,7 @@ import com.jtattoo.plaf.aluminium.AluminiumSplitPaneDivider;
 
 import umu.tds.modelo.CatalogoEstilos;
 import umu.tds.modelo.CatalogoUsuarios;
+import umu.tds.modelo.EstiloMusical;
 import umu.tds.modelo.Usuario;
 import umu.tds.persistencia.DAOException;
 import umu.tds.persistencia.FactoriaDAO;
@@ -24,11 +26,11 @@ public class AppMusic {
 	private CatalogoEstilos catalogoEstilos;
 
 	private AppMusic() {
-		//inicializarAdaptadores();
-		//inicializarCatalogos();
+		inicializarAdaptadores();
+		inicializarCatalogos();
 		obtenerEstilosMusicales();
 	}
-	
+
 	public static void main(String[] args) {
 		AppMusic app = AppMusic.getInstancia();
 	}
@@ -38,7 +40,6 @@ public class AppMusic {
 			unicaInstancia = new AppMusic();
 		return unicaInstancia;
 	}
-
 
 	public boolean login(String usuario, String clave) {
 		// Comprobamos que el usuario exite en Catalogo
@@ -52,7 +53,7 @@ public class AppMusic {
 		}
 		return false;
 	}
-	
+
 	public void logout() {
 		setUsuarioActual(null);
 	}
@@ -98,19 +99,37 @@ public class AppMusic {
 		catalogoUsuarios = CatalogoUsuarios.getUnicaInstancia();
 		catalogoEstilos = CatalogoEstilos.getUnicaInstancia();
 	}
-	
-	//TODO terminad esto
+
+	// TODO terminad esto
 	private void obtenerEstilosMusicales() {
 		File carpeta = new File("./src/main/java/umu.tds.catalogo.canciones");
 		String[] listado = carpeta.list();
-		
-		
-		
-		
-	    for (int i=0; i< listado.length; i++) {
-	        //System.out.println(listado[i].substring(0, 1) + listado[i].substring(1).toLowerCase());
-	    	catalogoEstilos.addEstilo(new EstiloMusical);
-	    }
-				
+		for (int i = 0; i < listado.length; i++) {
+			// System.out.println(listado[i].substring(0, 1) +
+			// listado[i].substring(1).toLowerCase());
+
+			if (!catalogoEstilos.existeEstilo(listado[i])) {
+				EstiloMusical estilo = adaptadorEstilo.registrarEstiloMusical(
+						new EstiloMusical(listado[i].substring(0, 1) + listado[i].substring(1).toLowerCase()));
+				catalogoEstilos.addEstilo(estilo);
+			}
+		}
+
+		List<EstiloMusical> lista = adaptadorEstilo.recuperarTodosEstilosMusicales();
+		for (EstiloMusical e : lista) {
+//			System.out.println(e.getCodigo());
+//			System.out.println(e.getNombre() + "\n");
+			boolean existe = false;
+			for (int i = 0; i < listado.length; i++) {
+				if (e.getNombre().equalsIgnoreCase(listado[i])) {
+					existe = true;
+					break;
+				}
+			}
+			if (!existe) {
+				catalogoEstilos.removeEstilo(e.getCodigo());
+			}
+		}
+
 	}
 }
