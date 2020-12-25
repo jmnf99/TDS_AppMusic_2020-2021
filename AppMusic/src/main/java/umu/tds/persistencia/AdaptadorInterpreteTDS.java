@@ -74,4 +74,10 @@ public class AdaptadorInterpreteTDS implements IAdaptadorInterpreteDAO {
 		}
 		return interpretes;
 	}
+
+	public void borrarInterprete(Interprete interprete) {
+		Entidad eInterprete;
+		eInterprete = servPersistencia.recuperarEntidad(interprete.getCodigo());
+		servPersistencia.borrarEntidad(eInterprete);
+	}
 }

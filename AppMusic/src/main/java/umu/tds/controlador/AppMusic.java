@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 import com.jtattoo.plaf.aluminium.AluminiumSplitPaneDivider;
 
+import umu.tds.modelo.CargadorCancionesDisco;
 import umu.tds.modelo.CatalogoEstilos;
 import umu.tds.modelo.CatalogoUsuarios;
 import umu.tds.modelo.EstiloMusical;
@@ -21,18 +22,13 @@ public class AppMusic {
 	private Usuario usuarioActual;
 	private static AppMusic unicaInstancia = null;
 	private IAdaptadorUsuarioDAO adaptadorUsuario;
-	private IAdaptadorEstiloMusicalDAO adaptadorEstilo;
 	private CatalogoUsuarios catalogoUsuarios;
-	private CatalogoEstilos catalogoEstilos;
+	private CargadorCancionesDisco cargadorCancionesDisco = CargadorCancionesDisco.getInstancia();
 
 	private AppMusic() {
 		inicializarAdaptadores();
 		inicializarCatalogos();
-		obtenerEstilosMusicales();
-	}
-
-	public static void main(String[] args) {
-		AppMusic app = AppMusic.getInstancia();
+		cargadorCancionesDisco.obtenerEstilosMusicales();
 	}
 
 	public static AppMusic getInstancia() {
@@ -92,44 +88,9 @@ public class AppMusic {
 			e.printStackTrace();
 		}
 		adaptadorUsuario = factoria.getUsuarioDAO();
-		adaptadorEstilo = factoria.getEstiloDAO();
 	}
 
 	private void inicializarCatalogos() {
 		catalogoUsuarios = CatalogoUsuarios.getUnicaInstancia();
-		catalogoEstilos = CatalogoEstilos.getUnicaInstancia();
-	}
-
-	// TODO terminad esto
-	private void obtenerEstilosMusicales() {
-		File carpeta = new File("./src/main/java/umu.tds.catalogo.canciones");
-		String[] listado = carpeta.list();
-		for (int i = 0; i < listado.length; i++) {
-			// System.out.println(listado[i].substring(0, 1) +
-			// listado[i].substring(1).toLowerCase());
-
-			if (!catalogoEstilos.existeEstilo(listado[i])) {
-				EstiloMusical estilo = adaptadorEstilo.registrarEstiloMusical(
-						new EstiloMusical(listado[i].substring(0, 1) + listado[i].substring(1).toLowerCase()));
-				catalogoEstilos.addEstilo(estilo);
-			}
-		}
-
-		List<EstiloMusical> lista = adaptadorEstilo.recuperarTodosEstilosMusicales();
-		for (EstiloMusical e : lista) {
-//			System.out.println(e.getCodigo());
-//			System.out.println(e.getNombre() + "\n");
-			boolean existe = false;
-			for (int i = 0; i < listado.length; i++) {
-				if (e.getNombre().equalsIgnoreCase(listado[i])) {
-					existe = true;
-					break;
-				}
-			}
-			if (!existe) {
-				catalogoEstilos.removeEstilo(e.getCodigo());
-			}
-		}
-
 	}
 }

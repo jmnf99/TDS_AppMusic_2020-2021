@@ -61,8 +61,8 @@ public class VentanaRegistro {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					//VentanaRegistro frame = new VentanaRegistro();
-					//frame.setVisible(true);
+					// VentanaRegistro frame = new VentanaRegistro();
+					// frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -74,19 +74,21 @@ public class VentanaRegistro {
 		frmAppmusic.setLocationRelativeTo(null);
 		frmAppmusic.setVisible(true);
 	}
-	
+
 	/**
 	 * Create the frame.
+	 * 
 	 * @wbp.parser.entryPoint
 	 */
 	public VentanaRegistro() {
-		
+
 		frmAppmusic = new JFrame();
 		frmAppmusic.setTitle(Constantes.titulo);
-		frmAppmusic.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaRegistro.class.getResource(Constantes.icono)));
-			
+		frmAppmusic.setIconImage(
+				Toolkit.getDefaultToolkit().getImage(VentanaRegistro.class.getResource(Constantes.icono)));
+
 		frmAppmusic.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frmAppmusic.setBounds(100, 100,Constantes.x_size,Constantes.y_size);
+		frmAppmusic.setBounds(100, 100, Constantes.x_size, Constantes.y_size);
 		frmAppmusic.setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -217,7 +219,7 @@ public class VentanaRegistro {
 		gbc_lblFecha.gridx = 1;
 		gbc_lblFecha.gridy = 6;
 		panel.add(lblFecha, gbc_lblFecha);
-		
+
 		textFecha = new JDateChooser();
 		GridBagConstraints gbc_textFecha = new GridBagConstraints();
 		gbc_textFecha.insets = new Insets(0, 0, 5, 5);
@@ -230,7 +232,7 @@ public class VentanaRegistro {
 		btnCancelar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+
 				VentanaLogin login = new VentanaLogin();
 				login.mostrarVentana();
 				frmAppmusic.dispose();
@@ -246,9 +248,8 @@ public class VentanaRegistro {
 		final JButton btnRegistrar = new JButton("Registrar");
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				//obtener los campos con calendar.get(mes, dia, año)
 
+				// obtener los campos con calendar.get(mes, dia, año)
 
 				if (!fieldsOK()) {
 					JOptionPane.showMessageDialog(btnRegistrar, "Error de datos de registro", "Fallo Registro",
@@ -259,7 +260,7 @@ public class VentanaRegistro {
 					int mes = calendario.get(Calendar.MONTH);
 					int anyo = calendario.get(Calendar.YEAR);
 					LocalDate fechaNacim = LocalDate.of(anyo, mes, dia);
-					
+
 					// Registramos al usuario
 					Usuario usu = AppMusic.getInstancia().registrarUsuario(textUsuario.getText(),
 							new String(textPassword.getPassword()), textNombre.getText(), textApellidos.getText(),
@@ -269,6 +270,11 @@ public class VentanaRegistro {
 								"Fallo Registro", JOptionPane.ERROR_MESSAGE, null);
 					} else {
 						AppMusic.getInstancia().setUsuarioActual(usu);
+						// TODO Mensaje de registro satisfactorio
+						JOptionPane.showMessageDialog(btnRegistrar, "Registro del usuario realizado", "Registro correcto", JOptionPane.INFORMATION_MESSAGE);
+						VentanaLogin login = new VentanaLogin();
+						login.mostrarVentana();
+						frmAppmusic.dispose();
 					}
 				}
 			}
@@ -280,65 +286,65 @@ public class VentanaRegistro {
 		gbc_btnRegistrar.gridy = 8;
 		panel.add(btnRegistrar, gbc_btnRegistrar);
 	}
-	
+
 	private boolean fieldsOK() {
 		boolean ok = true;
 		ocultarErrores();
-		if(textNombre.getText().trim().isEmpty()) {
+		if (textNombre.getText().trim().isEmpty()) {
 			lblNombre.setForeground(Color.RED);
 			textNombre.setBorder(BorderFactory.createLineBorder(Color.RED));
-			ok=false;
+			ok = false;
 		}
-		if(textApellidos.getText().trim().isEmpty()) {
+		if (textApellidos.getText().trim().isEmpty()) {
 			lblApellidos.setForeground(Color.RED);
 			textApellidos.setBorder(BorderFactory.createLineBorder(Color.RED));
-			ok=false;
+			ok = false;
 		}
-		if(textMail.getText().trim().isEmpty()) {
+		if (textMail.getText().trim().isEmpty()) {
 			lblMail.setForeground(Color.RED);
 			textMail.setBorder(BorderFactory.createLineBorder(Color.RED));
-			ok=false;
+			ok = false;
 		}
-		
-		//añadir comprobacion de si ya esta registrado el nombre
-		if(textUsuario.getText().trim().isEmpty()) {
+
+		// añadir comprobacion de si ya esta registrado el nombre
+		if (textUsuario.getText().trim().isEmpty()) {
 			lblUsuario.setForeground(Color.RED);
 			textUsuario.setBorder(BorderFactory.createLineBorder(Color.RED));
-			ok=false;
+			ok = false;
 		}
-		
+
 		String passwd = new String(textPassword.getPassword());
 		String passwd2 = new String(textPassword2.getPassword());
-		
-		if(passwd.isEmpty()) {
+
+		if (passwd.isEmpty()) {
 			lblClave.setForeground(Color.RED);
 			textPassword.setBorder(BorderFactory.createLineBorder(Color.RED));
-			ok=false;
+			ok = false;
 		}
-		
-		if(passwd2.isEmpty()) {
+
+		if (passwd2.isEmpty()) {
 			lblRepetirClave.setForeground(Color.RED);
 			textPassword2.setBorder(BorderFactory.createLineBorder(Color.RED));
-			ok=false;
+			ok = false;
 		}
-		
-		if(!passwd.equals(passwd2)) {
+
+		if (!passwd.equals(passwd2)) {
 			lblClave.setForeground(Color.RED);
 			lblRepetirClave.setForeground(Color.RED);
 			textPassword.setBorder(BorderFactory.createLineBorder(Color.RED));
 			textPassword2.setBorder(BorderFactory.createLineBorder(Color.RED));
-			ok=false;
+			ok = false;
 		}
-		
-		if(textFecha.getDate() == null) {
+
+		if (textFecha.getDate() == null) {
 			lblFecha.setForeground(Color.RED);
 			textFecha.setBorder(BorderFactory.createLineBorder(Color.RED));
-			ok=false;
+			ok = false;
 		}
-		
+
 		return ok;
 	}
-	
+
 	private void ocultarErrores() {
 		Border border = new JTextField().getBorder();
 		textNombre.setBorder(border);
@@ -348,7 +354,7 @@ public class VentanaRegistro {
 		textPassword.setBorder(border);
 		textPassword2.setBorder(border);
 		textFecha.setBorder(border);
-		
+
 		lblNombre.setForeground(Color.BLACK);
 		lblApellidos.setForeground(Color.BLACK);
 		lblUsuario.setForeground(Color.BLACK);

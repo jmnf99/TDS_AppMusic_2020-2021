@@ -76,4 +76,11 @@ public class AdaptadorEstiloMusicalTDS implements IAdaptadorEstiloMusicalDAO {
 		}
 		return estilosMusicales;
 	}
+	
+	public void borrarEstiloMusical(EstiloMusical estiloMusical) {
+		Entidad eEstiloMusical;
+		eEstiloMusical = servPersistencia.recuperarEntidad(estiloMusical.getCodigo());
+		servPersistencia.borrarEntidad(eEstiloMusical);
+	}
+
 }

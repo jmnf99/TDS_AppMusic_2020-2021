@@ -5,7 +5,6 @@ import javax.swing.JScrollPane;
 
 import java.awt.GridBagLayout;
 import javax.swing.JTable;
-import umu.tds.modelo.TablaModelo;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;

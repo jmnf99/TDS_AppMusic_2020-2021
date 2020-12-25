@@ -1,4 +1,4 @@
-package umu.tds.modelo;
+package umu.tds.vista;
 
 import javax.swing.table.AbstractTableModel;
 

@@ -45,7 +45,6 @@ public class VentanaPrincipal {
 	private JFrame frame;
 	private JPanel panelPrincipal;
 	
-	private CatalogoEstilos catalogoEstilos;
 	private PanelExplorarCanciones panelExplorarCanciones;
 	private PanelFiltroCanciones panelFiltroCanciones;
 	private PanelNuevaPlaylist panelNuevaPlaylist;
@@ -73,7 +72,6 @@ public class VentanaPrincipal {
 	 * Create the application.
 	 */
 	public VentanaPrincipal() {
-		catalogoEstilos = CatalogoEstilos.getUnicaInstancia();
 		panelFiltroCanciones = new PanelFiltroCanciones();
 		panelExplorarCanciones = new PanelExplorarCanciones(panelFiltroCanciones);
 		panelCreacionPlaylist = new PanelCreacionPlaylist();

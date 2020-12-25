@@ -8,4 +8,5 @@ public interface IAdaptadorEstiloMusicalDAO {
 	public EstiloMusical registrarEstiloMusical(EstiloMusical estiloMusical);
 	public EstiloMusical recuperarEstiloMusical(int codigo);
 	public  List<EstiloMusical> recuperarTodosEstilosMusicales();
+	public void borrarEstiloMusical(EstiloMusical estiloMusical);
 }
