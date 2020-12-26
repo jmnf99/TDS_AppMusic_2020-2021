@@ -29,7 +29,7 @@ public class AppMusic {
 		inicializarAdaptadores();
 		inicializarCatalogos();
 		cargadorCancionesDisco.cargarEstilosMusicales();
-		cargadorCancionesDisco.comprobarEstilosMusicales();
+//		cargadorCancionesDisco.comprobarEstilosMusicales();
 		cargadorCancionesDisco.cargarCanciones();
 	}
 

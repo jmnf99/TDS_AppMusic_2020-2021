@@ -41,6 +41,17 @@ public class CatalogoCanciones {
 		return lista;
 	}
 	
+	public boolean existeCancion(int codigo) {
+		return canciones.containsKey(codigo);
+	}
+	
+	public boolean existeCancion(String ruta) {
+		for (Cancion c : canciones.values()) {
+			if (c.getRutaFichero().equalsIgnoreCase(ruta))
+				return true;
+		}
+		return false;
+	}
 	public Cancion getCancion(int codigo) {
 		return canciones.get(codigo);
 	}

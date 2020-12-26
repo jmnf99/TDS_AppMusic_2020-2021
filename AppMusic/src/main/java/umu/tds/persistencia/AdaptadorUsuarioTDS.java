@@ -113,7 +113,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	// Obtener ids a partir de una lista de objetos al registrar
 	private String obtenerCodigosListasCanciones(List<ListaCanciones> listas) {
 		String aux = "";
-		for (ListaCanciones lista : listas)
+		for (ListaCanciones lista : listas) 
 			aux += lista.getCodigo() + " ";
 		return aux.trim();
 	}
