@@ -38,9 +38,26 @@ public class CatalogoEstilos {
 		}
 		return lista;
 	}
+	
+	public String[] getNombreEstilos() {
+		String[] nombreEstilos = new String[this.estilos.values().size()];
+		int i = 0;
+		for (EstiloMusical e : this.estilos.values()) {
+			nombreEstilos[i++] = e.getNombre();
+		}
+		return nombreEstilos;
+	}
 
 	public EstiloMusical getEstiloMusical(int codigo) {
 		return estilos.get(codigo);
+	}
+	
+	public EstiloMusical getEstiloMusical(String nombre) {
+		for (EstiloMusical e : estilos.values()) {
+			if (e.getNombre().equalsIgnoreCase(nombre))
+				return e;
+		}
+		return null;
 	}
 
 	public boolean existeEstilo(int codigo) {
