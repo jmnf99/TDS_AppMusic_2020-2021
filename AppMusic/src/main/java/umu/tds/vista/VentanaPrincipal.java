@@ -7,35 +7,21 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.GridBagLayout;
-import javax.swing.JToolBar;
 import java.awt.GridBagConstraints;
-import java.awt.Dimension;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import java.awt.Component;
 import java.awt.Insets;
 import javax.swing.SwingConstants;
-import javax.swing.border.TitledBorder;
 
 import pulsador.Luz;
 import umu.tds.controlador.AppMusic;
-import umu.tds.modelo.CatalogoEstilos;
-import umu.tds.modelo.EstiloMusical;
 import umu.tds.modelo.ListaCanciones;
-import umu.tds.vista.Constantes;
-
-import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
 import javax.swing.ImageIcon;
-import javax.swing.JTextPane;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
-import java.util.List;
 import java.awt.event.ActionEvent;
-import javax.swing.JToggleButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.AbstractListModel;
 import java.awt.Toolkit;
@@ -121,6 +107,10 @@ public class VentanaPrincipal {
 		panel.add(luz, gbc_luz);
 		
 		JButton btnPremium = new JButton("Mejora tu cuenta");
+		btnPremium.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnPremium.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/Crown-icon.png")));
 		GridBagConstraints gbc_btnPremium = new GridBagConstraints();
 		gbc_btnPremium.anchor = GridBagConstraints.EAST;
@@ -159,12 +149,15 @@ public class VentanaPrincipal {
 		gbl_panelFuncionalidad.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		panelFuncionalidad.setLayout(gbl_panelFuncionalidad);
 		
-		//List<EstiloMusical> lista = catalogoEstilos.getEstilos();
+		
+		//Obtenemos la lista de nombres de playlists que tiene el usuario actual
+		final String[] listas = AppMusic.getInstancia().getUsuarioActual().getNombreListas();
+	
 		final JList<ListaCanciones> listMisListas = new JList<ListaCanciones>();
 		listMisListas.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		listMisListas.setModel(new AbstractListModel() {
-			//catalogoEstilos
-			String[] values = new String[] {"Alternatively", "DeepHouse2020", "Electro"};
+			
+			String[] values = listas;
 			public int getSize() {
 				return values.length;
 			}
@@ -211,6 +204,7 @@ public class VentanaPrincipal {
 				panelPrincipal.add(panelNuevaPlaylist, BorderLayout.NORTH);
 				panelPrincipal.add(panelCreacionPlaylist, BorderLayout.CENTER);
 				listMisListas.setVisible(false);
+				panelNuevaPlaylist.activarBotonCrear();
 				panelCreacionPlaylist.esconderPanel();
 				panelPrincipal.revalidate();
 				panelPrincipal.repaint();

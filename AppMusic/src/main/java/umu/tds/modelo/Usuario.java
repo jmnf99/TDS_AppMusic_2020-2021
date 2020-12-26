@@ -75,4 +75,13 @@ public class Usuario {
 	public boolean login(String clave) {
 		return this.clave.equals(clave);
 	}
+
+	public String[] getNombreListas() {
+		String[] nombreListas = new String[this.listas.size()];
+		int i = 0;
+		for (ListaCanciones l : this.listas) {
+			nombreListas[i++] = l.getNombrePlaylist();
+		}
+		return nombreListas;
+	}
 }

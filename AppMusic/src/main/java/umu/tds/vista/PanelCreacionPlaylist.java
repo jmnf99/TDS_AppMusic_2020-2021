@@ -9,17 +9,23 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.List;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.border.TitledBorder;
+
+import umu.tds.modelo.CatalogoEstilos;
+
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 
 public class PanelCreacionPlaylist extends JPanel {
+	private static final long serialVersionUID = 1L;
 	private JTextField textInterprete;
 	private JTextField txtTitulo;
+	private CatalogoEstilos catalogoEstilos;
 
 	public void mostrarPanel() {
 		setVisible(true);
@@ -33,6 +39,7 @@ public class PanelCreacionPlaylist extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelCreacionPlaylist() {
+		catalogoEstilos = CatalogoEstilos.getUnicaInstancia();
 		setVisible(false);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -63,8 +70,10 @@ public class PanelCreacionPlaylist extends JPanel {
 		add(txtTitulo, gbc_txtTitulo);
 		txtTitulo.setColumns(10);
 		
+		String[] arrayEstilos = catalogoEstilos.getNombreEstilos();
+		
 		JComboBox comboBoxEstilos = new JComboBox();
-		comboBoxEstilos.setModel(new DefaultComboBoxModel(new String[] {"Bolero", "Cantautor", "Clasica", "Flamenco", "Jazz", "Opera", "Pop", "Rock", "Romantica"}));
+		comboBoxEstilos.setModel(new DefaultComboBoxModel(arrayEstilos));
 		GridBagConstraints gbc_comboBoxEstilos = new GridBagConstraints();
 		gbc_comboBoxEstilos.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBoxEstilos.insets = new Insets(0, 0, 5, 5);
