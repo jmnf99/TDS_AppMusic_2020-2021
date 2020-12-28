@@ -12,7 +12,7 @@ import umu.tds.persistencia.IAdaptadorCancionDAO;
 public class CatalogoCanciones {
 
 	private Map<Integer, Cancion> canciones;
-	private static CatalogoCanciones unicaInstancia = new CatalogoCanciones();
+	private static CatalogoCanciones unicaInstancia = null;
 	
 	private FactoriaDAO dao;
 	private IAdaptadorCancionDAO adaptadorCanciones;
@@ -31,6 +31,8 @@ public class CatalogoCanciones {
 	}
 	
 	public static CatalogoCanciones getUnicaInstancia() {
+		if (unicaInstancia == null)
+				return new CatalogoCanciones();
 		return unicaInstancia;
 	}
 	

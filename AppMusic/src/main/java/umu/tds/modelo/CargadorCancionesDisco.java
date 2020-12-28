@@ -96,9 +96,57 @@ public class CargadorCancionesDisco {
 			String[] canciones = archivos.list();
 			for (int j = 0; j < canciones.length; j++) {
 				// System.out.println(canciones[j]);
-				guardarCancion(canciones[j], rutaCancionesDisco + "/" + estiloActual + canciones[j], estiloActual);
+				guardarCancion(canciones[j], rutaCancionesDisco + "/" + estiloActual + "/" + canciones[j],
+						estiloActual);
 			}
 		}
+
+		List<Cancion> canciones = catalogoCanciones.getCanciones();
+
+		int i = 0;
+		for (Cancion cancion : canciones) {
+			System.out.println(cancion.getCodigo());
+
+			System.out.println(cancion.getEstilo().getNombre());
+
+			System.out.println(cancion.getTitulo());
+
+			System.out.println(cancion.getInterpretes());
+
+			System.out.println(cancion.getRutaFichero());
+
+			System.out.println();
+			i++;
+		}
+		System.out.println(i);
+
+	}
+
+	private void guardarCancion(String cancion, String ruta, String estilo) {
+
+		String[] campos = cancion.split("-");
+
+		List<Interprete> lista = this.cargarInterpretes(campos[0]);
+
+		String titulo = parsearTitulo(campos[1]);
+
+		EstiloMusical estiloMusical = catalogoEstilos.getEstiloMusical(estilo);
+
+		Cancion cancionActual = new Cancion(titulo, estiloMusical, ruta, lista);
+		if (!catalogoCanciones.existeCancion(ruta)) {
+			cancionActual = adaptadorCanciones.registrarCancion(cancionActual);
+			catalogoCanciones.addCancion(cancionActual);
+		}
+
+//		System.out.println(estilo);
+//
+//		System.out.println(titulo);
+//
+//		System.out.println(campos[0]);
+//
+//		System.out.println(ruta);
+//
+//		System.out.println();
 	}
 
 	private List<Interprete> cargarInterpretes(String nombres) {
@@ -119,33 +167,6 @@ public class CargadorCancionesDisco {
 			lista.add(interprete);
 		}
 		return lista;
-	}
-
-	private void guardarCancion(String cancion, String ruta, String estilo) {
-
-		String[] campos = cancion.split("-");
-
-		List<Interprete> lista = this.cargarInterpretes(campos[0]);
-
-		String titulo = parsearTitulo(campos[1]);
-
-//		EstiloMusical estiloMusical = catalogoEstilos.getEstiloMusical(estilo);
-//		
-//		Cancion cancionActual = new Cancion(titulo, estiloMusical, ruta, lista);
-//		if (!catalogoCanciones.existeCancion(ruta)) {
-//			cancionActual = adaptadorCanciones.registrarCancion(cancionActual);
-//			catalogoCanciones.addCancion(cancionActual);
-//		}
-
-		System.out.println(estilo);
-
-		System.out.println(titulo);
-
-		System.out.println(campos[0]);
-
-		System.out.println(ruta);
-
-		System.out.println();
 	}
 
 	private String parsearTitulo(String nombre) {
