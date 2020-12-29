@@ -77,9 +77,9 @@ public class VentanaPagoPremium extends JDialog {
 		JPanel panelDescuentos = new JPanel();
 		getContentPane().add(panelDescuentos, BorderLayout.CENTER);
 		GridBagLayout gbl_panelDescuentos = new GridBagLayout();
-		gbl_panelDescuentos.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panelDescuentos.columnWidths = new int[]{0, 0, 0, 0};
 		gbl_panelDescuentos.rowHeights = new int[]{30, 0, 0, 0, 0, 0};
-		gbl_panelDescuentos.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_panelDescuentos.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
 		gbl_panelDescuentos.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		panelDescuentos.setLayout(gbl_panelDescuentos);
 		
@@ -116,7 +116,7 @@ public class VentanaPagoPremium extends JDialog {
 		});
 		GridBagConstraints gbc_btnPagar = new GridBagConstraints();
 		gbc_btnPagar.insets = new Insets(0, 0, 0, 5);
-		gbc_btnPagar.gridx = 2;
+		gbc_btnPagar.gridx = 1;
 		gbc_btnPagar.gridy = 4;
 		panelDescuentos.add(btnPagar, gbc_btnPagar);
 		initialize();
