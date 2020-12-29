@@ -13,12 +13,19 @@ import javax.swing.SwingConstants;
 
 import pulsador.Luz;
 import umu.tds.controlador.AppMusic;
+import umu.tds.modelo.Descuento;
+import umu.tds.modelo.DescuentoMayores;
 import umu.tds.modelo.ListaCanciones;
+import umu.tds.modelo.Usuario;
+
 import java.awt.Color;
 import javax.swing.border.BevelBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -30,14 +37,14 @@ public class VentanaPrincipal {
 
 	private JFrame frame;
 	private JPanel panelPrincipal;
-	
+
 	private PanelExplorarCanciones panelExplorarCanciones;
 	private PanelFiltroCanciones panelFiltroCanciones;
 	private PanelNuevaPlaylist panelNuevaPlaylist;
 	private PanelCreacionPlaylist panelCreacionPlaylist;
 	private PanelFiltroCanciones panelMisListasDetalladas;
 	private PanelFiltroCanciones panelRecientes;
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -73,23 +80,23 @@ public class VentanaPrincipal {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPrincipal.class.getResource(Constantes.icono)));
-		frame.setBounds(100, 100,Constantes.x_size,Constantes.y_size);
+		frame.setBounds(100, 100, Constantes.x_size, Constantes.y_size);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		frame.setTitle(Constantes.titulo);
-		
+
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.NORTH);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{0, 0, 374, 0, 53, 111, 10, 0};
-		gbl_panel.rowHeights = new int[]{10, 21, 0};
-		gbl_panel.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.columnWidths = new int[] { 0, 0, 374, 0, 53, 111, 10, 0 };
+		gbl_panel.rowHeights = new int[] { 10, 21, 0 };
+		gbl_panel.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_panel.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
 		panel.setLayout(gbl_panel);
-		
-		
-		JLabel lblBienvenida = new JLabel("Bienvenid@ " + AppMusic.getInstancia().getUsuarioActual().getNombre() + " " + AppMusic.getInstancia().getUsuarioActual().getApellidos());
+
+		JLabel lblBienvenida = new JLabel("Bienvenid@ " + AppMusic.getInstancia().getUsuarioActual().getNombre() + " "
+				+ AppMusic.getInstancia().getUsuarioActual().getApellidos());
 		lblBienvenida.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_lblBienvenida = new GridBagConstraints();
 		gbc_lblBienvenida.anchor = GridBagConstraints.EAST;
@@ -97,7 +104,7 @@ public class VentanaPrincipal {
 		gbc_lblBienvenida.gridx = 2;
 		gbc_lblBienvenida.gridy = 1;
 		panel.add(lblBienvenida, gbc_lblBienvenida);
-		
+
 		Luz luz = new Luz();
 		GridBagConstraints gbc_luz = new GridBagConstraints();
 		luz.setColor(Color.CYAN);
@@ -105,10 +112,25 @@ public class VentanaPrincipal {
 		gbc_luz.gridx = 3;
 		gbc_luz.gridy = 1;
 		panel.add(luz, gbc_luz);
-		
+
 		JButton btnPremium = new JButton("Mejora tu cuenta");
+		btnPremium.setToolTipText("Sube a Premium");
 		btnPremium.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Comprobar que descuentos son aplicables
+				Usuario usuActual = AppMusic.getInstancia().getUsuarioActual();
+
+				if ((LocalDate.now().getMonthValue() == 1 && LocalDate.now().getDayOfMonth() <= 6)
+						|| (LocalDate.now().getMonthValue() == 12 && LocalDate.now().getDayOfMonth() >= 25)) {
+					usuActual.setDescuento(Descuento.NAVIDAD);
+				} else if (usuActual.isEstudianteUMU()) {
+					usuActual.setDescuento(Descuento.ESTUDIANTE);
+				} else if (AppMusic.getInstancia().isMayor(LocalDate.now().getYear())) {
+					usuActual.setDescuento(Descuento.MAYORES);
+				}
+
+				VentanaPagoPremium ventanaPagoPremium = new VentanaPagoPremium(frame, true);
+				ventanaPagoPremium.mostrarVentana();
 			}
 		});
 		btnPremium.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/Crown-icon.png")));
@@ -118,7 +140,7 @@ public class VentanaPrincipal {
 		gbc_btnPremium.gridx = 4;
 		gbc_btnPremium.gridy = 1;
 		panel.add(btnPremium, gbc_btnPremium);
-		
+
 		JButton btnLogout = new JButton("Logout");
 		btnLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -134,33 +156,34 @@ public class VentanaPrincipal {
 		gbc_btnLogout.gridx = 5;
 		gbc_btnLogout.gridy = 1;
 		panel.add(btnLogout, gbc_btnLogout);
-		
+
 		panelPrincipal = new JPanel();
-		panelPrincipal.setLayout(new BorderLayout(0,0));
-        frame.getContentPane().add(panelPrincipal, BorderLayout.CENTER);
-        
+		panelPrincipal.setLayout(new BorderLayout(0, 0));
+		frame.getContentPane().add(panelPrincipal, BorderLayout.CENTER);
+
 		final JPanel panelFuncionalidad = new JPanel();
 		panelFuncionalidad.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		frame.getContentPane().add(panelFuncionalidad, BorderLayout.WEST);
 		GridBagLayout gbl_panelFuncionalidad = new GridBagLayout();
-		gbl_panelFuncionalidad.columnWidths = new int[]{0, 0, 0};
-		gbl_panelFuncionalidad.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
-		gbl_panelFuncionalidad.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_panelFuncionalidad.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_panelFuncionalidad.columnWidths = new int[] { 0, 0, 0 };
+		gbl_panelFuncionalidad.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0 };
+		gbl_panelFuncionalidad.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
+		gbl_panelFuncionalidad.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		panelFuncionalidad.setLayout(gbl_panelFuncionalidad);
-		
-		
-		//Obtenemos la lista de nombres de playlists que tiene el usuario actual
+
+		// Obtenemos la lista de nombres de playlists que tiene el usuario actual
 		final String[] listas = AppMusic.getInstancia().getUsuarioActual().getNombreListas();
-	
+
 		final JList<ListaCanciones> listMisListas = new JList<ListaCanciones>();
 		listMisListas.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		listMisListas.setModel(new AbstractListModel() {
-			
+
 			String[] values = listas;
+
 			public int getSize() {
 				return values.length;
 			}
+
 			public Object getElementAt(int index) {
 				return values[index];
 			}
@@ -172,7 +195,7 @@ public class VentanaPrincipal {
 		gbc_listMisListas.gridy = 5;
 		panelFuncionalidad.add(listMisListas, gbc_listMisListas);
 		listMisListas.setVisible(false);
-		
+
 		JButton btnExplorar = new JButton("Explorar");
 		btnExplorar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -186,17 +209,17 @@ public class VentanaPrincipal {
 				frame.validate();
 			}
 		});
-		
-		
+
 		btnExplorar.setHorizontalAlignment(SwingConstants.LEFT);
-		btnExplorar.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/magnifier-1_icon-icons.com_56924.png")));
+		btnExplorar.setIcon(new ImageIcon(
+				VentanaPrincipal.class.getResource("/umu/tds/imagenes/magnifier-1_icon-icons.com_56924.png")));
 		GridBagConstraints gbc_btnExplorar = new GridBagConstraints();
 		gbc_btnExplorar.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnExplorar.insets = new Insets(0, 0, 5, 0);
 		gbc_btnExplorar.gridx = 1;
 		gbc_btnExplorar.gridy = 1;
 		panelFuncionalidad.add(btnExplorar, gbc_btnExplorar);
-		
+
 		JButton btnNuevaPlaylist = new JButton("Nueva Playlist");
 		btnNuevaPlaylist.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -212,19 +235,20 @@ public class VentanaPrincipal {
 			}
 		});
 		btnNuevaPlaylist.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNuevaPlaylist.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/-playlist-add_90050.png")));
+		btnNuevaPlaylist.setIcon(
+				new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/-playlist-add_90050.png")));
 		GridBagConstraints gbc_btnNuevaPlaylist = new GridBagConstraints();
 		gbc_btnNuevaPlaylist.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnNuevaPlaylist.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNuevaPlaylist.gridx = 1;
 		gbc_btnNuevaPlaylist.gridy = 2;
 		panelFuncionalidad.add(btnNuevaPlaylist, gbc_btnNuevaPlaylist);
-		
+
 		JButton btnReciente = new JButton("Reciente");
 		btnReciente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelPrincipal.removeAll();
-				panelPrincipal.add(panelRecientes,BorderLayout.CENTER);
+				panelPrincipal.add(panelRecientes, BorderLayout.CENTER);
 				listMisListas.setVisible(false);
 				panelPrincipal.revalidate();
 				panelPrincipal.repaint();
@@ -232,33 +256,32 @@ public class VentanaPrincipal {
 			}
 		});
 		btnReciente.setHorizontalAlignment(SwingConstants.LEFT);
-		btnReciente.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/1491254405-recenttimesearchreloadtime_82966.png")));
+		btnReciente.setIcon(new ImageIcon(VentanaPrincipal.class
+				.getResource("/umu/tds/imagenes/1491254405-recenttimesearchreloadtime_82966.png")));
 		GridBagConstraints gbc_btnReciente = new GridBagConstraints();
 		gbc_btnReciente.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnReciente.insets = new Insets(0, 0, 5, 0);
 		gbc_btnReciente.gridx = 1;
 		gbc_btnReciente.gridy = 3;
 		panelFuncionalidad.add(btnReciente, gbc_btnReciente);
-		
 
-		
 		JButton btnMisPlaylists = new JButton("Mis Playlists");
 		btnMisPlaylists.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				panelPrincipal.removeAll();
-				panelPrincipal.add(panelMisListasDetalladas,BorderLayout.CENTER);
+				panelPrincipal.add(panelMisListasDetalladas, BorderLayout.CENTER);
 				listMisListas.setVisible(true);
 				panelPrincipal.revalidate();
 				panelPrincipal.repaint();
 				frame.validate();
-				//Anadir al panel funcionalidad la lista de playlists
+				// Anadir al panel funcionalidad la lista de playlists
 
-				
 			}
 		});
 		btnMisPlaylists.setHorizontalAlignment(SwingConstants.LEFT);
-		btnMisPlaylists.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/playlist_121110.png")));
+		btnMisPlaylists
+				.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/playlist_121110.png")));
 		GridBagConstraints gbc_btnMisPlaylists = new GridBagConstraints();
 		gbc_btnMisPlaylists.insets = new Insets(0, 0, 5, 0);
 		gbc_btnMisPlaylists.fill = GridBagConstraints.HORIZONTAL;

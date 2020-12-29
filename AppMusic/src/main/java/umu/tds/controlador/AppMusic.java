@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import umu.tds.modelo.CargadorCancionesDisco;
 import umu.tds.modelo.CatalogoUsuarios;
+import umu.tds.modelo.DescuentoMayores;
 import umu.tds.modelo.ListaCanciones;
 import umu.tds.modelo.Usuario;
 import umu.tds.persistencia.DAOException;
@@ -69,13 +70,21 @@ public class AppMusic {
 	public void setUsuarioActual(Usuario usuarioActual) {
 		this.usuarioActual = usuarioActual;
 	}
-
+	
 	public double getPrecioPremium() {
 		return precioPremium;
+	}
+	
+	public boolean isMayor(int anyoActual) {
+		return (anyoActual - this.usuarioActual.getAnyoNacim()) >= DescuentoMayores.EDAD;
 	}
 
 	public void crearListaCanciones(String nombrePlaylist) {
 		listaActual = new ListaCanciones(nombrePlaylist);
+	}
+	
+	public double calcularDescuento() {
+		return usuarioActual.getDescuento().calcDescuento(this.precioPremium);
 	}
 
 	private void inicializarAdaptadores() {
