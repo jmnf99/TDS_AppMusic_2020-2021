@@ -28,8 +28,6 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Toolkit;
@@ -53,22 +51,6 @@ public class VentanaRegistro {
 	private JButton btnCancelar;
 	private JLabel lblApellidos;
 	private JLabel lblNombre;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					// VentanaRegistro frame = new VentanaRegistro();
-					// frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public void mostrarVentana() {
 		frmAppmusic.setLocationRelativeTo(null);
@@ -270,7 +252,7 @@ public class VentanaRegistro {
 								"Fallo Registro", JOptionPane.ERROR_MESSAGE, null);
 					} else {
 						AppMusic.getInstancia().setUsuarioActual(usu);
-						// TODO Mensaje de registro satisfactorio
+						// Mensaje de registro satisfactorio
 						JOptionPane.showMessageDialog(btnRegistrar, "Registro del usuario realizado", "Registro correcto", JOptionPane.INFORMATION_MESSAGE);
 						VentanaLogin login = new VentanaLogin();
 						login.mostrarVentana();

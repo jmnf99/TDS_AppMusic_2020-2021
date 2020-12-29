@@ -3,6 +3,9 @@ package umu.tds.vista;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JTextField;
+
+import umu.tds.controlador.AppMusic;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -13,23 +16,25 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class PanelNuevaPlaylist extends JPanel {
+	private static final long serialVersionUID = 1L;
 	private JTextField textNombrePlaylist;
+	private JButton btnCrearPlaylist;
 
 	/**
 	 * Create the panel.
 	 */
 	public PanelNuevaPlaylist(final PanelCreacionPlaylist playlist) {
 		setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel panelNorte = new JPanel();
 		add(panelNorte, BorderLayout.NORTH);
 		GridBagLayout gbl_panelNorte = new GridBagLayout();
-		gbl_panelNorte.columnWidths = new int[]{145, 96, 0, 120, 0};
-		gbl_panelNorte.rowHeights = new int[]{10, 21, 0};
-		gbl_panelNorte.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_panelNorte.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_panelNorte.columnWidths = new int[] { 145, 96, 0, 120, 0 };
+		gbl_panelNorte.rowHeights = new int[] { 10, 21, 0 };
+		gbl_panelNorte.columnWeights = new double[] { 0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE };
+		gbl_panelNorte.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
 		panelNorte.setLayout(gbl_panelNorte);
-		
+
 		textNombrePlaylist = new JTextField();
 		GridBagConstraints gbc_textNombrePlaylist = new GridBagConstraints();
 		gbc_textNombrePlaylist.fill = GridBagConstraints.HORIZONTAL;
@@ -38,14 +43,20 @@ public class PanelNuevaPlaylist extends JPanel {
 		gbc_textNombrePlaylist.gridy = 1;
 		panelNorte.add(textNombrePlaylist, gbc_textNombrePlaylist);
 		textNombrePlaylist.setColumns(10);
-		
-		final JButton btnCrearPlaylist = new JButton("Crear");
+
+		btnCrearPlaylist = new JButton("Crear");
 		btnCrearPlaylist.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				Object[] options = {"Si", "No"};
-				int opcion = JOptionPane.showOptionDialog(btnCrearPlaylist, "¿Deseas crear una nueva playlist?", "Crear nueva playlist", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-				if(opcion == JOptionPane.YES_OPTION) {
-					playlist.mostrarPanel();
+				if (btnCrearPlaylist.isEnabled()) {
+					Object[] options = { "Si", "No" };
+					int opcion = JOptionPane.showOptionDialog(btnCrearPlaylist, "¿Deseas crear una nueva playlist?",
+							"Crear nueva playlist", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+							options, options[0]);
+					if (opcion == JOptionPane.YES_OPTION) {
+						playlist.mostrarPanel();
+						AppMusic.getInstancia().crearListaCanciones(textNombrePlaylist.getText());
+					}
+					btnCrearPlaylist.setEnabled(false);
 				}
 			}
 		});
@@ -54,8 +65,11 @@ public class PanelNuevaPlaylist extends JPanel {
 		gbc_btnCrearPlaylist.gridx = 2;
 		gbc_btnCrearPlaylist.gridy = 1;
 		panelNorte.add(btnCrearPlaylist, gbc_btnCrearPlaylist);
-		
 
+	}
+
+	public void activarBotonCrear() {
+		this.btnCrearPlaylist.setEnabled(true);
 	}
 
 }

@@ -1,25 +1,20 @@
 package umu.tds.controlador;
 
-import java.util.List;
-import java.io.File;
 import java.time.LocalDate;
-import java.util.Arrays;
-
-import com.jtattoo.plaf.aluminium.AluminiumSplitPaneDivider;
 
 import umu.tds.modelo.CargadorCancionesDisco;
-import umu.tds.modelo.CatalogoEstilos;
 import umu.tds.modelo.CatalogoUsuarios;
-import umu.tds.modelo.EstiloMusical;
+import umu.tds.modelo.DescuentoMayores;
+import umu.tds.modelo.ListaCanciones;
 import umu.tds.modelo.Usuario;
 import umu.tds.persistencia.DAOException;
 import umu.tds.persistencia.FactoriaDAO;
-import umu.tds.persistencia.IAdaptadorEstiloMusicalDAO;
 import umu.tds.persistencia.IAdaptadorUsuarioDAO;
 
 public class AppMusic {
 	private final double precioPremium = 10;
 	private Usuario usuarioActual;
+	private ListaCanciones listaActual;
 	private static AppMusic unicaInstancia = null;
 	private IAdaptadorUsuarioDAO adaptadorUsuario;
 	private CatalogoUsuarios catalogoUsuarios;
@@ -77,9 +72,21 @@ public class AppMusic {
 	public void setUsuarioActual(Usuario usuarioActual) {
 		this.usuarioActual = usuarioActual;
 	}
-
+	
 	public double getPrecioPremium() {
 		return precioPremium;
+	}
+	
+	public boolean isMayor(int anyoActual) {
+		return (anyoActual - this.usuarioActual.getAnyoNacim()) >= DescuentoMayores.EDAD;
+	}
+
+	public void crearListaCanciones(String nombrePlaylist) {
+		listaActual = new ListaCanciones(nombrePlaylist);
+	}
+	
+	public double calcularDescuento() {
+		return usuarioActual.getDescuento().calcDescuento(this.precioPremium);
 	}
 
 	private void inicializarAdaptadores() {

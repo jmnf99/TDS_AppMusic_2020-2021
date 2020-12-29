@@ -1,7 +1,7 @@
 package umu.tds.modelo;
-//Descuento temporal del 20%
+//Descuento Navidad del 20%
 
-public class DescuentoTemporal implements Descuento {
+public class DescuentoNavidad implements Descuento {
 
 	@Override
 	public double calcDescuento(double precioBase) {
