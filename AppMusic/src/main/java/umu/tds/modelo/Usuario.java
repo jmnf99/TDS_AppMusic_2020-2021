@@ -3,8 +3,6 @@ package umu.tds.modelo;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Usuario {
 	private int codigo;
@@ -25,7 +23,7 @@ public class Usuario {
 		this.fechaNacim = fechaNacim;
 		this.listas = new LinkedList<ListaCanciones>();
 		this.tipoDescuento = "Ninguno";
-		this.descuento = null;
+		this.descuento = new DescuentoNormal();
 		this.premium = false;
 	}
 
@@ -66,14 +64,14 @@ public class Usuario {
 		return descuento;
 	}
 
-	public int getAnyoNacim() {
-		return this.fechaNacim.getDayOfYear();
-	}
-
 	public boolean isEstudianteUMU() {
-		Pattern pattern = Pattern.compile(".*@um.es");
-		Matcher matcher = pattern.matcher(mail);
-		return matcher.find();
+		int index = this.mail.indexOf('@');
+		String dominio = this.mail.substring(index);
+		return dominio.equals("@um.es");
+	}
+	
+	public boolean isMayor(int anyoActual) {
+		return (anyoActual - this.fechaNacim.getYear()) >= DescuentoMayores.EDAD;
 	}
 
 	public void addListaCanciones(ListaCanciones l) {

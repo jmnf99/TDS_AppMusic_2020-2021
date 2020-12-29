@@ -107,6 +107,13 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		}
 		return usuarios;
 	}
+	
+	public void modificarUsuario(Usuario usuario) {
+		Entidad eUsuario = servPersistencia.recuperarEntidad(usuario.getCodigo());
+		
+		servPersistencia.eliminarPropiedadEntidad(eUsuario, "premium");
+		servPersistencia.anadirPropiedadEntidad(eUsuario, "premium", Boolean.toString(usuario.isPremium()));
+	}
 
 	// -------------------Funciones auxiliares-----------------------------
 
@@ -130,5 +137,4 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		}
 		return aux;
 	}
-
 }

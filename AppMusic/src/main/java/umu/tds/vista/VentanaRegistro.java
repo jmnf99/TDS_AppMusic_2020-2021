@@ -25,6 +25,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.MouseAdapter;
@@ -65,8 +67,7 @@ public class VentanaRegistro {
 
 		frame = new JFrame();
 		frame.setTitle(Constantes.titulo);
-		frame.setIconImage(
-				Toolkit.getDefaultToolkit().getImage(VentanaRegistro.class.getResource(Constantes.icono)));
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaRegistro.class.getResource(Constantes.icono)));
 
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setBounds(100, 100, Constantes.x_size, Constantes.y_size);
@@ -252,7 +253,8 @@ public class VentanaRegistro {
 					} else {
 						AppMusic.getInstancia().setUsuarioActual(usu);
 						// Mensaje de registro satisfactorio
-						JOptionPane.showMessageDialog(btnRegistrar, "Registro del usuario realizado", "Registro correcto", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(btnRegistrar, "Registro del usuario realizado",
+								"Registro correcto", JOptionPane.INFORMATION_MESSAGE);
 						VentanaLogin login = new VentanaLogin();
 						login.mostrarVentana();
 						frame.dispose();
@@ -281,7 +283,7 @@ public class VentanaRegistro {
 			textApellidos.setBorder(BorderFactory.createLineBorder(Color.RED));
 			ok = false;
 		}
-		if (textMail.getText().trim().isEmpty()) {
+		if (textMail.getText().trim().isEmpty() || !isEmailValido(textMail.getText().trim())) {
 			lblMail.setForeground(Color.RED);
 			textMail.setBorder(BorderFactory.createLineBorder(Color.RED));
 			ok = false;
@@ -343,6 +345,18 @@ public class VentanaRegistro {
 		lblClave.setForeground(Color.BLACK);
 		lblRepetirClave.setForeground(Color.BLACK);
 		lblFecha.setForeground(Color.BLACK);
+	}
+
+	Pattern patronEmail = Pattern
+			.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+	Matcher matcher;
+
+	private boolean isEmailValido(String email) {
+		matcher = patronEmail.matcher(email);
+		if (matcher.find())
+			return true;
+		else
+			return false;
 	}
 
 }

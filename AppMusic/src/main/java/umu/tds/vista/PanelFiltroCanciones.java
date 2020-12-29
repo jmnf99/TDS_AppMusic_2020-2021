@@ -12,7 +12,9 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 
 public class PanelFiltroCanciones extends JPanel {
-	
+	private static final long serialVersionUID = 1L;
+
+
 	public void mostrarPanel() {
 		setVisible(true);
 	}
@@ -78,6 +80,5 @@ public class PanelFiltroCanciones extends JPanel {
 				gbc_btnAvanzar.gridx = 4;
 				gbc_btnAvanzar.gridy = 3;
 				add(btnAvanzar, gbc_btnAvanzar);
-
 	}
 }
