@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import umu.tds.modelo.CargadorCancionesDisco;
 import umu.tds.modelo.CatalogoUsuarios;
+import umu.tds.modelo.Descuento;
 import umu.tds.modelo.DescuentoMayores;
 import umu.tds.modelo.ListaCanciones;
 import umu.tds.modelo.Usuario;
@@ -70,11 +71,11 @@ public class AppMusic {
 	public void setUsuarioActual(Usuario usuarioActual) {
 		this.usuarioActual = usuarioActual;
 	}
-	
+
 	public double getPrecioPremium() {
 		return precioPremium;
 	}
-	
+
 	public boolean isMayor(int anyoActual) {
 		return (anyoActual - this.usuarioActual.getAnyoNacim()) >= DescuentoMayores.EDAD;
 	}
@@ -82,7 +83,18 @@ public class AppMusic {
 	public void crearListaCanciones(String nombrePlaylist) {
 		listaActual = new ListaCanciones(nombrePlaylist);
 	}
-	
+
+	public void seleccionarDescuento(LocalDate now) {
+		if ((now.getMonthValue() == 1 && now.getDayOfMonth() <= 6)
+				|| (now.getMonthValue() == 12 && now.getDayOfMonth() >= 25)) {
+			this.usuarioActual.setDescuento(Descuento.NAVIDAD);
+		} else if (this.usuarioActual.isEstudianteUMU()) {
+			this.usuarioActual.setDescuento(Descuento.ESTUDIANTE);
+		} else if (isMayor(now.getYear())) {
+			this.usuarioActual.setDescuento(Descuento.MAYORES);
+		}
+	}
+
 	public double calcularDescuento() {
 		return usuarioActual.getDescuento().calcDescuento(this.precioPremium);
 	}

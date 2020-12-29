@@ -118,16 +118,7 @@ public class VentanaPrincipal {
 		btnPremium.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Comprobar que descuentos son aplicables
-				Usuario usuActual = AppMusic.getInstancia().getUsuarioActual();
-
-				if ((LocalDate.now().getMonthValue() == 1 && LocalDate.now().getDayOfMonth() <= 6)
-						|| (LocalDate.now().getMonthValue() == 12 && LocalDate.now().getDayOfMonth() >= 25)) {
-					usuActual.setDescuento(Descuento.NAVIDAD);
-				} else if (usuActual.isEstudianteUMU()) {
-					usuActual.setDescuento(Descuento.ESTUDIANTE);
-				} else if (AppMusic.getInstancia().isMayor(LocalDate.now().getYear())) {
-					usuActual.setDescuento(Descuento.MAYORES);
-				}
+				AppMusic.getInstancia().seleccionarDescuento(LocalDate.now());
 
 				VentanaPagoPremium ventanaPagoPremium = new VentanaPagoPremium(frame, true);
 				ventanaPagoPremium.mostrarVentana();

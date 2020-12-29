@@ -2,7 +2,6 @@ package umu.tds.vista;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -34,7 +33,7 @@ import java.awt.Toolkit;
 
 public class VentanaRegistro {
 
-	private JFrame frmAppmusic;
+	private JFrame frame;
 	private JPanel contentPane;
 	private JTextField textNombre;
 	private JTextField textApellidos;
@@ -53,8 +52,8 @@ public class VentanaRegistro {
 	private JLabel lblNombre;
 
 	public void mostrarVentana() {
-		frmAppmusic.setLocationRelativeTo(null);
-		frmAppmusic.setVisible(true);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
 	}
 
 	/**
@@ -64,18 +63,18 @@ public class VentanaRegistro {
 	 */
 	public VentanaRegistro() {
 
-		frmAppmusic = new JFrame();
-		frmAppmusic.setTitle(Constantes.titulo);
-		frmAppmusic.setIconImage(
+		frame = new JFrame();
+		frame.setTitle(Constantes.titulo);
+		frame.setIconImage(
 				Toolkit.getDefaultToolkit().getImage(VentanaRegistro.class.getResource(Constantes.icono)));
 
-		frmAppmusic.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frmAppmusic.setBounds(100, 100, Constantes.x_size, Constantes.y_size);
-		frmAppmusic.setResizable(false);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setBounds(100, 100, Constantes.x_size, Constantes.y_size);
+		frame.setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
-		frmAppmusic.setContentPane(contentPane);
+		frame.setContentPane(contentPane);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
@@ -217,7 +216,7 @@ public class VentanaRegistro {
 
 				VentanaLogin login = new VentanaLogin();
 				login.mostrarVentana();
-				frmAppmusic.dispose();
+				frame.dispose();
 			}
 		});
 		GridBagConstraints gbc_btnCancelar = new GridBagConstraints();
@@ -256,7 +255,7 @@ public class VentanaRegistro {
 						JOptionPane.showMessageDialog(btnRegistrar, "Registro del usuario realizado", "Registro correcto", JOptionPane.INFORMATION_MESSAGE);
 						VentanaLogin login = new VentanaLogin();
 						login.mostrarVentana();
-						frmAppmusic.dispose();
+						frame.dispose();
 					}
 				}
 			}
