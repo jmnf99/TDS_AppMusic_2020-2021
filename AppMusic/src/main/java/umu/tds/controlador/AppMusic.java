@@ -24,7 +24,9 @@ public class AppMusic {
 	private AppMusic() {
 		inicializarAdaptadores();
 		inicializarCatalogos();
-		cargadorCancionesDisco.obtenerEstilosMusicales();
+		cargadorCancionesDisco.cargarEstilosMusicales();
+//		cargadorCancionesDisco.comprobarEstilosMusicales();
+		cargadorCancionesDisco.cargarCanciones();
 	}
 
 	public static AppMusic getInstancia() {

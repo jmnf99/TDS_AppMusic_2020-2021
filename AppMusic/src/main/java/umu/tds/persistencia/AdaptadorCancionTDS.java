@@ -89,9 +89,9 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO {
 		AdaptadorEstiloMusicalTDS adaptadorEstiloMusicalTDS = AdaptadorEstiloMusicalTDS.getUnicaInstancia();
 
 		interpretes = obtenerInterpretesDesdeCodigos(servPersistencia.recuperarPropiedadEntidad(eCancion, "interpretes")); 
-		for (Interprete i : interpretes) {
-			interpretes.add(i);
-		}	
+//		for (Interprete i : interpretes) {
+//			interpretes.add(i);
+//		}	
 		
 		estilo = adaptadorEstiloMusicalTDS.recuperarEstiloMusical(
 				Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(eCancion, "estilo")));

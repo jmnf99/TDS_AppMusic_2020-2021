@@ -12,7 +12,7 @@ import umu.tds.persistencia.IAdaptadorCancionDAO;
 public class CatalogoCanciones {
 
 	private Map<Integer, Cancion> canciones;
-	private static CatalogoCanciones unicaInstancia = new CatalogoCanciones();
+	private static CatalogoCanciones unicaInstancia = null;
 	
 	private FactoriaDAO dao;
 	private IAdaptadorCancionDAO adaptadorCanciones;
@@ -31,6 +31,8 @@ public class CatalogoCanciones {
 	}
 	
 	public static CatalogoCanciones getUnicaInstancia() {
+		if (unicaInstancia == null)
+				return new CatalogoCanciones();
 		return unicaInstancia;
 	}
 	
@@ -41,6 +43,17 @@ public class CatalogoCanciones {
 		return lista;
 	}
 	
+	public boolean existeCancion(int codigo) {
+		return canciones.containsKey(codigo);
+	}
+	
+	public boolean existeCancion(String ruta) {
+		for (Cancion c : canciones.values()) {
+			if (c.getRutaFichero().equalsIgnoreCase(ruta))
+				return true;
+		}
+		return false;
+	}
 	public Cancion getCancion(int codigo) {
 		return canciones.get(codigo);
 	}

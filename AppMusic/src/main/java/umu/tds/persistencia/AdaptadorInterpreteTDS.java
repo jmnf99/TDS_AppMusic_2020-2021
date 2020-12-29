@@ -27,7 +27,7 @@ public class AdaptadorInterpreteTDS implements IAdaptadorInterpreteDAO {
 	}
 
 	// cuando se registra un interprete se le asigna un identificador único
-	public void registrarInterprete(Interprete interprete) {
+	public Interprete registrarInterprete(Interprete interprete) {
 		Entidad eInterprete;
 		boolean existe = true;
 		// Si la entidad está registrada no la registra de nuevo
@@ -37,7 +37,7 @@ public class AdaptadorInterpreteTDS implements IAdaptadorInterpreteDAO {
 			existe = false;
 		}
 		if (existe)
-			return;
+			return interprete;
 
 		// el interprete ya existe
 		// Se crea la entidad eInterprete
@@ -50,6 +50,8 @@ public class AdaptadorInterpreteTDS implements IAdaptadorInterpreteDAO {
 		// Se registra la entidad eInterprete asignandole un identificador unico
 		eInterprete = servPersistencia.registrarEntidad(eInterprete);
 		interprete.setCodigo(eInterprete.getId());
+		
+		return interprete;
 	}
 
 	public Interprete recuperarInterprete(int codigo) {
