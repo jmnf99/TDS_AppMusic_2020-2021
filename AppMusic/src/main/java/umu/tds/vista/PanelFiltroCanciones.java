@@ -5,13 +5,23 @@ import javax.swing.JScrollPane;
 
 import java.awt.GridBagLayout;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import umu.tds.modelo.Cancion;
+import umu.tds.modelo.CatalogoCanciones;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 
 public class PanelFiltroCanciones extends JPanel {
+	
+	int selectedRow = -1;
 	
 	public void mostrarPanel() {
 		setVisible(true);
@@ -33,7 +43,9 @@ public class PanelFiltroCanciones extends JPanel {
 		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 0.0 };
 		setLayout(gridBagLayout);
 
-		JTable table = new JTable(new TablaModelo());
+		TablaModelo tabla = new TablaModelo();
+		
+		final JTable table = new JTable(tabla);
 		JScrollPane scrollPane = new JScrollPane(table);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
@@ -42,7 +54,25 @@ public class PanelFiltroCanciones extends JPanel {
 		gbc_scrollPane.gridx = 1;
 		gbc_scrollPane.gridy = 1;
 		add(scrollPane, gbc_scrollPane);
+		
+		List<Cancion> lista = CatalogoCanciones.getUnicaInstancia().getCanciones();
+		
+		for (Cancion cancion : lista) {
+			tabla.añadirFila(cancion);
+		}
+		
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+		ListSelectionModel selectionModel = table.getSelectionModel();
+
+		selectionModel.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				System.out.println(table.getSelectedRow());
+				
+			}
+		});
+		
 		JButton btnPlay = new JButton("");
 		btnPlay.setIcon(new ImageIcon(PanelFiltroCanciones.class
 				.getResource("/umu/tds/imagenes/music-play-pause-control-go-arrow_80458.png")));
