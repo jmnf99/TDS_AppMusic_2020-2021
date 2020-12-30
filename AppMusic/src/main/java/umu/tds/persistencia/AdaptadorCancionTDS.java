@@ -43,7 +43,7 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO {
 		}
 		if (existe)
 			return cancion;
-
+		
 		// Se registran sus objetos agregados
 		AdaptadorInterpreteTDS adaptadorInterprete = AdaptadorInterpreteTDS.getUnicaInstancia();
 		for (Interprete i : cancion.getInterpretes()) {

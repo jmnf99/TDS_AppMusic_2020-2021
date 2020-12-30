@@ -51,5 +51,9 @@ public class TablaModelo extends AbstractTableModel {
 		fireTableDataChanged();
 	}
 	
+	public Cancion getCancionFila(int row) {
+		return data.get(row);
+	}
+	
 	
 }

@@ -49,7 +49,7 @@ public class VentanaLogin {
 			}
 		});
 	}
-	
+
 	public void mostrarVentana() {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
@@ -68,7 +68,7 @@ public class VentanaLogin {
 	private void initialize() {
 		try {
 			UIManager.setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
-			//UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
+			// UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 				| UnsupportedLookAndFeelException e1) {
 			e1.printStackTrace();
@@ -77,7 +77,7 @@ public class VentanaLogin {
 		frame = new JFrame();
 		frame.setTitle(Constantes.titulo);
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaLogin.class.getResource(Constantes.icono)));
-		frame.setBounds(100, 100,Constantes.x_size,Constantes.y_size);
+		frame.setBounds(100, 100, Constantes.x_size, Constantes.y_size);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -100,7 +100,7 @@ public class VentanaLogin {
 		gbc_lblTitulo.gridx = 2;
 		gbc_lblTitulo.gridy = 1;
 		panelFormulario.add(lblTitulo, gbc_lblTitulo);
-		
+
 		JLabel lblAppMusicLogo = new JLabel("");
 		lblAppMusicLogo.setIcon(new ImageIcon(VentanaLogin.class.getResource("/umu/tds/imagenes/AppMusic(1).png")));
 		GridBagConstraints gbc_lblAppMusicLogo = new GridBagConstraints();
@@ -108,14 +108,14 @@ public class VentanaLogin {
 		gbc_lblAppMusicLogo.gridx = 3;
 		gbc_lblAppMusicLogo.gridy = 3;
 		panelFormulario.add(lblAppMusicLogo, gbc_lblAppMusicLogo);
-		
-				JLabel lblUsuario = new JLabel("Usuario");
-				GridBagConstraints gbc_lblUsuario = new GridBagConstraints();
-				gbc_lblUsuario.anchor = GridBagConstraints.EAST;
-				gbc_lblUsuario.insets = new Insets(0, 0, 5, 5);
-				gbc_lblUsuario.gridx = 1;
-				gbc_lblUsuario.gridy = 5;
-				panelFormulario.add(lblUsuario, gbc_lblUsuario);
+
+		JLabel lblUsuario = new JLabel("Usuario");
+		GridBagConstraints gbc_lblUsuario = new GridBagConstraints();
+		gbc_lblUsuario.anchor = GridBagConstraints.EAST;
+		gbc_lblUsuario.insets = new Insets(0, 0, 5, 5);
+		gbc_lblUsuario.gridx = 1;
+		gbc_lblUsuario.gridy = 5;
+		panelFormulario.add(lblUsuario, gbc_lblUsuario);
 
 		textUsuario = new JTextField();
 		GridBagConstraints gbc_textUsuario = new GridBagConstraints();
@@ -126,14 +126,14 @@ public class VentanaLogin {
 		gbc_textUsuario.gridy = 5;
 		panelFormulario.add(textUsuario, gbc_textUsuario);
 		textUsuario.setColumns(10);
-		
-				JLabel lblClave = new JLabel("Clave");
-				GridBagConstraints gbc_lblClave = new GridBagConstraints();
-				gbc_lblClave.anchor = GridBagConstraints.EAST;
-				gbc_lblClave.insets = new Insets(0, 0, 5, 5);
-				gbc_lblClave.gridx = 1;
-				gbc_lblClave.gridy = 6;
-				panelFormulario.add(lblClave, gbc_lblClave);
+
+		JLabel lblClave = new JLabel("Clave");
+		GridBagConstraints gbc_lblClave = new GridBagConstraints();
+		gbc_lblClave.anchor = GridBagConstraints.EAST;
+		gbc_lblClave.insets = new Insets(0, 0, 5, 5);
+		gbc_lblClave.gridx = 1;
+		gbc_lblClave.gridy = 6;
+		panelFormulario.add(lblClave, gbc_lblClave);
 
 		textPassword = new JPasswordField();
 		textPassword.setColumns(10);
@@ -154,38 +154,38 @@ public class VentanaLogin {
 				frame.dispose();
 			}
 		});
-		
-				final JButton btnLogin = new JButton("Login");
-				btnLogin.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						// leer datos de la pantalla
-						String usuario = textUsuario.getText();
-						String clave = new String(textPassword.getPassword()); // devuelve un array de char, por eso el new
 
-						// con los datos, invocar a los metodos del controlador: invocar logica de
-						// negocio
-						boolean logueado = AppMusic.getInstancia().login(usuario, clave);
+		final JButton btnLogin = new JButton("Login");
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// leer datos de la pantalla
+				String usuario = textUsuario.getText();
+				String clave = new String(textPassword.getPassword()); // devuelve un array de char, por eso el new
 
-						// si el controlador retorna datos, presentarlos en pantalla
-						if (!logueado) {
-							JOptionPane.showMessageDialog(btnLogin, "Usuario '" + usuario + "' o contraseña incorrectos",
-									"Fallo login", JOptionPane.ERROR_MESSAGE, null);
+				// con los datos, invocar a los metodos del controlador: invocar logica de
+				// negocio
+				boolean logueado = AppMusic.getInstancia().login(usuario, clave);
 
-						} else {
-							// AppMusic.getInstancia().setUsuarioActual(usuarioActual);
-							// DONE crear ventanaMain y hacerla visible (ocultar la de login)
-							VentanaPrincipal vPrincipal = new VentanaPrincipal();
-							vPrincipal.mostrarVentana();
-							frame.dispose();
-						}
-					}
-				});
-				GridBagConstraints gbc_btnLogin = new GridBagConstraints();
-				gbc_btnLogin.anchor = GridBagConstraints.WEST;
-				gbc_btnLogin.insets = new Insets(0, 0, 5, 5);
-				gbc_btnLogin.gridx = 2;
-				gbc_btnLogin.gridy = 7;
-				panelFormulario.add(btnLogin, gbc_btnLogin);
+				// si el controlador retorna datos, presentarlos en pantalla
+				if (!logueado) {
+					JOptionPane.showMessageDialog(btnLogin, "Usuario '" + usuario + "' o contraseña incorrectos",
+							"Fallo login", JOptionPane.ERROR_MESSAGE, null);
+
+				} else {
+					// AppMusic.getInstancia().setUsuarioActual(usuarioActual);
+					// DONE crear ventanaMain y hacerla visible (ocultar la de login)
+					VentanaPrincipal vPrincipal = new VentanaPrincipal();
+					vPrincipal.mostrarVentana();
+					frame.dispose();
+				}
+			}
+		});
+		GridBagConstraints gbc_btnLogin = new GridBagConstraints();
+		gbc_btnLogin.anchor = GridBagConstraints.WEST;
+		gbc_btnLogin.insets = new Insets(0, 0, 5, 5);
+		gbc_btnLogin.gridx = 2;
+		gbc_btnLogin.gridy = 7;
+		panelFormulario.add(btnLogin, gbc_btnLogin);
 		GridBagConstraints gbc_btnRegistro = new GridBagConstraints();
 		gbc_btnRegistro.anchor = GridBagConstraints.EAST;
 		gbc_btnRegistro.insets = new Insets(0, 0, 5, 5);

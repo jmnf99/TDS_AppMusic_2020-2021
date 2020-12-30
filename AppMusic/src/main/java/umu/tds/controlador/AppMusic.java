@@ -2,10 +2,13 @@ package umu.tds.controlador;
 
 import java.time.LocalDate;
 
+import umu.tds.modelo.Cancion;
 import umu.tds.modelo.CargadorCancionesDisco;
+import umu.tds.modelo.CatalogoEstilos;
 import umu.tds.modelo.CatalogoUsuarios;
 import umu.tds.modelo.DescuentoMayores;
 import umu.tds.modelo.ListaCanciones;
+import umu.tds.modelo.Reproductor;
 import umu.tds.modelo.Usuario;
 import umu.tds.persistencia.DAOException;
 import umu.tds.persistencia.FactoriaDAO;
@@ -18,7 +21,9 @@ public class AppMusic {
 	private static AppMusic unicaInstancia = null;
 	private IAdaptadorUsuarioDAO adaptadorUsuario;
 	private CatalogoUsuarios catalogoUsuarios;
+	private CatalogoEstilos catalogoEstilos;
 	private CargadorCancionesDisco cargadorCancionesDisco = CargadorCancionesDisco.getInstancia();
+	Reproductor reproductor = Reproductor.getUnicaInstancia();
 
 	private AppMusic() {
 		inicializarAdaptadores();
@@ -88,6 +93,18 @@ public class AppMusic {
 	public double calcularDescuento() {
 		return usuarioActual.getDescuento().calcDescuento(this.precioPremium);
 	}
+	
+	public void reproducirCancion(Cancion c) {
+		reproductor.reproducirCancion(c.getRutaFichero());
+	}
+	
+	public void pausarCancion() {
+		reproductor.pausarCancion();
+	}
+	
+	public String[] getNombresEstilos() {
+		return catalogoEstilos.getNombreEstilos();
+	}
 
 	private void inicializarAdaptadores() {
 		FactoriaDAO factoria = null;
@@ -100,6 +117,7 @@ public class AppMusic {
 	}
 
 	private void inicializarCatalogos() {
+		catalogoEstilos = CatalogoEstilos.getUnicaInstancia();
 		catalogoUsuarios = CatalogoUsuarios.getUnicaInstancia();
 	}
 }

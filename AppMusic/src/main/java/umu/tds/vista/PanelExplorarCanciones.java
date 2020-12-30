@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JTextField;
 
+import umu.tds.controlador.AppMusic;
 import umu.tds.modelo.CatalogoEstilos;
 import umu.tds.modelo.EstiloMusical;
 
@@ -20,17 +21,18 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
 public class PanelExplorarCanciones extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField textInterprete;
 	private JTextField textTitulo;
-	private CatalogoEstilos catalogoEstilos;
 
 	/**
 	 * Create the panel.
 	 * 
 	 */
 	public PanelExplorarCanciones(final PanelFiltroCanciones filtro) {
-
-		catalogoEstilos = CatalogoEstilos.getUnicaInstancia();
 
 		setLayout(new BorderLayout(0, 0));
 
@@ -60,7 +62,7 @@ public class PanelExplorarCanciones extends JPanel {
 		panelNorte.add(textTitulo);
 		textTitulo.setColumns(10);
 
-		String[] arrayEstilos = catalogoEstilos.getNombreEstilos();
+		String[] arrayEstilos = AppMusic.getInstancia().getNombresEstilos();
 
 		JComboBox comboBoxEstilo = new JComboBox();
 		comboBoxEstilo.setToolTipText("Estilo");
