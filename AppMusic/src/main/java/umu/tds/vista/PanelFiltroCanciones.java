@@ -64,8 +64,7 @@ public class PanelFiltroCanciones extends JPanel {
 		gbc_scrollPane.gridy = 1;
 		add(scrollPane, gbc_scrollPane);
 
-		
-		//ELIMINAR ESTO DE AQUI CUANDO SE CREEN LA BUSQUEDA
+		// ELIMINAR ESTO DE AQUI CUANDO SE CREEN LA BUSQUEDA
 		List<Cancion> lista = CatalogoCanciones.getUnicaInstancia().getCanciones();
 
 		for (Cancion cancion : lista) {
@@ -84,11 +83,11 @@ public class PanelFiltroCanciones extends JPanel {
 		});
 
 		JButton btnPlay = new JButton("");
-
 		btnPlay.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controlador.reproducirCancion(tabla.getCancionFila(selectedRow));
+				if (selectedRow != -1)
+					controlador.reproducirCancion(tabla.getCancionFila(selectedRow));
 			}
 		});
 
@@ -117,7 +116,7 @@ public class PanelFiltroCanciones extends JPanel {
 		gbc_btnPause.gridx = 3;
 		gbc_btnPause.gridy = 3;
 		add(btnPause, gbc_btnPause);
-		
+
 		btnPause.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
