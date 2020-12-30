@@ -9,7 +9,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.util.List;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;

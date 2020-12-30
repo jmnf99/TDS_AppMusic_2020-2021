@@ -9,5 +9,4 @@ public class DescuentoMayores implements Descuento {
 	public double calcDescuento(double precioBase) {
 		return precioBase * 0.5;
 	}
-
 }

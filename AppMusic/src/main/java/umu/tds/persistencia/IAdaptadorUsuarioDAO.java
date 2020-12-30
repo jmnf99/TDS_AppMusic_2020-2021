@@ -8,4 +8,5 @@ public interface IAdaptadorUsuarioDAO {
 	public Usuario registrarUsuario(Usuario usuario);
 	public Usuario recuperarUsuario(int codigo);
 	public List<Usuario> recuperarTodosUsuarios();
+	public void modificarUsuario(Usuario usuario);
 }

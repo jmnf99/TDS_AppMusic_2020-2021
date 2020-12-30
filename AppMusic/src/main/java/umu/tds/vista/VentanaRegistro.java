@@ -2,7 +2,6 @@ package umu.tds.vista;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -26,6 +25,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.MouseAdapter;
@@ -34,7 +35,7 @@ import java.awt.Toolkit;
 
 public class VentanaRegistro {
 
-	private JFrame frmAppmusic;
+	private JFrame frame;
 	private JPanel contentPane;
 	private JTextField textNombre;
 	private JTextField textApellidos;
@@ -53,8 +54,8 @@ public class VentanaRegistro {
 	private JLabel lblNombre;
 
 	public void mostrarVentana() {
-		frmAppmusic.setLocationRelativeTo(null);
-		frmAppmusic.setVisible(true);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
 	}
 
 	/**
@@ -64,18 +65,17 @@ public class VentanaRegistro {
 	 */
 	public VentanaRegistro() {
 
-		frmAppmusic = new JFrame();
-		frmAppmusic.setTitle(Constantes.titulo);
-		frmAppmusic.setIconImage(
-				Toolkit.getDefaultToolkit().getImage(VentanaRegistro.class.getResource(Constantes.icono)));
+		frame = new JFrame();
+		frame.setTitle(Constantes.titulo);
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaRegistro.class.getResource(Constantes.icono)));
 
-		frmAppmusic.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frmAppmusic.setBounds(100, 100, Constantes.x_size, Constantes.y_size);
-		frmAppmusic.setResizable(false);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setBounds(100, 100, Constantes.x_size, Constantes.y_size);
+		frame.setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
-		frmAppmusic.setContentPane(contentPane);
+		frame.setContentPane(contentPane);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
@@ -217,7 +217,7 @@ public class VentanaRegistro {
 
 				VentanaLogin login = new VentanaLogin();
 				login.mostrarVentana();
-				frmAppmusic.dispose();
+				frame.dispose();
 			}
 		});
 		GridBagConstraints gbc_btnCancelar = new GridBagConstraints();
@@ -253,10 +253,11 @@ public class VentanaRegistro {
 					} else {
 						AppMusic.getInstancia().setUsuarioActual(usu);
 						// Mensaje de registro satisfactorio
-						JOptionPane.showMessageDialog(btnRegistrar, "Registro del usuario realizado", "Registro correcto", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(btnRegistrar, "Registro del usuario realizado",
+								"Registro correcto", JOptionPane.INFORMATION_MESSAGE);
 						VentanaLogin login = new VentanaLogin();
 						login.mostrarVentana();
-						frmAppmusic.dispose();
+						frame.dispose();
 					}
 				}
 			}
@@ -282,7 +283,7 @@ public class VentanaRegistro {
 			textApellidos.setBorder(BorderFactory.createLineBorder(Color.RED));
 			ok = false;
 		}
-		if (textMail.getText().trim().isEmpty()) {
+		if (textMail.getText().trim().isEmpty() || !isEmailValido(textMail.getText().trim())) {
 			lblMail.setForeground(Color.RED);
 			textMail.setBorder(BorderFactory.createLineBorder(Color.RED));
 			ok = false;
@@ -344,6 +345,18 @@ public class VentanaRegistro {
 		lblClave.setForeground(Color.BLACK);
 		lblRepetirClave.setForeground(Color.BLACK);
 		lblFecha.setForeground(Color.BLACK);
+	}
+
+	Pattern patronEmail = Pattern
+			.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+	Matcher matcher;
+
+	private boolean isEmailValido(String email) {
+		matcher = patronEmail.matcher(email);
+		if (matcher.find())
+			return true;
+		else
+			return false;
 	}
 
 }
