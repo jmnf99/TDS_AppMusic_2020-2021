@@ -64,8 +64,7 @@ public class PanelFiltroCanciones extends JPanel {
 		gbc_scrollPane.gridy = 1;
 		add(scrollPane, gbc_scrollPane);
 
-		
-		//ELIMINAR ESTO DE AQUI CUANDO SE CREEN LA BUSQUEDA
+		// ELIMINAR ESTO DE AQUI CUANDO SE CREEN LA BUSQUEDA
 		List<Cancion> lista = CatalogoCanciones.getUnicaInstancia().getCanciones();
 
 		for (Cancion cancion : lista) {
@@ -101,6 +100,13 @@ public class PanelFiltroCanciones extends JPanel {
 		add(btnPlay, gbc_btnPlay);
 
 		JButton btnRetroceder = new JButton("");
+		btnRetroceder.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (selectedRow > 0)
+					controlador.reproducirCancion(tabla.getCancionFila(--selectedRow));
+			}
+		});
 		btnRetroceder.setIcon(new ImageIcon(
 				PanelFiltroCanciones.class.getResource("/umu/tds/imagenes/back-backwards-repeat-arrows-arrow.png")));
 		GridBagConstraints gbc_btnRetroceder = new GridBagConstraints();
@@ -117,7 +123,7 @@ public class PanelFiltroCanciones extends JPanel {
 		gbc_btnPause.gridx = 3;
 		gbc_btnPause.gridy = 3;
 		add(btnPause, gbc_btnPause);
-		
+
 		btnPause.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -126,6 +132,15 @@ public class PanelFiltroCanciones extends JPanel {
 		});
 
 		JButton btnAvanzar = new JButton("");
+		btnAvanzar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (selectedRow < tabla.getRowCount() - 1) {
+					controlador.reproducirCancion(tabla.getCancionFila(++selectedRow));
+				}
+
+			}
+		});
 		btnAvanzar.setIcon(new ImageIcon(
 				PanelFiltroCanciones.class.getResource("/umu/tds/imagenes/forward-arrows-arrow-front-go.png")));
 		GridBagConstraints gbc_btnAvanzar = new GridBagConstraints();
