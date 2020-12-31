@@ -1,6 +1,7 @@
 package umu.tds.controlador;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import umu.tds.modelo.Cancion;
 import umu.tds.modelo.CargadorCancionesDisco;
@@ -13,6 +14,7 @@ import umu.tds.modelo.Usuario;
 import umu.tds.persistencia.AdaptadorUsuarioTDS;
 import umu.tds.persistencia.DAOException;
 import umu.tds.persistencia.FactoriaDAO;
+import umu.tds.persistencia.IAdaptadorListaCancionesDAO;
 import umu.tds.persistencia.IAdaptadorUsuarioDAO;
 
 public class AppMusic {
@@ -23,6 +25,7 @@ public class AppMusic {
 	private IAdaptadorUsuarioDAO adaptadorUsuario;
 	private CatalogoUsuarios catalogoUsuarios;
 	private CatalogoEstilos catalogoEstilos;
+	private IAdaptadorListaCancionesDAO adaptadorListaCanciones;
 	private CargadorCancionesDisco cargadorCancionesDisco = CargadorCancionesDisco.getInstancia();
 	Reproductor reproductor = Reproductor.getUnicaInstancia();
 
@@ -86,6 +89,14 @@ public class AppMusic {
 	public void crearListaCanciones(String nombrePlaylist) {
 		listaActual = new ListaCanciones(nombrePlaylist);
 	}
+	
+	public void confirmarListaCanciones(List<Cancion> lista) {
+		for (Cancion cancion : lista) {
+			listaActual.addCancion(cancion);			
+		}
+		usuarioActual.addListaCanciones(listaActual);
+		adaptadorListaCanciones.registrarListaCanciones(listaActual);
+	}
 
 	public void seleccionarDescuento(LocalDate now) {
 		if ((now.getMonthValue() == 1 && now.getDayOfMonth() <= 6)
@@ -127,6 +138,7 @@ public class AppMusic {
 			e.printStackTrace();
 		}
 		adaptadorUsuario = factoria.getUsuarioDAO();
+		adaptadorListaCanciones = factoria.getListaCancionesDAO();
 	}
 
 	private void inicializarCatalogos() {

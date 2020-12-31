@@ -38,6 +38,7 @@ public class VentanaPrincipal {
 	private PanelCreacionPlaylist panelCreacionPlaylist;
 	private PanelFiltroCanciones panelMisListasDetalladas;
 	private PanelFiltroCanciones panelRecientes;
+	private String[] listas;
 
 	/**
 	 * Launch the application.
@@ -90,9 +91,6 @@ public class VentanaPrincipal {
 		gbl_panelFuncionalidad.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		panelFuncionalidad.setLayout(gbl_panelFuncionalidad);
 
-		// Obtenemos la lista de nombres de playlists que tiene el usuario actual
-		final String[] listas = AppMusic.getInstancia().getUsuarioActual().getNombreListas();
-
 		final JButton btnTop10 = new JButton("Éxitos AppMusic");
 		if (AppMusic.getInstancia().getUsuarioActual().isPremium()) {
 			btnTop10.setVisible(true);
@@ -107,6 +105,8 @@ public class VentanaPrincipal {
 		gbc_btnTop10.gridy = 4;
 		panelFuncionalidad.add(btnTop10, gbc_btnTop10);
 
+		
+		listas = AppMusic.getInstancia().getUsuarioActual().getNombreListas();
 		final JList<ListaCanciones> listMisListas = new JList<ListaCanciones>();
 		listMisListas.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		listMisListas.setModel(new AbstractListModel() {
@@ -224,7 +224,6 @@ public class VentanaPrincipal {
 				panelPrincipal.repaint();
 				frame.validate();
 				// Anadir al panel funcionalidad la lista de playlists
-
 			}
 		});
 		btnMisPlaylists.setHorizontalAlignment(SwingConstants.LEFT);

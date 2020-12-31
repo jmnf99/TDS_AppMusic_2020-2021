@@ -65,11 +65,11 @@ public class PanelFiltroCanciones extends JPanel {
 		add(scrollPane, gbc_scrollPane);
 
 		// ELIMINAR ESTO DE AQUI CUANDO SE CREEN LA BUSQUEDA
-		List<Cancion> lista = CatalogoCanciones.getUnicaInstancia().getCanciones();
-
-		for (Cancion cancion : lista) {
-			tabla.añadirFila(cancion);
-		}
+//		List<Cancion> lista = CatalogoCanciones.getUnicaInstancia().getCanciones();
+//
+//		for (Cancion cancion : lista) {
+//			tabla.añadirFila(cancion);
+//		}
 
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
