@@ -83,11 +83,11 @@ public class PanelFiltroCanciones extends JPanel {
 		});
 
 		JButton btnPlay = new JButton("");
-
 		btnPlay.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controlador.reproducirCancion(tabla.getCancionFila(selectedRow));
+				if (selectedRow != -1)
+					controlador.reproducirCancion(tabla.getCancionFila(selectedRow));
 			}
 		});
 
