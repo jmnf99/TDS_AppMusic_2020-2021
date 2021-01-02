@@ -15,10 +15,10 @@ public class TablaModelo extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String[] columnNames = { "Título", "Intérprete" };
-	List<Cancion> data = new LinkedList<>();
+	List<Cancion> data;
 	
 	public TablaModelo() {
-		data.add(CatalogoCanciones.getUnicaInstancia().getCancion(509));
+		data = new LinkedList<>();
 	}
 	
 	public String getColumnName(int col) {
@@ -51,9 +51,22 @@ public class TablaModelo extends AbstractTableModel {
 		fireTableDataChanged();
 	}
 	
+	public void eliminarFila(int c) {
+		data.remove(c);
+		fireTableDataChanged();
+	}
+	
+	public void limpiarDatos() {
+		data.clear();
+		fireTableDataChanged();
+	}
+	
 	public Cancion getCancionFila(int row) {
 		return data.get(row);
 	}
 	
+	public List<Cancion> getCanciones() {
+		return new LinkedList<>(data);
+	}
 	
 }

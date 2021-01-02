@@ -33,12 +33,25 @@ public class PanelFiltroCanciones extends JPanel {
 
 	AppMusic controlador = AppMusic.getInstancia();
 
+	private TablaModelo tabla;
+
 	public void mostrarPanel() {
 		setVisible(true);
 	}
 
 	public void esconderPanel() {
 		setVisible(false);
+	}
+	
+	public void añadirCancion(Cancion c) {
+		tabla.añadirFila(c);
+	}
+	
+	public void actualizarTabla() {
+		tabla.limpiarDatos();
+		for (Cancion c : AppMusic.getInstancia().getCancionesRecientes()) {
+			tabla.añadirFila(c);
+		}
 	}
 
 	/**
@@ -52,7 +65,7 @@ public class PanelFiltroCanciones extends JPanel {
 		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 0.0 };
 		setLayout(gridBagLayout);
 
-		TablaModelo tabla = new TablaModelo();
+		tabla = new TablaModelo();
 
 		final JTable table = new JTable(tabla);
 		JScrollPane scrollPane = new JScrollPane(table);
@@ -65,11 +78,11 @@ public class PanelFiltroCanciones extends JPanel {
 		add(scrollPane, gbc_scrollPane);
 
 		// ELIMINAR ESTO DE AQUI CUANDO SE CREEN LA BUSQUEDA
-		List<Cancion> lista = CatalogoCanciones.getUnicaInstancia().getCanciones();
-
-		for (Cancion cancion : lista) {
-			tabla.añadirFila(cancion);
-		}
+//		List<Cancion> lista = CatalogoCanciones.getUnicaInstancia().getCanciones();
+//
+//		for (Cancion cancion : lista) {
+//			tabla.añadirFila(cancion);
+//		}
 
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -86,8 +99,9 @@ public class PanelFiltroCanciones extends JPanel {
 		btnPlay.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (selectedRow != -1)
+				if (selectedRow != -1) {
 					controlador.reproducirCancion(tabla.getCancionFila(selectedRow));
+				}
 			}
 		});
 
@@ -100,6 +114,13 @@ public class PanelFiltroCanciones extends JPanel {
 		add(btnPlay, gbc_btnPlay);
 
 		JButton btnRetroceder = new JButton("");
+		btnRetroceder.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (selectedRow > 0)
+					controlador.reproducirCancion(tabla.getCancionFila(--selectedRow));
+			}
+		});
 		btnRetroceder.setIcon(new ImageIcon(
 				PanelFiltroCanciones.class.getResource("/umu/tds/imagenes/back-backwards-repeat-arrows-arrow.png")));
 		GridBagConstraints gbc_btnRetroceder = new GridBagConstraints();
@@ -125,6 +146,15 @@ public class PanelFiltroCanciones extends JPanel {
 		});
 
 		JButton btnAvanzar = new JButton("");
+		btnAvanzar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (selectedRow < tabla.getRowCount() - 1) {
+					controlador.reproducirCancion(tabla.getCancionFila(++selectedRow));
+				}
+
+			}
+		});
 		btnAvanzar.setIcon(new ImageIcon(
 				PanelFiltroCanciones.class.getResource("/umu/tds/imagenes/forward-arrows-arrow-front-go.png")));
 		GridBagConstraints gbc_btnAvanzar = new GridBagConstraints();

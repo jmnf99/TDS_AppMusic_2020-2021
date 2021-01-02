@@ -1,6 +1,9 @@
 package umu.tds.controlador;
 
 import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 import umu.tds.modelo.Cancion;
 import umu.tds.modelo.CargadorCancionesDisco;
@@ -13,6 +16,7 @@ import umu.tds.modelo.Usuario;
 import umu.tds.persistencia.AdaptadorUsuarioTDS;
 import umu.tds.persistencia.DAOException;
 import umu.tds.persistencia.FactoriaDAO;
+import umu.tds.persistencia.IAdaptadorListaCancionesDAO;
 import umu.tds.persistencia.IAdaptadorUsuarioDAO;
 
 public class AppMusic {
@@ -23,8 +27,11 @@ public class AppMusic {
 	private IAdaptadorUsuarioDAO adaptadorUsuario;
 	private CatalogoUsuarios catalogoUsuarios;
 	private CatalogoEstilos catalogoEstilos;
+	private IAdaptadorListaCancionesDAO adaptadorListaCanciones;
 	private CargadorCancionesDisco cargadorCancionesDisco = CargadorCancionesDisco.getInstancia();
-	Reproductor reproductor = Reproductor.getUnicaInstancia();
+	private Queue<Cancion> recientes;
+	private Reproductor reproductor = Reproductor.getUnicaInstancia();
+	
 
 	private AppMusic() {
 		inicializarAdaptadores();
@@ -32,6 +39,7 @@ public class AppMusic {
 		cargadorCancionesDisco.cargarEstilosMusicales();
 //		cargadorCancionesDisco.comprobarEstilosMusicales();
 		cargadorCancionesDisco.cargarCanciones();
+		recientes = new LinkedList<>();
 	}
 
 	public static AppMusic getInstancia() {
@@ -86,6 +94,14 @@ public class AppMusic {
 	public void crearListaCanciones(String nombrePlaylist) {
 		listaActual = new ListaCanciones(nombrePlaylist);
 	}
+	
+	public void confirmarListaCanciones(List<Cancion> lista) {
+		for (Cancion cancion : lista) {
+			listaActual.addCancion(cancion);			
+		}
+		usuarioActual.addListaCanciones(listaActual);
+		adaptadorListaCanciones.registrarListaCanciones(listaActual);
+	}
 
 	public void seleccionarDescuento(LocalDate now) {
 		if ((now.getMonthValue() == 1 && now.getDayOfMonth() <= 6)
@@ -104,6 +120,14 @@ public class AppMusic {
 	
 	public void reproducirCancion(Cancion c) {
 		reproductor.reproducirCancion(c.getRutaFichero());
+		if(recientes.size()==10) {
+			recientes.poll();
+		}
+		recientes.add(c);
+	}
+	
+	public List<Cancion> getCancionesRecientes() {
+		return new LinkedList<>(recientes);
 	}
 	
 	public void pausarCancion() {
@@ -129,6 +153,7 @@ public class AppMusic {
 			e.printStackTrace();
 		}
 		adaptadorUsuario = factoria.getUsuarioDAO();
+		adaptadorListaCanciones = factoria.getListaCancionesDAO();
 	}
 
 	private void inicializarCatalogos() {
