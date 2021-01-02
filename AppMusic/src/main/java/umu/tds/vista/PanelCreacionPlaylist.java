@@ -28,8 +28,6 @@ import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class PanelCreacionPlaylist extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -50,8 +48,9 @@ public class PanelCreacionPlaylist extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * @param ventanaPrincipal 
 	 */
-	public PanelCreacionPlaylist() {
+	public PanelCreacionPlaylist(VentanaPrincipal ventanaPrincipal) {
 		catalogoEstilos = CatalogoEstilos.getUnicaInstancia();
 		setVisible(false);
 
@@ -86,8 +85,8 @@ public class PanelCreacionPlaylist extends JPanel {
 
 		String[] arrayEstilos = catalogoEstilos.getNombreEstilos();
 
-		JComboBox comboBoxEstilos = new JComboBox();
-		comboBoxEstilos.setModel(new DefaultComboBoxModel(arrayEstilos));
+		JComboBox<String> comboBoxEstilos = new JComboBox<String>();
+		comboBoxEstilos.setModel(new DefaultComboBoxModel<String>(arrayEstilos));
 		GridBagConstraints gbc_comboBoxEstilos = new GridBagConstraints();
 		gbc_comboBoxEstilos.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBoxEstilos.insets = new Insets(0, 0, 5, 5);
@@ -192,6 +191,13 @@ public class PanelCreacionPlaylist extends JPanel {
 		add(btnAceptar, gbc_btnAceptar);
 
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				// Debe mostrarse como si se volviera a clickar en NuevaPlaylist
+				setVisible(false);
+				ventanaPrincipal.reiniciarPanel();
+			}
+		});
 		GridBagConstraints gbc_btnCancelar = new GridBagConstraints();
 		gbc_btnCancelar.gridwidth = 2;
 		gbc_btnCancelar.insets = new Insets(0, 0, 5, 5);
@@ -218,5 +224,4 @@ public class PanelCreacionPlaylist extends JPanel {
 		});
 
 	}
-
 }

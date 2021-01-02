@@ -66,7 +66,7 @@ public class VentanaPrincipal {
 	public VentanaPrincipal() {
 		panelFiltroCanciones = new PanelFiltroCanciones();
 		panelExplorarCanciones = new PanelExplorarCanciones(panelFiltroCanciones);
-		panelCreacionPlaylist = new PanelCreacionPlaylist();
+		panelCreacionPlaylist = new PanelCreacionPlaylist(this);
 		panelNuevaPlaylist = new PanelNuevaPlaylist(panelCreacionPlaylist);
 		panelMisListasDetalladas = new PanelFiltroCanciones();
 		panelRecientes = new PanelFiltroCanciones();
@@ -165,6 +165,7 @@ public class VentanaPrincipal {
 		JButton btnNuevaPlaylist = new JButton("Nueva Playlist");
 		btnNuevaPlaylist.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				panelNuevaPlaylist.limpiarNombrePlaylist();
 				panelPrincipal.removeAll();
 				panelPrincipal.add(panelNuevaPlaylist, BorderLayout.NORTH);
 				panelPrincipal.add(panelCreacionPlaylist, BorderLayout.CENTER);
@@ -331,6 +332,12 @@ public class VentanaPrincipal {
 	public void mostrarVentana() {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+	}
+
+	public void reiniciarPanel() {
+		panelNuevaPlaylist.limpiarNombrePlaylist();
+		panelNuevaPlaylist.activarBotonCrear();
+		panelNuevaPlaylist.ocultarBotonBorrar();
 	}
 
 }

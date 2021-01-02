@@ -239,7 +239,7 @@ public class VentanaRegistro {
 				} else {
 					Calendar calendario = textFecha.getCalendar();
 					int dia = calendario.get(Calendar.DAY_OF_MONTH);
-					int mes = calendario.get(Calendar.MONTH);
+					int mes = calendario.get(Calendar.MONTH) + 1;
 					int anyo = calendario.get(Calendar.YEAR);
 					LocalDate fechaNacim = LocalDate.of(anyo, mes, dia);
 

@@ -101,24 +101,24 @@ public class CargadorCancionesDisco {
 			}
 		}
 
-		List<Cancion> canciones = catalogoCanciones.getCanciones();
+//		List<Cancion> canciones = catalogoCanciones.getCanciones();
 
-		int i = 0;
-		for (Cancion cancion : canciones) {
-			System.out.println(cancion.getCodigo());
-
-			System.out.println(cancion.getEstilo().getNombre());
-
-			System.out.println(cancion.getTitulo());
-
-			System.out.println(cancion.getInterpretes());
-
-			System.out.println(cancion.getRutaFichero());
-
-			System.out.println();
-			i++;
-		}
-		System.out.println(i);
+//		int i = 0;
+//		for (Cancion cancion : canciones) {
+//			System.out.println(cancion.getCodigo());
+//
+//			System.out.println(cancion.getEstilo().getNombre());
+//
+//			System.out.println(cancion.getTitulo());
+//
+//			System.out.println(cancion.getInterpretes());
+//
+//			System.out.println(cancion.getRutaFichero());
+//
+//			System.out.println();
+//			i++;
+//		}
+//		System.out.println(i);
 
 	}
 

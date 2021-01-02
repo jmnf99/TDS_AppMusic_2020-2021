@@ -2,6 +2,7 @@ package umu.tds.persistencia;
 
 import java.util.List;
 
+import umu.tds.modelo.ListaCanciones;
 import umu.tds.modelo.Usuario;
 
 public interface IAdaptadorUsuarioDAO {
@@ -10,4 +11,5 @@ public interface IAdaptadorUsuarioDAO {
 	public List<Usuario> recuperarTodosUsuarios();
 	public void modificarPremium(Usuario usuario);
 	public void modificarListas(Usuario usuario);
+	public void eliminarLista(Usuario usuario, ListaCanciones lista);
 }

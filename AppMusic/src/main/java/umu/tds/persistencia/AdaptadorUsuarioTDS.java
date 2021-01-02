@@ -122,6 +122,12 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		servPersistencia.eliminarPropiedadEntidad(eUsuario, "listas");
 		servPersistencia.anadirPropiedadEntidad(eUsuario, "listas", listas);
 	}
+	
+	public void eliminarLista(Usuario usuario, ListaCanciones lista) {
+		modificarListas(usuario);
+		AdaptadorListaCancionesTDS adaptadorLista = AdaptadorListaCancionesTDS.getUnicaInstancia();
+		adaptadorLista.borrarListaCanciones(lista);
+	}
 
 	// -------------------Funciones auxiliares-----------------------------
 

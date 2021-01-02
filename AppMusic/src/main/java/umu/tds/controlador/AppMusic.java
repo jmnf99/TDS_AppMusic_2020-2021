@@ -13,7 +13,6 @@ import umu.tds.modelo.Descuento;
 import umu.tds.modelo.ListaCanciones;
 import umu.tds.modelo.Reproductor;
 import umu.tds.modelo.Usuario;
-import umu.tds.persistencia.AdaptadorUsuarioTDS;
 import umu.tds.persistencia.DAOException;
 import umu.tds.persistencia.FactoriaDAO;
 import umu.tds.persistencia.IAdaptadorListaCancionesDAO;
@@ -31,7 +30,6 @@ public class AppMusic {
 	private CargadorCancionesDisco cargadorCancionesDisco = CargadorCancionesDisco.getInstancia();
 	private Queue<Cancion> recientes;
 	private Reproductor reproductor = Reproductor.getUnicaInstancia();
-	
 
 	private AppMusic() {
 		inicializarAdaptadores();
@@ -94,13 +92,14 @@ public class AppMusic {
 	public void crearListaCanciones(String nombrePlaylist) {
 		listaActual = new ListaCanciones(nombrePlaylist);
 	}
-	
+
 	public void confirmarListaCanciones(List<Cancion> lista) {
 		for (Cancion cancion : lista) {
-			listaActual.addCancion(cancion);			
+			listaActual.addCancion(cancion);
 		}
 		usuarioActual.addListaCanciones(listaActual);
 		adaptadorListaCanciones.registrarListaCanciones(listaActual);
+		adaptadorUsuario.modificarListas(usuarioActual);
 	}
 
 	public void seleccionarDescuento(LocalDate now) {
@@ -117,32 +116,51 @@ public class AppMusic {
 	public double calcularDescuento() {
 		return usuarioActual.getDescuento().calcDescuento(this.precioPremium);
 	}
-	
+
 	public void reproducirCancion(Cancion c) {
 		reproductor.reproducirCancion(c.getRutaFichero());
-		if(recientes.size()==10) {
+		if (recientes.size() == 10) {
 			recientes.poll();
 		}
 		recientes.add(c);
 	}
-	
+
 	public List<Cancion> getCancionesRecientes() {
 		return new LinkedList<>(recientes);
 	}
-	
+
 	public void pausarCancion() {
 		reproductor.pausarCancion();
 	}
-	
+
 	public String[] getNombresEstilos() {
 		return catalogoEstilos.getNombreEstilos();
 	}
 
 	public void modificarUsuarioPremium() {
-		AdaptadorUsuarioTDS.getUnicaInstancia().modificarPremium(this.usuarioActual);
+		adaptadorUsuario.modificarPremium(this.usuarioActual);
 	}
+
 	public void modificarUsuarioListas() {
-		AdaptadorUsuarioTDS.getUnicaInstancia().modificarListas(this.usuarioActual);
+		adaptadorUsuario.modificarListas(this.usuarioActual);
+	}
+
+	public void eliminarUsuarioLista() {
+		this.usuarioActual.eliminarLista(listaActual);
+		adaptadorUsuario.eliminarLista(usuarioActual, listaActual);
+		listaActual = null;
+	}
+
+	public boolean existePlaylistUsuario(String nombre) {
+		return usuarioActual.existePlaylist(nombre);
+	}
+
+	public String getListaActual() {
+		return this.listaActual.getNombrePlaylist();
+	}
+
+	public void setListaActual(String nombre) {
+		listaActual = usuarioActual.getLista(nombre);
 	}
 
 	private void inicializarAdaptadores() {

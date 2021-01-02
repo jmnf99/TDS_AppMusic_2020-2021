@@ -64,12 +64,21 @@ public class Usuario {
 		return descuento;
 	}
 
+	public ListaCanciones getLista(String nombre) {
+		for (ListaCanciones l : listas) {
+			if (l.getNombrePlaylist().equals(nombre)) {
+				return l;
+			}
+		}
+		return null;
+	}
+
 	public boolean isEstudianteUMU() {
 		int index = this.mail.indexOf('@');
 		String dominio = this.mail.substring(index);
 		return dominio.equals("@um.es");
 	}
-	
+
 	public boolean isMayor(int anyoActual) {
 		return (anyoActual - this.fechaNacim.getYear()) >= DescuentoMayores.EDAD;
 	}
@@ -89,7 +98,7 @@ public class Usuario {
 	public boolean isPremium() {
 		return premium;
 	}
-	
+
 	public String getTipoDescuento() {
 		return this.tipoDescuento;
 	}
@@ -120,10 +129,21 @@ public class Usuario {
 		case Descuento.MAYORES:
 			this.descuento = new DescuentoMayores();
 			this.tipoDescuento = "Mayor de " + DescuentoMayores.EDAD + " años";
-			
+
 			break;
 		default:
 			throw new IllegalArgumentException("Codigo de Descuento incorrecto");
 		}
+	}
+
+	public void eliminarLista(ListaCanciones l) {
+		this.listas.remove(l);
+	}
+
+	public boolean existePlaylist(String nombre) {
+		for (ListaCanciones l : listas)
+			if (l.getNombrePlaylist().equals(nombre))
+				return true;
+		return false;
 	}
 }
