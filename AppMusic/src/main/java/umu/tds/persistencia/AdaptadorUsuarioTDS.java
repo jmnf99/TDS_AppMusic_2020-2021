@@ -107,12 +107,20 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		}
 		return usuarios;
 	}
-	
-	public void modificarUsuario(Usuario usuario) {
+
+	public void modificarPremium(Usuario usuario) {
 		Entidad eUsuario = servPersistencia.recuperarEntidad(usuario.getCodigo());
-		
+
 		servPersistencia.eliminarPropiedadEntidad(eUsuario, "premium");
 		servPersistencia.anadirPropiedadEntidad(eUsuario, "premium", Boolean.toString(usuario.isPremium()));
+	}
+
+	public void modificarListas(Usuario usuario) {
+		Entidad eUsuario = servPersistencia.recuperarEntidad(usuario.getCodigo());
+
+		String listas = obtenerCodigosListasCanciones(usuario.getListas());
+		servPersistencia.eliminarPropiedadEntidad(eUsuario, "listas");
+		servPersistencia.anadirPropiedadEntidad(eUsuario, "listas", listas);
 	}
 
 	// -------------------Funciones auxiliares-----------------------------
@@ -120,7 +128,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	// Obtener ids a partir de una lista de objetos al registrar
 	private String obtenerCodigosListasCanciones(List<ListaCanciones> listas) {
 		String aux = "";
-		for (ListaCanciones lista : listas) 
+		for (ListaCanciones lista : listas)
 			aux += lista.getCodigo() + " ";
 		return aux.trim();
 	}

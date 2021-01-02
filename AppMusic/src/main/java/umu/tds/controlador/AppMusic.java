@@ -114,9 +114,11 @@ public class AppMusic {
 		return catalogoEstilos.getNombreEstilos();
 	}
 
-	public void modificarUsuario() {
-		AdaptadorUsuarioTDS.getUnicaInstancia().modificarUsuario(this.usuarioActual);
-
+	public void modificarUsuarioPremium() {
+		AdaptadorUsuarioTDS.getUnicaInstancia().modificarPremium(this.usuarioActual);
+	}
+	public void modificarUsuarioListas() {
+		AdaptadorUsuarioTDS.getUnicaInstancia().modificarListas(this.usuarioActual);
 	}
 
 	private void inicializarAdaptadores() {
