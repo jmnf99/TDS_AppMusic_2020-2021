@@ -1,7 +1,9 @@
 package umu.tds.controlador;
 
 import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import umu.tds.modelo.Cancion;
 import umu.tds.modelo.CargadorCancionesDisco;
@@ -27,7 +29,9 @@ public class AppMusic {
 	private CatalogoEstilos catalogoEstilos;
 	private IAdaptadorListaCancionesDAO adaptadorListaCanciones;
 	private CargadorCancionesDisco cargadorCancionesDisco = CargadorCancionesDisco.getInstancia();
-	Reproductor reproductor = Reproductor.getUnicaInstancia();
+	private Queue<Cancion> recientes;
+	private Reproductor reproductor = Reproductor.getUnicaInstancia();
+	
 
 	private AppMusic() {
 		inicializarAdaptadores();
@@ -35,6 +39,7 @@ public class AppMusic {
 		cargadorCancionesDisco.cargarEstilosMusicales();
 //		cargadorCancionesDisco.comprobarEstilosMusicales();
 		cargadorCancionesDisco.cargarCanciones();
+		recientes = new LinkedList<>();
 	}
 
 	public static AppMusic getInstancia() {
@@ -115,6 +120,14 @@ public class AppMusic {
 	
 	public void reproducirCancion(Cancion c) {
 		reproductor.reproducirCancion(c.getRutaFichero());
+		if(recientes.size()==10) {
+			recientes.poll();
+		}
+		recientes.add(c);
+	}
+	
+	public List<Cancion> getCancionesRecientes() {
+		return new LinkedList<>(recientes);
 	}
 	
 	public void pausarCancion() {

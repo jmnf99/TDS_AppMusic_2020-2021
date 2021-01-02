@@ -56,6 +56,11 @@ public class TablaModelo extends AbstractTableModel {
 		fireTableDataChanged();
 	}
 	
+	public void limpiarDatos() {
+		data.clear();
+		fireTableDataChanged();
+	}
+	
 	public Cancion getCancionFila(int row) {
 		return data.get(row);
 	}

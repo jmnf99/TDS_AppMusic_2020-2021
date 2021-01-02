@@ -9,10 +9,14 @@ import javax.swing.JButton;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.List;
+
 import javax.swing.SwingConstants;
 
 import pulsador.Luz;
 import umu.tds.controlador.AppMusic;
+import umu.tds.modelo.Cancion;
+import umu.tds.modelo.CatalogoCanciones;
 import umu.tds.modelo.ListaCanciones;
 
 import java.awt.Color;
@@ -105,7 +109,6 @@ public class VentanaPrincipal {
 		gbc_btnTop10.gridy = 4;
 		panelFuncionalidad.add(btnTop10, gbc_btnTop10);
 
-		
 		listas = AppMusic.getInstancia().getUsuarioActual().getNombreListas();
 		final JList<ListaCanciones> listMisListas = new JList<ListaCanciones>();
 		listMisListas.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -135,6 +138,12 @@ public class VentanaPrincipal {
 				panelPrincipal.removeAll();
 				panelPrincipal.add(panelExplorarCanciones, BorderLayout.NORTH);
 				panelPrincipal.add(panelFiltroCanciones, BorderLayout.CENTER);
+
+				List<Cancion> lista = CatalogoCanciones.getUnicaInstancia().getCanciones();
+
+				for (Cancion cancion : lista) {
+					panelFiltroCanciones.añadirCancion(cancion);
+				}
 				listMisListas.setVisible(false);
 				panelFiltroCanciones.esconderPanel();
 				panelPrincipal.revalidate();
@@ -182,6 +191,7 @@ public class VentanaPrincipal {
 			public void actionPerformed(ActionEvent e) {
 				panelPrincipal.removeAll();
 				panelPrincipal.add(panelRecientes, BorderLayout.CENTER);
+				panelRecientes.actualizarTabla();
 				listMisListas.setVisible(false);
 				panelPrincipal.revalidate();
 				panelPrincipal.repaint();

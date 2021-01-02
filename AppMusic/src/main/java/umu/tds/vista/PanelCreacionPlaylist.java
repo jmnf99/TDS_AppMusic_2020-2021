@@ -202,8 +202,10 @@ public class PanelCreacionPlaylist extends JPanel {
 		btnDerecha.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Cancion c = tablaBusqueda.getCancionFila(selectedRowSearch);
-				tablaPlaylist.añadirFila(c);
+				if (selectedRowSearch != -1) {
+					Cancion c = tablaBusqueda.getCancionFila(selectedRowSearch);
+					tablaPlaylist.añadirFila(c);
+				}
 			}
 		});
 
