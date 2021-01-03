@@ -186,6 +186,7 @@ public class PanelCreacionPlaylist extends JPanel {
 						JOptionPane.INFORMATION_MESSAGE);
 				AppMusic.getInstancia().confirmarListaCanciones(tablaPlaylist.getCanciones());
 				setVisible(false);
+				ventanaPrincipal.anadirElemento(AppMusic.getInstancia().getListaActual());
 				ventanaPrincipal.reiniciarPanel();
 			}
 		});

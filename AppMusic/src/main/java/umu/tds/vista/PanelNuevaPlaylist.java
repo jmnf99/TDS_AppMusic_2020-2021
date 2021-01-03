@@ -23,8 +23,9 @@ public class PanelNuevaPlaylist extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * @param ventanaPrincipal 
 	 */
-	public PanelNuevaPlaylist(final PanelCreacionPlaylist playlist) {
+	public PanelNuevaPlaylist(final PanelCreacionPlaylist playlist, VentanaPrincipal ventanaPrincipal) {
 		setLayout(new BorderLayout(0, 0));
 
 		JPanel panelNorte = new JPanel();
@@ -92,6 +93,7 @@ public class PanelNuevaPlaylist extends JPanel {
 				JOptionPane.showMessageDialog(btnBorrar,
 						"Lista '" + AppMusic.getInstancia().getListaActual() + "' borrada con éxito.",
 						"Borrado realizado", JOptionPane.INFORMATION_MESSAGE);
+				ventanaPrincipal.eliminarElemento(AppMusic.getInstancia().getListaActual());
 				AppMusic.getInstancia().eliminarUsuarioLista();
 				ocultarBotonBorrar();
 				playlist.esconderPanel();

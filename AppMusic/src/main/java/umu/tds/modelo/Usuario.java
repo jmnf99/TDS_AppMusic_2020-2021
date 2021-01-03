@@ -107,11 +107,10 @@ public class Usuario {
 		return this.clave.equals(clave);
 	}
 
-	public String[] getNombreListas() {
-		String[] nombreListas = new String[this.listas.size()];
-		int i = 0;
+	public List<String> getNombreListas() {
+		List<String> nombreListas = new LinkedList<String>();
 		for (ListaCanciones l : this.listas) {
-			nombreListas[i++] = l.getNombrePlaylist();
+			nombreListas.add(l.getNombrePlaylist());
 		}
 		return nombreListas;
 	}

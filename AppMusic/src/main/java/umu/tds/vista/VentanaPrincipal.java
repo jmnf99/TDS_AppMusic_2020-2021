@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.SwingConstants;
@@ -33,14 +32,14 @@ public class VentanaPrincipal {
 
 	private JFrame frame;
 	private JPanel panelPrincipal;
-
 	private PanelExplorarCanciones panelExplorarCanciones;
 	private PanelFiltroCanciones panelFiltroCanciones;
 	private PanelNuevaPlaylist panelNuevaPlaylist;
 	private PanelCreacionPlaylist panelCreacionPlaylist;
 	private PanelFiltroCanciones panelMisListasDetalladas;
 	private PanelFiltroCanciones panelRecientes;
-	private String[] listas;
+	private List<String> listas;
+	private ListaModelo modelo;
 
 	/**
 	 * Launch the application.
@@ -65,7 +64,7 @@ public class VentanaPrincipal {
 		panelFiltroCanciones = new PanelFiltroCanciones();
 		panelExplorarCanciones = new PanelExplorarCanciones(panelFiltroCanciones);
 		panelCreacionPlaylist = new PanelCreacionPlaylist(this);
-		panelNuevaPlaylist = new PanelNuevaPlaylist(panelCreacionPlaylist);
+		panelNuevaPlaylist = new PanelNuevaPlaylist(panelCreacionPlaylist, this);
 		panelMisListasDetalladas = new PanelFiltroCanciones();
 		panelRecientes = new PanelFiltroCanciones();
 		initialize();
@@ -108,9 +107,10 @@ public class VentanaPrincipal {
 		panelFuncionalidad.add(btnTop10, gbc_btnTop10);
 
 		listas = AppMusic.getInstancia().getUsuarioActual().getNombreListas();
-		final JList<String> listMisListas = new JList<String>();
+		modelo = new ListaModelo(listas);
+		JList<String> listMisListas = new JList<String>(modelo);
+		
 		listMisListas.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		listMisListas.setModel(new ListaModelo(Arrays.asList(listas)));
 		listMisListas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		GridBagConstraints gbc_listMisListas = new GridBagConstraints();
 		gbc_listMisListas.fill = GridBagConstraints.BOTH;
@@ -325,6 +325,14 @@ public class VentanaPrincipal {
 		panelNuevaPlaylist.limpiarNombrePlaylist();
 		panelNuevaPlaylist.activarBotonCrear();
 		panelNuevaPlaylist.ocultarBotonBorrar();
+	}
+	
+	public void anadirElemento(String lista) {
+		modelo.anadirElemento(lista);
+	}
+	
+	public void eliminarElemento(String lista) {
+		modelo.eliminarElemento(lista);
 	}
 
 }
