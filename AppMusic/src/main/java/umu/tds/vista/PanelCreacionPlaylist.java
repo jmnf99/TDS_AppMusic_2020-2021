@@ -182,11 +182,19 @@ public class PanelCreacionPlaylist extends JPanel {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(btnAceptar, "Playlist creada con éxito", "Creación playlist",
-						JOptionPane.INFORMATION_MESSAGE);
+
+				if (!AppMusic.getInstancia().existePlaylistUsuario(AppMusic.getInstancia().getListaActual())) {
+					JOptionPane.showMessageDialog(btnAceptar, "Playlist creada con éxito", "Creación playlist",
+							JOptionPane.INFORMATION_MESSAGE);
+					//solo se añade a la lista de mis listas si la playlist es nueva
+					ventanaPrincipal.anadirElemento(AppMusic.getInstancia().getListaActual());
+
+				} else {
+					JOptionPane.showMessageDialog(btnAceptar, "Playlist modificada con éxito", "Modificación playlist",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
 				AppMusic.getInstancia().confirmarListaCanciones(tablaPlaylist.getCanciones());
 				setVisible(false);
-				ventanaPrincipal.anadirElemento(AppMusic.getInstancia().getListaActual());
 				ventanaPrincipal.reiniciarPanel();
 			}
 		});

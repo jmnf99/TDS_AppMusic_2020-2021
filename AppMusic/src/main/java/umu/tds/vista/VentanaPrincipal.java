@@ -111,6 +111,7 @@ public class VentanaPrincipal {
 		JList<String> listMisListas = new JList<String>(modelo);
 		
 		listMisListas.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		listMisListas.setSelectedIndex(0);
 		listMisListas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		GridBagConstraints gbc_listMisListas = new GridBagConstraints();
 		gbc_listMisListas.fill = GridBagConstraints.BOTH;
@@ -152,7 +153,7 @@ public class VentanaPrincipal {
 		JButton btnNuevaPlaylist = new JButton("Nueva Playlist");
 		btnNuevaPlaylist.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelNuevaPlaylist.limpiarNombrePlaylist();
+				reiniciarPanel();
 				panelPrincipal.removeAll();
 				panelPrincipal.add(panelNuevaPlaylist, BorderLayout.NORTH);
 				panelPrincipal.add(panelCreacionPlaylist, BorderLayout.CENTER);
