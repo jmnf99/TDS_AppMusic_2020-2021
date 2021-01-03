@@ -103,6 +103,14 @@ public class AdaptadorListaCancionesTDS implements IAdaptadorListaCancionesDAO {
 		}
 		return listaCanciones;
 	}
+	
+	public void modificarListaCanciones(ListaCanciones listaCanciones) {
+		Entidad eListaCanciones = servPersistencia.recuperarEntidad(listaCanciones.getCodigo());
+
+		String canciones = obtenerCodigosCanciones(listaCanciones.getCanciones());
+		servPersistencia.eliminarPropiedadEntidad(eListaCanciones, "canciones");
+		servPersistencia.anadirPropiedadEntidad(eListaCanciones, "canciones", canciones);
+	}
 
 	public void borrarListaCanciones(ListaCanciones listaCanciones) {
 		Entidad eListaCanciones = servPersistencia.recuperarEntidad(listaCanciones.getCodigo());

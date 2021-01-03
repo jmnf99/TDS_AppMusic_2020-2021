@@ -145,6 +145,18 @@ public class AppMusic {
 		adaptadorUsuario.modificarListas(this.usuarioActual);
 	}
 
+	public void modificarListaCanciones(List<Cancion> lista) {
+		
+		listaActual.eliminarCanciones();
+		
+		for (Cancion cancion : lista) {
+			listaActual.addCancion(cancion);
+		}
+		usuarioActual.addListaCanciones(listaActual);
+		adaptadorListaCanciones.modificarListaCanciones(this.listaActual);
+		adaptadorUsuario.modificarListas(usuarioActual);
+	}
+
 	public void eliminarUsuarioLista() {
 		this.usuarioActual.eliminarLista(listaActual);
 		adaptadorUsuario.eliminarLista(usuarioActual, listaActual);

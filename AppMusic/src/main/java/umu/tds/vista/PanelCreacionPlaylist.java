@@ -188,12 +188,14 @@ public class PanelCreacionPlaylist extends JPanel {
 							JOptionPane.INFORMATION_MESSAGE);
 					//solo se añade a la lista de mis listas si la playlist es nueva
 					ventanaPrincipal.anadirElemento(AppMusic.getInstancia().getListaActual());
+					AppMusic.getInstancia().confirmarListaCanciones(tablaPlaylist.getCanciones());
 
 				} else {
 					JOptionPane.showMessageDialog(btnAceptar, "Playlist modificada con éxito", "Modificación playlist",
 							JOptionPane.INFORMATION_MESSAGE);
+					//TODO modificar la playlist existente
+					AppMusic.getInstancia().modificarListaCanciones(tablaPlaylist.getCanciones());
 				}
-				AppMusic.getInstancia().confirmarListaCanciones(tablaPlaylist.getCanciones());
 				setVisible(false);
 				ventanaPrincipal.reiniciarPanel();
 			}
