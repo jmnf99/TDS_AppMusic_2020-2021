@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.SwingConstants;
@@ -17,8 +18,6 @@ import pulsador.Luz;
 import umu.tds.controlador.AppMusic;
 import umu.tds.modelo.Cancion;
 import umu.tds.modelo.CatalogoCanciones;
-import umu.tds.modelo.ListaCanciones;
-
 import java.awt.Color;
 import javax.swing.border.BevelBorder;
 import javax.swing.ImageIcon;
@@ -28,7 +27,6 @@ import java.time.LocalDate;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
-import javax.swing.AbstractListModel;
 import java.awt.Toolkit;
 
 public class VentanaPrincipal {
@@ -110,20 +108,9 @@ public class VentanaPrincipal {
 		panelFuncionalidad.add(btnTop10, gbc_btnTop10);
 
 		listas = AppMusic.getInstancia().getUsuarioActual().getNombreListas();
-		final JList<ListaCanciones> listMisListas = new JList<ListaCanciones>();
+		final JList<String> listMisListas = new JList<String>();
 		listMisListas.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		listMisListas.setModel(new AbstractListModel() {
-
-			String[] values = listas;
-
-			public int getSize() {
-				return values.length;
-			}
-
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
+		listMisListas.setModel(new ListaModelo(Arrays.asList(listas)));
 		listMisListas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		GridBagConstraints gbc_listMisListas = new GridBagConstraints();
 		gbc_listMisListas.fill = GridBagConstraints.BOTH;

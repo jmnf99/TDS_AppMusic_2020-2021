@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -48,7 +49,8 @@ public class PanelCreacionPlaylist extends JPanel {
 
 	/**
 	 * Create the panel.
-	 * @param ventanaPrincipal 
+	 * 
+	 * @param ventanaPrincipal
 	 */
 	public PanelCreacionPlaylist(VentanaPrincipal ventanaPrincipal) {
 		catalogoEstilos = CatalogoEstilos.getUnicaInstancia();
@@ -180,7 +182,11 @@ public class PanelCreacionPlaylist extends JPanel {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				JOptionPane.showMessageDialog(btnAceptar, "Playlist creada con éxito", "Creación playlist",
+						JOptionPane.INFORMATION_MESSAGE);
 				AppMusic.getInstancia().confirmarListaCanciones(tablaPlaylist.getCanciones());
+				setVisible(false);
+				ventanaPrincipal.reiniciarPanel();
 			}
 		});
 		GridBagConstraints gbc_btnAceptar = new GridBagConstraints();

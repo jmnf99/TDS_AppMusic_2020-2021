@@ -53,26 +53,27 @@ public class PanelNuevaPlaylist extends JPanel {
 					if (nombrePlaylist.isEmpty()) {
 						JOptionPane.showMessageDialog(btnCrearPlaylist, "No se puede crear una playlist sin nombre.",
 								"Error en la creación", JOptionPane.ERROR_MESSAGE);
+
 					} else if (AppMusic.getInstancia().existePlaylistUsuario(nombrePlaylist)) {
 
 						JOptionPane.showMessageDialog(btnCrearPlaylist, "Ya existe una playlist con ese nombre.",
 								"Playlist existente", JOptionPane.WARNING_MESSAGE);
+						
 						AppMusic.getInstancia().setListaActual(nombrePlaylist);
 						mostrarBotonBorrar();
 						playlist.mostrarPanel();
-						btnCrearPlaylist.setEnabled(false);
+						desactivarBotonCrear();
 						// TODO Cargar la playlist existente
-						
-						
+
 					} else {
 						Object[] options = { "Si", "No" };
 						int opcion = JOptionPane.showOptionDialog(btnCrearPlaylist, "¿Deseas crear una nueva playlist?",
 								"Crear nueva playlist", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
 								options, options[0]);
 						if (opcion == JOptionPane.YES_OPTION) {
-							playlist.mostrarPanel();
 							AppMusic.getInstancia().crearListaCanciones(nombrePlaylist);
-							btnCrearPlaylist.setEnabled(false);
+							playlist.mostrarPanel();
+							desactivarBotonCrear();
 						}
 					}
 				}
@@ -92,8 +93,8 @@ public class PanelNuevaPlaylist extends JPanel {
 						"Lista '" + AppMusic.getInstancia().getListaActual() + "' borrada con éxito.",
 						"Borrado realizado", JOptionPane.INFORMATION_MESSAGE);
 				AppMusic.getInstancia().eliminarUsuarioLista();
-				playlist.esconderPanel();
 				ocultarBotonBorrar();
+				playlist.esconderPanel();
 				limpiarNombrePlaylist();
 				activarBotonCrear();
 			}
@@ -109,6 +110,10 @@ public class PanelNuevaPlaylist extends JPanel {
 
 	public void activarBotonCrear() {
 		this.btnCrearPlaylist.setEnabled(true);
+	}
+
+	public void desactivarBotonCrear() {
+		this.btnCrearPlaylist.setEnabled(false);
 	}
 
 	public void mostrarBotonBorrar() {
