@@ -5,18 +5,12 @@ import java.awt.BorderLayout;
 import javax.swing.JTextField;
 
 import umu.tds.controlador.AppMusic;
-import umu.tds.modelo.CatalogoEstilos;
-import umu.tds.modelo.EstiloMusical;
-
 import java.awt.FlowLayout;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.DropMode;
-import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
@@ -64,9 +58,9 @@ public class PanelExplorarCanciones extends JPanel {
 
 		String[] arrayEstilos = AppMusic.getInstancia().getNombresEstilos();
 
-		JComboBox comboBoxEstilo = new JComboBox();
+		JComboBox<String> comboBoxEstilo = new JComboBox<String>();
 		comboBoxEstilo.setToolTipText("Estilo");
-		comboBoxEstilo.setModel(new DefaultComboBoxModel(arrayEstilos));
+		comboBoxEstilo.setModel(new DefaultComboBoxModel<String>(arrayEstilos));
 		panelNorte.add(comboBoxEstilo);
 
 		JPanel panelCentral = new JPanel();

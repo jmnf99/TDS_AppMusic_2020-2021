@@ -113,7 +113,7 @@ public class VentanaPagoPremium extends JDialog {
 				// Ya es premium el usuario
 				AppMusic.getInstancia().getUsuarioActual().setPremium(true);
 				// Se actualiza en la BBDD
-				AppMusic.getInstancia().modificarUsuario();
+				AppMusic.getInstancia().modificarUsuarioPremium();
 				dispose();
 			}
 		});

@@ -38,4 +38,8 @@ public class ListaCanciones {
 	public List<Cancion> getCanciones() {
 		return new LinkedList<Cancion>(canciones);
 	}
+
+	public void eliminarCanciones() {
+		canciones.clear();
+	}
 }

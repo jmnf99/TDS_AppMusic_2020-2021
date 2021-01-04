@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
-
 import beans.Entidad;
 import beans.Propiedad;
 import tds.driver.FactoriaServicioPersistencia;
@@ -84,6 +83,38 @@ public class AdaptadorListaCancionesTDS implements IAdaptadorListaCancionesDAO {
 			listaCanciones.addCancion(c);
 		}
 		return listaCanciones;
+	}
+
+	public ListaCanciones recuperarListaCanciones(String nombre) {
+		List<ListaCanciones> listas = recuperarTodasListasCanciones();
+		for (ListaCanciones l : listas) {
+			if (l.getNombrePlaylist().equals(nombre)) {
+				return l;
+			}
+		}
+		return null;
+	}
+
+	public List<ListaCanciones> recuperarTodasListasCanciones() {
+		List<ListaCanciones> listaCanciones = new LinkedList<ListaCanciones>();
+		List<Entidad> entidades = servPersistencia.recuperarEntidades("listas");
+		for (Entidad eCancion : entidades) {
+			listaCanciones.add(recuperarListaCanciones(eCancion.getId()));
+		}
+		return listaCanciones;
+	}
+	
+	public void modificarListaCanciones(ListaCanciones listaCanciones) {
+		Entidad eListaCanciones = servPersistencia.recuperarEntidad(listaCanciones.getCodigo());
+
+		String canciones = obtenerCodigosCanciones(listaCanciones.getCanciones());
+		servPersistencia.eliminarPropiedadEntidad(eListaCanciones, "canciones");
+		servPersistencia.anadirPropiedadEntidad(eListaCanciones, "canciones", canciones);
+	}
+
+	public void borrarListaCanciones(ListaCanciones listaCanciones) {
+		Entidad eListaCanciones = servPersistencia.recuperarEntidad(listaCanciones.getCodigo());
+		servPersistencia.borrarEntidad(eListaCanciones);
 	}
 
 	// -------------------Funciones auxiliares-----------------------------

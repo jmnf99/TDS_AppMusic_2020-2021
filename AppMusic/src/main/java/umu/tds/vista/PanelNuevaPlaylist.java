@@ -19,11 +19,13 @@ public class PanelNuevaPlaylist extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField textNombrePlaylist;
 	private JButton btnCrearPlaylist;
+	private JButton btnBorrar;
 
 	/**
 	 * Create the panel.
+	 * @param ventanaPrincipal 
 	 */
-	public PanelNuevaPlaylist(final PanelCreacionPlaylist playlist) {
+	public PanelNuevaPlaylist(final PanelCreacionPlaylist playlist, VentanaPrincipal ventanaPrincipal) {
 		setLayout(new BorderLayout(0, 0));
 
 		JPanel panelNorte = new JPanel();
@@ -48,15 +50,33 @@ public class PanelNuevaPlaylist extends JPanel {
 		btnCrearPlaylist.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (btnCrearPlaylist.isEnabled()) {
-					Object[] options = { "Si", "No" };
-					int opcion = JOptionPane.showOptionDialog(btnCrearPlaylist, "¿Deseas crear una nueva playlist?",
-							"Crear nueva playlist", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-							options, options[0]);
-					if (opcion == JOptionPane.YES_OPTION) {
+					String nombrePlaylist = textNombrePlaylist.getText();
+					if (nombrePlaylist.isEmpty()) {
+						JOptionPane.showMessageDialog(btnCrearPlaylist, "No se puede crear una playlist sin nombre.",
+								"Error en la creación", JOptionPane.ERROR_MESSAGE);
+
+					} else if (AppMusic.getInstancia().existePlaylistUsuario(nombrePlaylist)) {
+
+						JOptionPane.showMessageDialog(btnCrearPlaylist, "Ya existe una playlist con ese nombre.",
+								"Playlist existente", JOptionPane.WARNING_MESSAGE);
+						
+						AppMusic.getInstancia().setListaActual(nombrePlaylist);
+						mostrarBotonBorrar();
 						playlist.mostrarPanel();
-						AppMusic.getInstancia().crearListaCanciones(textNombrePlaylist.getText());
+						desactivarBotonCrear();
+						// TODO Cargar la playlist existente
+
+					} else {
+						Object[] options = { "Si", "No" };
+						int opcion = JOptionPane.showOptionDialog(btnCrearPlaylist, "¿Deseas crear una nueva playlist?",
+								"Crear nueva playlist", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+								options, options[0]);
+						if (opcion == JOptionPane.YES_OPTION) {
+							AppMusic.getInstancia().crearListaCanciones(nombrePlaylist);
+							playlist.mostrarPanel();
+							desactivarBotonCrear();
+						}
 					}
-					btnCrearPlaylist.setEnabled(false);
 				}
 			}
 		});
@@ -66,10 +86,47 @@ public class PanelNuevaPlaylist extends JPanel {
 		gbc_btnCrearPlaylist.gridy = 1;
 		panelNorte.add(btnCrearPlaylist, gbc_btnCrearPlaylist);
 
+		btnBorrar = new JButton("Borrar");
+		btnBorrar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JOptionPane.showMessageDialog(btnBorrar,
+						"Lista '" + AppMusic.getInstancia().getListaActual() + "' borrada con éxito.",
+						"Borrado realizado", JOptionPane.INFORMATION_MESSAGE);
+				ventanaPrincipal.eliminarElemento(AppMusic.getInstancia().getListaActual());
+				AppMusic.getInstancia().eliminarUsuarioLista();
+				ocultarBotonBorrar();
+				playlist.esconderPanel();
+				limpiarNombrePlaylist();
+				activarBotonCrear();
+			}
+		});
+		btnBorrar.setVisible(false);
+		GridBagConstraints gbc_btnBorrar = new GridBagConstraints();
+		gbc_btnBorrar.anchor = GridBagConstraints.WEST;
+		gbc_btnBorrar.gridx = 3;
+		gbc_btnBorrar.gridy = 1;
+		panelNorte.add(btnBorrar, gbc_btnBorrar);
+
 	}
 
 	public void activarBotonCrear() {
 		this.btnCrearPlaylist.setEnabled(true);
 	}
 
+	public void desactivarBotonCrear() {
+		this.btnCrearPlaylist.setEnabled(false);
+	}
+
+	public void mostrarBotonBorrar() {
+		this.btnBorrar.setVisible(true);
+	}
+
+	public void ocultarBotonBorrar() {
+		this.btnBorrar.setVisible(false);
+	}
+
+	public void limpiarNombrePlaylist() {
+		this.textNombrePlaylist.setText("");
+	}
 }

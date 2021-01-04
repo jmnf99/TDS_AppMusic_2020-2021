@@ -2,21 +2,15 @@ package umu.tds.vista;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
 import java.awt.GridBagLayout;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import umu.tds.controlador.AppMusic;
 import umu.tds.modelo.Cancion;
-import umu.tds.modelo.CatalogoCanciones;
-
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;

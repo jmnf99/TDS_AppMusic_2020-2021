@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -28,8 +29,6 @@ import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class PanelCreacionPlaylist extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -50,8 +49,10 @@ public class PanelCreacionPlaylist extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * 
+	 * @param ventanaPrincipal
 	 */
-	public PanelCreacionPlaylist() {
+	public PanelCreacionPlaylist(VentanaPrincipal ventanaPrincipal) {
 		catalogoEstilos = CatalogoEstilos.getUnicaInstancia();
 		setVisible(false);
 
@@ -86,8 +87,8 @@ public class PanelCreacionPlaylist extends JPanel {
 
 		String[] arrayEstilos = catalogoEstilos.getNombreEstilos();
 
-		JComboBox comboBoxEstilos = new JComboBox();
-		comboBoxEstilos.setModel(new DefaultComboBoxModel(arrayEstilos));
+		JComboBox<String> comboBoxEstilos = new JComboBox<String>();
+		comboBoxEstilos.setModel(new DefaultComboBoxModel<String>(arrayEstilos));
 		GridBagConstraints gbc_comboBoxEstilos = new GridBagConstraints();
 		gbc_comboBoxEstilos.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBoxEstilos.insets = new Insets(0, 0, 5, 5);
@@ -181,7 +182,22 @@ public class PanelCreacionPlaylist extends JPanel {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				AppMusic.getInstancia().confirmarListaCanciones(tablaPlaylist.getCanciones());
+
+				if (!AppMusic.getInstancia().existePlaylistUsuario(AppMusic.getInstancia().getListaActual())) {
+					JOptionPane.showMessageDialog(btnAceptar, "Playlist creada con éxito", "Creación playlist",
+							JOptionPane.INFORMATION_MESSAGE);
+					//solo se añade a la lista de mis listas si la playlist es nueva
+					ventanaPrincipal.anadirElemento(AppMusic.getInstancia().getListaActual());
+					AppMusic.getInstancia().confirmarListaCanciones(tablaPlaylist.getCanciones());
+
+				} else {
+					JOptionPane.showMessageDialog(btnAceptar, "Playlist modificada con éxito", "Modificación playlist",
+							JOptionPane.INFORMATION_MESSAGE);
+					//TODO modificar la playlist existente
+					AppMusic.getInstancia().modificarListaCanciones(tablaPlaylist.getCanciones());
+				}
+				setVisible(false);
+				ventanaPrincipal.reiniciarPanel();
 			}
 		});
 		GridBagConstraints gbc_btnAceptar = new GridBagConstraints();
@@ -192,6 +208,13 @@ public class PanelCreacionPlaylist extends JPanel {
 		add(btnAceptar, gbc_btnAceptar);
 
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				// Debe mostrarse como si se volviera a clickar en NuevaPlaylist
+				setVisible(false);
+				ventanaPrincipal.reiniciarPanel();
+			}
+		});
 		GridBagConstraints gbc_btnCancelar = new GridBagConstraints();
 		gbc_btnCancelar.gridwidth = 2;
 		gbc_btnCancelar.insets = new Insets(0, 0, 5, 5);
@@ -218,5 +241,4 @@ public class PanelCreacionPlaylist extends JPanel {
 		});
 
 	}
-
 }
