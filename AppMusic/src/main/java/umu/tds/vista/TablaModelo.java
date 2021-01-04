@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import javax.swing.table.AbstractTableModel;
 
 import umu.tds.modelo.Cancion;
-import umu.tds.modelo.CatalogoCanciones;
 
 public class TablaModelo extends AbstractTableModel {
 
@@ -47,7 +46,7 @@ public class TablaModelo extends AbstractTableModel {
 	}
 	
 	public void añadirFila(Cancion c) {
-		data.add(c);
+		data.add(0, c);
 		fireTableDataChanged();
 	}
 	
