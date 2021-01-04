@@ -92,6 +92,18 @@ public class AppMusic {
 	public void crearListaCanciones(String nombrePlaylist) {
 		listaActual = new ListaCanciones(nombrePlaylist);
 	}
+	
+	public void modificarListaCanciones(List<Cancion> lista) {
+		
+		listaActual.eliminarCanciones();
+		
+		for (Cancion cancion : lista) {
+			listaActual.addCancion(cancion);
+		}
+		
+		adaptadorListaCanciones.modificarListaCanciones(this.listaActual);
+		adaptadorUsuario.modificarListas(usuarioActual);
+	}
 
 	public void confirmarListaCanciones(List<Cancion> lista) {
 		for (Cancion cancion : lista) {
@@ -145,18 +157,6 @@ public class AppMusic {
 		adaptadorUsuario.modificarListas(this.usuarioActual);
 	}
 
-	public void modificarListaCanciones(List<Cancion> lista) {
-		
-		listaActual.eliminarCanciones();
-		
-		for (Cancion cancion : lista) {
-			listaActual.addCancion(cancion);
-		}
-		usuarioActual.addListaCanciones(listaActual);
-		adaptadorListaCanciones.modificarListaCanciones(this.listaActual);
-		adaptadorUsuario.modificarListas(usuarioActual);
-	}
-
 	public void eliminarUsuarioLista() {
 		this.usuarioActual.eliminarLista(listaActual);
 		adaptadorUsuario.eliminarLista(usuarioActual, listaActual);
@@ -184,6 +184,7 @@ public class AppMusic {
 		}
 		adaptadorUsuario = factoria.getUsuarioDAO();
 		adaptadorListaCanciones = factoria.getListaCancionesDAO();
+		System.out.println();
 	}
 
 	private void inicializarCatalogos() {
