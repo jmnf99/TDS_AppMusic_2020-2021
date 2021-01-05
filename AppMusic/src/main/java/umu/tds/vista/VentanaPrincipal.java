@@ -10,9 +10,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.util.List;
-
 import javax.swing.SwingConstants;
-
 import pulsador.Luz;
 import umu.tds.controlador.AppMusic;
 import umu.tds.modelo.Cancion;
@@ -25,8 +23,11 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class VentanaPrincipal {
 
@@ -38,6 +39,7 @@ public class VentanaPrincipal {
 	private PanelCreacionPlaylist panelCreacionPlaylist;
 	private PanelFiltroCanciones panelMisListasDetalladas;
 	private PanelFiltroCanciones panelRecientes;
+	private PanelFiltroCanciones panelExitos;
 	private List<String> listas;
 	private ListaModelo modelo;
 
@@ -67,6 +69,7 @@ public class VentanaPrincipal {
 		panelNuevaPlaylist = new PanelNuevaPlaylist(panelCreacionPlaylist, this);
 		panelMisListasDetalladas = new PanelFiltroCanciones();
 		panelRecientes = new PanelFiltroCanciones();
+		panelExitos = new PanelFiltroCanciones();
 		initialize();
 	}
 
@@ -92,7 +95,32 @@ public class VentanaPrincipal {
 		gbl_panelFuncionalidad.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		panelFuncionalidad.setLayout(gbl_panelFuncionalidad);
 
+		listas = AppMusic.getInstancia().getUsuarioActual().getNombreListas();
+		modelo = new ListaModelo(listas);
+		JList<String> listMisListas = new JList<String>(modelo);
+
+		listMisListas.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		listMisListas.setSelectedIndex(0);
+		listMisListas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		GridBagConstraints gbc_listMisListas = new GridBagConstraints();
+		gbc_listMisListas.fill = GridBagConstraints.BOTH;
+		gbc_listMisListas.gridx = 1;
+		gbc_listMisListas.gridy = 6;
+		panelFuncionalidad.add(listMisListas, gbc_listMisListas);
+		listMisListas.setVisible(false);
+
 		final JButton btnTop10 = new JButton("Éxitos AppMusic");
+		btnTop10.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				panelPrincipal.removeAll();
+				panelPrincipal.add(panelExitos, BorderLayout.CENTER);
+				// TODO actualizar tabla de panelExitos con las 10 canciones mas escuchadas
+				listMisListas.setVisible(false);
+				panelPrincipal.revalidate();
+				panelPrincipal.repaint();
+				frame.validate();
+			}
+		});
 		if (AppMusic.getInstancia().getUsuarioActual().isPremium()) {
 			btnTop10.setVisible(true);
 		} else {
@@ -105,20 +133,6 @@ public class VentanaPrincipal {
 		gbc_btnTop10.gridx = 1;
 		gbc_btnTop10.gridy = 4;
 		panelFuncionalidad.add(btnTop10, gbc_btnTop10);
-
-		listas = AppMusic.getInstancia().getUsuarioActual().getNombreListas();
-		modelo = new ListaModelo(listas);
-		JList<String> listMisListas = new JList<String>(modelo);
-		
-		listMisListas.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		listMisListas.setSelectedIndex(0);
-		listMisListas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		GridBagConstraints gbc_listMisListas = new GridBagConstraints();
-		gbc_listMisListas.fill = GridBagConstraints.BOTH;
-		gbc_listMisListas.gridx = 1;
-		gbc_listMisListas.gridy = 6;
-		panelFuncionalidad.add(listMisListas, gbc_listMisListas);
-		listMisListas.setVisible(false);
 
 		JButton btnExplorar = new JButton("Explorar");
 		btnExplorar.addActionListener(new ActionListener() {
@@ -198,6 +212,14 @@ public class VentanaPrincipal {
 		panelFuncionalidad.add(btnReciente, gbc_btnReciente);
 
 		final JButton btnPdf = new JButton("");
+		btnPdf.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(btnPdf, "Pdf generado con éxito", "Generación de pdf",
+						JOptionPane.INFORMATION_MESSAGE);
+					AppMusic.getInstancia().generarPdf();
+			}
+		});
+		btnPdf.setVisible(false);
 		btnPdf.setIcon(new ImageIcon(PanelFiltroCanciones.class.getResource("/umu/tds/imagenes/pdf-32.png")));
 		GridBagConstraints gbc_btnPdf = new GridBagConstraints();
 		gbc_btnPdf.insets = new Insets(0, 0, 5, 5);
@@ -213,8 +235,6 @@ public class VentanaPrincipal {
 
 				if (AppMusic.getInstancia().getUsuarioActual().isPremium()) {
 					btnPdf.setVisible(true);
-				} else {
-					btnPdf.setVisible(false);
 				}
 
 				panelPrincipal.add(panelMisListasDetalladas, BorderLayout.CENTER);
@@ -327,11 +347,11 @@ public class VentanaPrincipal {
 		panelNuevaPlaylist.activarBotonCrear();
 		panelNuevaPlaylist.ocultarBotonBorrar();
 	}
-	
+
 	public void anadirElemento(String lista) {
 		modelo.anadirElemento(lista);
 	}
-	
+
 	public void eliminarElemento(String lista) {
 		modelo.eliminarElemento(lista);
 	}
