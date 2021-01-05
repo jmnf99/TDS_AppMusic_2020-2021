@@ -35,7 +35,6 @@ public class AppMusic {
 		inicializarAdaptadores();
 		inicializarCatalogos();
 		cargadorCancionesDisco.cargarEstilosMusicales();
-//		cargadorCancionesDisco.comprobarEstilosMusicales();
 		cargadorCancionesDisco.cargarCanciones();
 		recientes = new LinkedList<>();
 	}
@@ -65,7 +64,7 @@ public class AppMusic {
 
 	public Usuario registrarUsuario(String usuario, String clave, String nombre, String apellidos, String mail,
 			LocalDate fechaNacim) {
-		// Comprobar que el nombre del usuario no existe ya en la aplicacion
+		// Comprobar que el nombre del usuario no existe ya en la aplicación
 		if (catalogoUsuarios.getUsuario(usuario) != null)
 			return null;
 		// Creamos al usuario
@@ -167,12 +166,16 @@ public class AppMusic {
 		return usuarioActual.existePlaylist(nombre);
 	}
 
-	public String getListaActual() {
+	public String getNombreListaActual() {
 		return this.listaActual.getNombrePlaylist();
 	}
 
 	public void setListaActual(String nombre) {
 		listaActual = usuarioActual.getLista(nombre);
+	}
+	
+	public List<Cancion> getCancionesListaActual(){
+		return listaActual.getCanciones();
 	}
 
 	private void inicializarAdaptadores() {

@@ -173,6 +173,7 @@ public class VentanaPrincipal {
 				panelPrincipal.add(panelCreacionPlaylist, BorderLayout.CENTER);
 				listMisListas.setVisible(false);
 				panelNuevaPlaylist.activarBotonCrear();
+				panelCreacionPlaylist.limpiarTablas();
 				panelCreacionPlaylist.esconderPanel();
 				panelPrincipal.revalidate();
 				panelPrincipal.repaint();

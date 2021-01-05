@@ -38,6 +38,8 @@ public class PanelCreacionPlaylist extends JPanel {
 
 	private int selectedRowSearch = -1;
 	private int selectedRowPlaylist = -1;
+	private TablaModelo tablaPlaylist;
+	private TablaModelo tablaBusqueda;
 
 	public void mostrarPanel() {
 		setVisible(true);
@@ -45,6 +47,15 @@ public class PanelCreacionPlaylist extends JPanel {
 
 	public void esconderPanel() {
 		setVisible(false);
+	}
+	
+	public void limpiarTablas() {
+		//tablaBusqueda.limpiarDatos();
+		tablaPlaylist.limpiarDatos();
+	}
+	
+	public void añadirCancionesTabla(Cancion c) {
+		tablaPlaylist.añadirFila(c);
 	}
 
 	/**
@@ -103,7 +114,7 @@ public class PanelCreacionPlaylist extends JPanel {
 		gbc_btnBuscar.gridy = 1;
 		add(btnBuscar, gbc_btnBuscar);
 
-		TablaModelo tablaBusqueda = new TablaModelo();
+		tablaBusqueda = new TablaModelo();
 		JTable tablaMusica = new JTable(tablaBusqueda);
 		JScrollPane scrollPaneMusica = new JScrollPane(tablaMusica);
 		GridBagConstraints gbc_scrollPaneMusica = new GridBagConstraints();
@@ -140,7 +151,7 @@ public class PanelCreacionPlaylist extends JPanel {
 		gbc_btnDerecha.gridy = 3;
 		add(btnDerecha, gbc_btnDerecha);
 
-		TablaModelo tablaPlaylist = new TablaModelo();
+		tablaPlaylist = new TablaModelo();
 		JTable tablePlaylist = new JTable(tablaPlaylist);
 		JScrollPane scrollPanePlaylist = new JScrollPane(tablePlaylist);
 		scrollPanePlaylist
@@ -183,11 +194,11 @@ public class PanelCreacionPlaylist extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				if (!AppMusic.getInstancia().existePlaylistUsuario(AppMusic.getInstancia().getListaActual())) {
+				if (!AppMusic.getInstancia().existePlaylistUsuario(AppMusic.getInstancia().getNombreListaActual())) {
 					JOptionPane.showMessageDialog(btnAceptar, "Playlist creada con éxito", "Creación playlist",
 							JOptionPane.INFORMATION_MESSAGE);
 					//solo se añade a la lista de mis listas si la playlist es nueva
-					ventanaPrincipal.anadirElemento(AppMusic.getInstancia().getListaActual());
+					ventanaPrincipal.anadirElemento(AppMusic.getInstancia().getNombreListaActual());
 					AppMusic.getInstancia().confirmarListaCanciones(tablaPlaylist.getCanciones());
 
 				} else {
@@ -198,6 +209,7 @@ public class PanelCreacionPlaylist extends JPanel {
 				}
 				setVisible(false);
 				ventanaPrincipal.reiniciarPanel();
+				limpiarTablas();
 			}
 		});
 		GridBagConstraints gbc_btnAceptar = new GridBagConstraints();
@@ -213,6 +225,7 @@ public class PanelCreacionPlaylist extends JPanel {
 				// Debe mostrarse como si se volviera a clickar en NuevaPlaylist
 				setVisible(false);
 				ventanaPrincipal.reiniciarPanel();
+				limpiarTablas();
 			}
 		});
 		GridBagConstraints gbc_btnCancelar = new GridBagConstraints();
