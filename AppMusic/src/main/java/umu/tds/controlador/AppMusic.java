@@ -1,22 +1,15 @@
 package umu.tds.controlador;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.property.TextAlignment;
 import umu.tds.modelo.Cancion;
 import umu.tds.modelo.CargadorCancionesDisco;
 import umu.tds.modelo.CatalogoEstilos;
 import umu.tds.modelo.CatalogoUsuarios;
 import umu.tds.modelo.Descuento;
+import umu.tds.modelo.GeneradorPdfs;
 import umu.tds.modelo.ListaCanciones;
 import umu.tds.modelo.Reproductor;
 import umu.tds.modelo.Usuario;
@@ -26,7 +19,6 @@ import umu.tds.persistencia.IAdaptadorListaCancionesDAO;
 import umu.tds.persistencia.IAdaptadorUsuarioDAO;
 
 public class AppMusic {
-	private static final String DST = "/playlist.pdf";
 	private final double precioPremium = 10;
 	private Usuario usuarioActual;
 	private ListaCanciones listaActual;
@@ -201,34 +193,6 @@ public class AppMusic {
 	}
 
 	public void generarPdf() {
-		PdfDocument pdf;
-		try {
-			String path = new File(".").getCanonicalPath();
-			pdf = new PdfDocument(new PdfWriter(path + DST));
-			Document documento = new Document(pdf);
-
-			Paragraph titulo = new Paragraph("Mis playlists de AppMusic");
-			titulo.setTextAlignment(TextAlignment.CENTER);
-			titulo.setFontSize(16);
-			documento.add(titulo);
-
-			for (ListaCanciones lista : usuarioActual.getListas()) {
-				Paragraph nombrePlaylist = new Paragraph();
-				nombrePlaylist.add(lista.getNombrePlaylist());
-				nombrePlaylist.setBold();
-				documento.add(nombrePlaylist);
-				for (Cancion cancion : lista.getCanciones()) {
-					documento.add(new Paragraph(cancion.getTitulo() + " - " + cancion.getInterpretes().toString()
-							+ " - " + cancion.getEstilo().getNombre()));
-				}
-				documento.add(new Paragraph(""));
-			}
-			documento.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-
+		GeneradorPdfs.getUnicaInstancia().generarPdf(this.usuarioActual.getListas());
 	}
 }

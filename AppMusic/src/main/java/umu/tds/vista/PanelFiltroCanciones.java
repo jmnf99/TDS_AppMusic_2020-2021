@@ -41,7 +41,7 @@ public class PanelFiltroCanciones extends JPanel {
 		tabla.añadirFila(c);
 	}
 	
-	public void actualizarTabla() {
+	public void actualizarTablaRecientes() {
 		tabla.limpiarDatos();
 		for (Cancion c : AppMusic.getInstancia().getCancionesRecientes()) {
 			tabla.añadirFila(c);

@@ -194,7 +194,7 @@ public class VentanaPrincipal {
 			public void actionPerformed(ActionEvent e) {
 				panelPrincipal.removeAll();
 				panelPrincipal.add(panelRecientes, BorderLayout.CENTER);
-				panelRecientes.actualizarTabla();
+				panelRecientes.actualizarTablaRecientes();
 				listMisListas.setVisible(false);
 				panelPrincipal.revalidate();
 				panelPrincipal.repaint();
