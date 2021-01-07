@@ -72,18 +72,18 @@ public class CargadorCancionesDisco {
 //		}
 //	}
 
-	public void cargarEstilosMusicales() {
-
-		String[] listado = obtenerEstilosMusicalesDisco();
-
-		for (int i = 0; i < listado.length; i++) {
-			if (!catalogoEstilos.existeEstilo(listado[i])) {
-				EstiloMusical estilo = adaptadorEstilo.registrarEstiloMusical(
-						new EstiloMusical(listado[i].substring(0, 1) + listado[i].substring(1).toLowerCase()));
-				catalogoEstilos.addEstilo(estilo);
-			}
-		}
-	}
+//	public void cargarEstilosMusicales() {
+//
+//		String[] listado = obtenerEstilosMusicalesDisco();
+//
+//		for (int i = 0; i < listado.length; i++) {
+//			if (!catalogoEstilos.existeEstilo(listado[i])) {
+//				EstiloMusical estilo = adaptadorEstilo.registrarEstiloMusical(
+//						new EstiloMusical(listado[i].substring(0, 1) + listado[i].substring(1).toLowerCase()));
+//				catalogoEstilos.addEstilo(estilo);
+//			}
+//		}
+//	}
 
 	public void cargarCanciones() {
 		String[] listado = obtenerEstilosMusicalesDisco();
@@ -122,6 +122,11 @@ public class CargadorCancionesDisco {
 
 	}
 
+	public void cargarCancionesXML(String titulo, String interprete, String url, String estilo) {
+		String cancion = interprete + "-" + titulo;
+		guardarCancion(cancion, url, estilo);
+	}
+
 	private void guardarCancion(String cancion, String ruta, String estilo) {
 
 		String[] campos = cancion.split("-");
@@ -130,7 +135,7 @@ public class CargadorCancionesDisco {
 
 		String titulo = parsearTitulo(campos[1]);
 
-		EstiloMusical estiloMusical = catalogoEstilos.getEstiloMusical(estilo);
+		EstiloMusical estiloMusical = this.cargarEstilos(estilo);
 
 		Cancion cancionActual = new Cancion(titulo, estiloMusical, ruta, lista);
 		if (!catalogoCanciones.existeCancion(ruta)) {
@@ -149,6 +154,16 @@ public class CargadorCancionesDisco {
 //		System.out.println();
 	}
 
+	private EstiloMusical cargarEstilos(String estilo) {
+		if (!catalogoEstilos.existeEstilo(estilo)) {
+			EstiloMusical estiloMusical = adaptadorEstilo.registrarEstiloMusical(
+					new EstiloMusical(estilo.substring(0, 1) + estilo.substring(1).toLowerCase()));
+			catalogoEstilos.addEstilo(estiloMusical);
+			return estiloMusical;
+		} else
+			return catalogoEstilos.getEstiloMusical(estilo);
+	}
+
 	private List<Interprete> cargarInterpretes(String nombres) {
 		Interprete interprete = null;
 		String[] interpretes = nombres.split("&");
@@ -163,7 +178,6 @@ public class CargadorCancionesDisco {
 			} else {
 				interprete = catalogoInterpretes.getInterprete(interpreteActual);
 			}
-
 			lista.add(interprete);
 		}
 		return lista;
@@ -175,7 +189,10 @@ public class CargadorCancionesDisco {
 		titulo = titulo.substring(0, 1) + titulo.substring(1).toLowerCase();
 
 		int index = titulo.indexOf('.');
-		titulo = titulo.substring(0, index);
+		// Las canciones de los xml no terminan en .mp3
+		if (index > -1) {
+			titulo = titulo.substring(0, index);
+		}
 		return titulo;
 	}
 }

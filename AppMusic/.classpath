@@ -22,5 +22,6 @@
 	<classpathentry kind="lib" path="lib/h2-1.3.160.jar"/>
 	<classpathentry kind="lib" path="lib/javax.persistence_2.0.3.v201010191057.jar"/>
 	<classpathentry kind="lib" path="lib/Luz.jar"/>
+	<classpathentry kind="lib" path="lib/CargadorCanciones.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

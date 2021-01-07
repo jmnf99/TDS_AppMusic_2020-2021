@@ -51,6 +51,7 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO {
 		}
 		
 		AdaptadorEstiloMusicalTDS adaptadorEstiloMusical = AdaptadorEstiloMusicalTDS.getUnicaInstancia();
+		//System.out.println("Cancion: " + cancion.getTitulo() + " y su estilo es: " + cancion.getEstilo().getNombre());
 		adaptadorEstiloMusical.registrarEstiloMusical(cancion.getEstilo());
 
 		// la cancion ya existe

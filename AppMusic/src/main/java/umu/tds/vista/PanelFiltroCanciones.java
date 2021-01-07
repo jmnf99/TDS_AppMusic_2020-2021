@@ -61,7 +61,7 @@ public class PanelFiltroCanciones extends JPanel {
 
 		tabla = new TablaModelo();
 
-		final JTable table = new JTable(tabla);
+		JTable table = new JTable(tabla);
 		JScrollPane scrollPane = new JScrollPane(table);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);

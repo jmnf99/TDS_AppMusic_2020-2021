@@ -25,7 +25,7 @@ public class PanelNuevaPlaylist extends JPanel {
 	 * Create the panel.
 	 * @param ventanaPrincipal 
 	 */
-	public PanelNuevaPlaylist(final PanelCreacionPlaylist playlist, VentanaPrincipal ventanaPrincipal) {
+	public PanelNuevaPlaylist(PanelCreacionPlaylist playlist, VentanaPrincipal ventanaPrincipal) {
 		setLayout(new BorderLayout(0, 0));
 
 		JPanel panelNorte = new JPanel();

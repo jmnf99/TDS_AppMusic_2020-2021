@@ -155,7 +155,7 @@ public class VentanaLogin {
 			}
 		});
 
-		final JButton btnLogin = new JButton("Login");
+		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// leer datos de la pantalla

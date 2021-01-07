@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -17,6 +19,7 @@ import umu.tds.modelo.Cancion;
 import umu.tds.modelo.CatalogoCanciones;
 import java.awt.Color;
 import javax.swing.border.BevelBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
@@ -28,6 +31,7 @@ import javax.swing.ListSelectionModel;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 public class VentanaPrincipal {
 
@@ -85,7 +89,7 @@ public class VentanaPrincipal {
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		frame.setTitle(Constantes.titulo);
 
-		final JPanel panelFuncionalidad = new JPanel();
+		JPanel panelFuncionalidad = new JPanel();
 		panelFuncionalidad.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		frame.getContentPane().add(panelFuncionalidad, BorderLayout.WEST);
 		GridBagLayout gbl_panelFuncionalidad = new GridBagLayout();
@@ -109,7 +113,7 @@ public class VentanaPrincipal {
 		panelFuncionalidad.add(listMisListas, gbc_listMisListas);
 		listMisListas.setVisible(false);
 
-		final JButton btnTop10 = new JButton("Éxitos AppMusic");
+		JButton btnTop10 = new JButton("Éxitos AppMusic");
 		btnTop10.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				panelPrincipal.removeAll();
@@ -211,12 +215,12 @@ public class VentanaPrincipal {
 		gbc_btnReciente.gridy = 3;
 		panelFuncionalidad.add(btnReciente, gbc_btnReciente);
 
-		final JButton btnPdf = new JButton("");
+		JButton btnPdf = new JButton("");
 		btnPdf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(btnPdf, "Pdf generado con éxito", "Generación de pdf",
 						JOptionPane.INFORMATION_MESSAGE);
-					AppMusic.getInstancia().generarPdf();
+				AppMusic.getInstancia().generarPdf();
 			}
 		});
 		btnPdf.setVisible(false);
@@ -275,6 +279,23 @@ public class VentanaPrincipal {
 		panel.add(lblBienvenida, gbc_lblBienvenida);
 
 		Luz luz = new Luz();
+		luz.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				chooser.setDialogTitle("Seleccionar archivo XML");
+				// Creamos el filtro
+				FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.xml", "xml");
+				chooser.setFileFilter(filtro);
+
+				int seleccion = chooser.showOpenDialog(luz);
+				if (seleccion == JFileChooser.APPROVE_OPTION) {
+					File currentFile = chooser.getSelectedFile();
+					AppMusic.getInstancia().cargarCanciones(currentFile.getAbsolutePath());
+					JOptionPane.showMessageDialog(luz, "Canciones cargadas correctamente desde el XML", "Canciones cargadas", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
 		GridBagConstraints gbc_luz = new GridBagConstraints();
 		luz.setColor(Color.CYAN);
 		gbc_luz.insets = new Insets(0, 0, 0, 5);
@@ -282,7 +303,7 @@ public class VentanaPrincipal {
 		gbc_luz.gridy = 1;
 		panel.add(luz, gbc_luz);
 
-		final JButton btnPremium = new JButton("Mejora tu cuenta");
+		JButton btnPremium = new JButton("Mejora tu cuenta");
 		if (AppMusic.getInstancia().getUsuarioActual().isPremium()) {
 			btnPremium.setVisible(false);
 		} else {

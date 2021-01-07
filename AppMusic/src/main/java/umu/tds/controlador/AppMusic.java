@@ -1,9 +1,16 @@
 package umu.tds.controlador;
 
 import java.time.LocalDate;
+import java.util.EventObject;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+
+import umu.tds.componente.CancionXML;
+import umu.tds.componente.Canciones;
+import umu.tds.componente.CancionesEvent;
+import umu.tds.componente.CancionesListener;
+import umu.tds.componente.CargadorCanciones;
 import umu.tds.modelo.Cancion;
 import umu.tds.modelo.CargadorCancionesDisco;
 import umu.tds.modelo.CatalogoEstilos;
@@ -18,7 +25,7 @@ import umu.tds.persistencia.FactoriaDAO;
 import umu.tds.persistencia.IAdaptadorListaCancionesDAO;
 import umu.tds.persistencia.IAdaptadorUsuarioDAO;
 
-public class AppMusic {
+public class AppMusic implements CancionesListener {
 	private final double precioPremium = 10;
 	private Usuario usuarioActual;
 	private ListaCanciones listaActual;
@@ -30,14 +37,16 @@ public class AppMusic {
 	private CargadorCancionesDisco cargadorCancionesDisco = CargadorCancionesDisco.getInstancia();
 	private Queue<Cancion> recientes;
 	private Reproductor reproductor = Reproductor.getUnicaInstancia();
+	private CargadorCanciones cargadorXML = CargadorCanciones.getUnicaInstancia();
 
 	private AppMusic() {
 		inicializarAdaptadores();
 		inicializarCatalogos();
-		cargadorCancionesDisco.cargarEstilosMusicales();
+//		cargadorCancionesDisco.cargarEstilosMusicales();
 //		cargadorCancionesDisco.comprobarEstilosMusicales();
 		cargadorCancionesDisco.cargarCanciones();
 		recientes = new LinkedList<>();
+		cargadorXML.addCancionesListener(this);
 	}
 
 	public static AppMusic getInstancia() {
@@ -194,5 +203,19 @@ public class AppMusic {
 
 	public void generarPdf() {
 		GeneradorPdfs.getUnicaInstancia().generarPdf(this.usuarioActual.getListas());
+	}
+
+	public void cargarCanciones(String xml) {
+		cargadorXML.setArchivoCanciones(xml);
+	}
+
+	@Override
+	public void enteradoNuevasCanciones(EventObject evento) {
+		if(evento instanceof CancionesEvent) {
+			Canciones nuevasCanciones = ((CancionesEvent) evento).getNuevasCanciones();
+			for (CancionXML cxml : nuevasCanciones.getCancion()) {
+				cargadorCancionesDisco.cargarCancionesXML(cxml.getTitulo(), cxml.getInterprete(), cxml.getURL(), cxml.getEstilo());
+			}		
+		}
 	}
 }

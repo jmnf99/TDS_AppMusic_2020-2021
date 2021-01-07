@@ -26,7 +26,7 @@ public class PanelExplorarCanciones extends JPanel {
 	 * Create the panel.
 	 * 
 	 */
-	public PanelExplorarCanciones(final PanelFiltroCanciones filtro) {
+	public PanelExplorarCanciones(PanelFiltroCanciones filtro) {
 
 		setLayout(new BorderLayout(0, 0));
 

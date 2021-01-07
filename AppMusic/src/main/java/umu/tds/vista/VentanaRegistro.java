@@ -227,7 +227,7 @@ public class VentanaRegistro {
 		gbc_btnCancelar.gridy = 8;
 		panel.add(btnCancelar, gbc_btnCancelar);
 
-		final JButton btnRegistrar = new JButton("Registrar");
+		JButton btnRegistrar = new JButton("Registrar");
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
