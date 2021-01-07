@@ -9,6 +9,7 @@ import umu.tds.modelo.CargadorCancionesDisco;
 import umu.tds.modelo.CatalogoEstilos;
 import umu.tds.modelo.CatalogoUsuarios;
 import umu.tds.modelo.Descuento;
+import umu.tds.modelo.Filtros;
 import umu.tds.modelo.GeneradorPdfs;
 import umu.tds.modelo.ListaCanciones;
 import umu.tds.modelo.Reproductor;
@@ -177,6 +178,13 @@ public class AppMusic {
 	public List<Cancion> getCancionesListaActual(){
 		return listaActual.getCanciones();
 	}
+	
+	public List<Cancion> getCancionesFiltro(String nombre, String interprete, String estilo){
+		if(nombre.equals("Título")) nombre = "";
+		if(interprete.equals("Intérprete")) interprete = "";
+		if(estilo.equals("Todos")) estilo = "";
+		return Filtros.getCancionesFiltro(nombre, interprete, estilo);
+	}
 
 	private void inicializarAdaptadores() {
 		FactoriaDAO factoria = null;
@@ -196,6 +204,6 @@ public class AppMusic {
 	}
 
 	public void generarPdf() {
-		GeneradorPdfs.getUnicaInstancia().generarPdf(this.usuarioActual.getListas());
+		GeneradorPdfs.generarPdf(this.usuarioActual.getListas());
 	}
 }

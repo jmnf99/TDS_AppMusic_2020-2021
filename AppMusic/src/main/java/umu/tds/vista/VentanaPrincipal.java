@@ -17,6 +17,8 @@ import umu.tds.modelo.Cancion;
 import umu.tds.modelo.CatalogoCanciones;
 import java.awt.Color;
 import javax.swing.border.BevelBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
@@ -98,6 +100,8 @@ public class VentanaPrincipal {
 		listas = AppMusic.getInstancia().getUsuarioActual().getNombreListas();
 		modelo = new ListaModelo(listas);
 		JList<String> listMisListas = new JList<String>(modelo);
+		
+		
 
 		listMisListas.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		listMisListas.setSelectedIndex(0);
@@ -140,12 +144,7 @@ public class VentanaPrincipal {
 				panelPrincipal.removeAll();
 				panelPrincipal.add(panelExplorarCanciones, BorderLayout.NORTH);
 				panelPrincipal.add(panelFiltroCanciones, BorderLayout.CENTER);
-
-				List<Cancion> lista = CatalogoCanciones.getUnicaInstancia().getCanciones();
-
-				for (Cancion cancion : lista) {
-					panelFiltroCanciones.añadirCancion(cancion);
-				}
+				panelExplorarCanciones.reiniciarFiltros();
 				listMisListas.setVisible(false);
 				panelFiltroCanciones.esconderPanel();
 				panelPrincipal.revalidate();
@@ -237,6 +236,10 @@ public class VentanaPrincipal {
 				if (AppMusic.getInstancia().getUsuarioActual().isPremium()) {
 					btnPdf.setVisible(true);
 				}
+				
+				for (Cancion c : AppMusic.getInstancia().getCancionesListaActual()) {					
+					panelMisListasDetalladas.añadirCancion(c);
+				}
 
 				panelPrincipal.add(panelMisListasDetalladas, BorderLayout.CENTER);
 				listMisListas.setVisible(true);
@@ -255,6 +258,18 @@ public class VentanaPrincipal {
 		gbc_btnMisPlaylists.gridx = 1;
 		gbc_btnMisPlaylists.gridy = 5;
 		panelFuncionalidad.add(btnMisPlaylists, gbc_btnMisPlaylists);
+		
+		listMisListas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		ListSelectionModel selectionModel = listMisListas.getSelectionModel();
+
+		selectionModel.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				panelMisListasDetalladas.limpiarDatos();
+				AppMusic.getInstancia().setListaActual(listMisListas.getSelectedValue());
+			}
+		});
 
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.NORTH);

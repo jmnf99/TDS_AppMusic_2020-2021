@@ -13,18 +13,8 @@ import com.itextpdf.layout.property.TextAlignment;
 
 public class GeneradorPdfs {
 	private static final String DST = "misPlaylists.pdf";
-	private static GeneradorPdfs unicaInstancia;
 
-	private GeneradorPdfs() {}
-
-	public static GeneradorPdfs getUnicaInstancia() {
-		if (unicaInstancia == null) {
-			unicaInstancia = new GeneradorPdfs();
-		}
-		return unicaInstancia;
-	}
-
-	public void generarPdf(List<ListaCanciones> listas) {
+	public static void generarPdf(List<ListaCanciones> listas) {
 		PdfDocument pdf;
 		try {
 			String home = System.getProperty("user.home");
