@@ -44,6 +44,7 @@ public class VentanaPrincipal {
 	private PanelFiltroCanciones panelExitos;
 	private List<String> listas;
 	private ListaModelo modelo;
+	private JList<String> listMisListas;
 
 	/**
 	 * Launch the application.
@@ -99,7 +100,7 @@ public class VentanaPrincipal {
 
 		listas = AppMusic.getInstancia().getUsuarioActual().getNombreListas();
 		modelo = new ListaModelo(listas);
-		JList<String> listMisListas = new JList<String>(modelo);
+		listMisListas = new JList<String>(modelo);
 		
 		
 
@@ -232,15 +233,12 @@ public class VentanaPrincipal {
 			public void actionPerformed(ActionEvent e) {
 
 				panelPrincipal.removeAll();
-
+				
 				if (AppMusic.getInstancia().getUsuarioActual().isPremium()) {
 					btnPdf.setVisible(true);
 				}
 				
-				for (Cancion c : AppMusic.getInstancia().getCancionesListaActual()) {					
-					panelMisListasDetalladas.añadirCancion(c);
-				}
-
+				actualizarTablaMisPlaylist();
 				panelPrincipal.add(panelMisListasDetalladas, BorderLayout.CENTER);
 				listMisListas.setVisible(true);
 				panelPrincipal.revalidate();
@@ -266,8 +264,8 @@ public class VentanaPrincipal {
 		selectionModel.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				panelMisListasDetalladas.limpiarDatos();
-				AppMusic.getInstancia().setListaActual(listMisListas.getSelectedValue());
+				
+				actualizarTablaMisPlaylist();
 			}
 		});
 
@@ -370,6 +368,14 @@ public class VentanaPrincipal {
 
 	public void eliminarElemento(String lista) {
 		modelo.eliminarElemento(lista);
+	}
+	
+	private void actualizarTablaMisPlaylist() {
+		panelMisListasDetalladas.limpiarDatos();
+		AppMusic.getInstancia().setListaActual(listMisListas.getSelectedValue());
+		for (Cancion c : AppMusic.getInstancia().getCancionesListaActual()) {					
+			panelMisListasDetalladas.añadirCancion(c);
+		}
 	}
 
 }
