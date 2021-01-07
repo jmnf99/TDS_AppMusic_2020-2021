@@ -170,7 +170,7 @@ public class CargadorCancionesDisco {
 		LinkedList<Interprete> lista = new LinkedList<>();
 		for (int j = 0; j < interpretes.length; j++) {
 
-			String interpreteActual = interpretes[j];
+			String interpreteActual = interpretes[j].strip();
 
 			if (!catalogoInterpretes.existeInterprete(interpreteActual)) {
 				interprete = adaptadorInterpretes.registrarInterprete(new Interprete(interpreteActual));

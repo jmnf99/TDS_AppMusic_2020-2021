@@ -25,10 +25,13 @@ public class PanelExplorarCanciones extends JPanel {
 	private JTextField textInterprete;
 	private JTextField textTitulo;
 	private JComboBox<String> comboBoxEstilo;
+	private String[] arrayEstilos;
 
 	public void reiniciarFiltros() {
 		textInterprete.setText("Intérprete");
 		textTitulo.setText("Título");
+		arrayEstilos = AppMusic.getInstancia().getNombresEstilos();
+		comboBoxEstilo.setModel(new DefaultComboBoxModel<String>(arrayEstilos));
 		comboBoxEstilo.setSelectedIndex(comboBoxEstilo.getItemCount() - 1);
 	}
 
@@ -66,7 +69,7 @@ public class PanelExplorarCanciones extends JPanel {
 		panelNorte.add(textTitulo);
 		textTitulo.setColumns(10);
 
-		String[] arrayEstilos = AppMusic.getInstancia().getNombresEstilos();
+		arrayEstilos = AppMusic.getInstancia().getNombresEstilos();
 
 		comboBoxEstilo = new JComboBox<String>();
 		comboBoxEstilo.setToolTipText("Estilo");

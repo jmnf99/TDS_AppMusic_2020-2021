@@ -16,7 +16,6 @@ import javax.swing.SwingConstants;
 import pulsador.Luz;
 import umu.tds.controlador.AppMusic;
 import umu.tds.modelo.Cancion;
-import umu.tds.modelo.CatalogoCanciones;
 import java.awt.Color;
 import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -105,8 +104,6 @@ public class VentanaPrincipal {
 		listas = AppMusic.getInstancia().getUsuarioActual().getNombreListas();
 		modelo = new ListaModelo(listas);
 		listMisListas = new JList<String>(modelo);
-		
-		
 
 		listMisListas.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		listMisListas.setSelectedIndex(0);
@@ -237,11 +234,11 @@ public class VentanaPrincipal {
 			public void actionPerformed(ActionEvent e) {
 
 				panelPrincipal.removeAll();
-				
+
 				if (AppMusic.getInstancia().getUsuarioActual().isPremium()) {
 					btnPdf.setVisible(true);
 				}
-				
+
 				actualizarTablaMisPlaylist();
 				panelPrincipal.add(panelMisListasDetalladas, BorderLayout.CENTER);
 				listMisListas.setVisible(true);
@@ -260,7 +257,7 @@ public class VentanaPrincipal {
 		gbc_btnMisPlaylists.gridx = 1;
 		gbc_btnMisPlaylists.gridy = 5;
 		panelFuncionalidad.add(btnMisPlaylists, gbc_btnMisPlaylists);
-		
+
 		listMisListas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		ListSelectionModel selectionModel = listMisListas.getSelectionModel();
@@ -268,7 +265,7 @@ public class VentanaPrincipal {
 		selectionModel.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				
+
 				actualizarTablaMisPlaylist();
 			}
 		});
@@ -306,7 +303,8 @@ public class VentanaPrincipal {
 				if (seleccion == JFileChooser.APPROVE_OPTION) {
 					File currentFile = chooser.getSelectedFile();
 					AppMusic.getInstancia().cargarCanciones(currentFile.getAbsolutePath());
-					JOptionPane.showMessageDialog(luz, "Canciones cargadas correctamente desde el XML", "Canciones cargadas", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(luz, "Canciones cargadas correctamente desde el XML",
+							"Canciones cargadas", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
@@ -390,12 +388,14 @@ public class VentanaPrincipal {
 	public void eliminarElemento(String lista) {
 		modelo.eliminarElemento(lista);
 	}
-	
+
 	private void actualizarTablaMisPlaylist() {
 		panelMisListasDetalladas.limpiarDatos();
-		AppMusic.getInstancia().setListaActual(listMisListas.getSelectedValue());
-		for (Cancion c : AppMusic.getInstancia().getCancionesListaActual()) {					
-			panelMisListasDetalladas.añadirCancion(c);
+		if (listMisListas.getSelectedValue() != null) {
+			AppMusic.getInstancia().setListaActual(listMisListas.getSelectedValue());
+			for (Cancion c : AppMusic.getInstancia().getCancionesListaActual()) {
+				panelMisListasDetalladas.añadirCancion(c);
+			}
 		}
 	}
 

@@ -24,7 +24,6 @@ public class PanelFiltroCanciones extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	int selectedRow = -1;
-	boolean reproduciendo = false;
 
 	AppMusic controlador = AppMusic.getInstancia();
 
@@ -93,7 +92,6 @@ public class PanelFiltroCanciones extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if (selectedRow != -1) {
 					controlador.reproducirCancion(tabla.getCancionFila(selectedRow));
-					reproduciendo = true;
 				}
 			}
 		});
@@ -134,11 +132,7 @@ public class PanelFiltroCanciones extends JPanel {
 		btnPause.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (reproduciendo) {
 					controlador.pausarCancion();
-					reproduciendo = false;
-				}
-					
 			}
 		});
 
