@@ -25,6 +25,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
@@ -203,6 +204,7 @@ public class VentanaRegistro {
 		panel.add(lblFecha, gbc_lblFecha);
 
 		textFecha = new JDateChooser();
+		textFecha.setMaxSelectableDate(new Date(System.currentTimeMillis()));
 		GridBagConstraints gbc_textFecha = new GridBagConstraints();
 		gbc_textFecha.insets = new Insets(0, 0, 5, 5);
 		gbc_textFecha.fill = GridBagConstraints.HORIZONTAL;
