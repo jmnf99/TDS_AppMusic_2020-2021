@@ -16,6 +16,7 @@ import umu.tds.modelo.CargadorCancionesDisco;
 import umu.tds.modelo.CatalogoEstilos;
 import umu.tds.modelo.CatalogoUsuarios;
 import umu.tds.modelo.Descuento;
+import umu.tds.modelo.Filtros;
 import umu.tds.modelo.GeneradorPdfs;
 import umu.tds.modelo.ListaCanciones;
 import umu.tds.modelo.Reproductor;
@@ -42,6 +43,7 @@ public class AppMusic implements CancionesListener {
 	private AppMusic() {
 		inicializarAdaptadores();
 		inicializarCatalogos();
+
 //		cargadorCancionesDisco.cargarEstilosMusicales();
 //		cargadorCancionesDisco.comprobarEstilosMusicales();
 		cargadorCancionesDisco.cargarCanciones();
@@ -74,7 +76,7 @@ public class AppMusic implements CancionesListener {
 
 	public Usuario registrarUsuario(String usuario, String clave, String nombre, String apellidos, String mail,
 			LocalDate fechaNacim) {
-		// Comprobar que el nombre del usuario no existe ya en la aplicacion
+		// Comprobar que el nombre del usuario no existe ya en la aplicación
 		if (catalogoUsuarios.getUsuario(usuario) != null)
 			return null;
 		// Creamos al usuario
@@ -176,12 +178,23 @@ public class AppMusic implements CancionesListener {
 		return usuarioActual.existePlaylist(nombre);
 	}
 
-	public String getListaActual() {
+	public String getNombreListaActual() {
 		return this.listaActual.getNombrePlaylist();
 	}
 
 	public void setListaActual(String nombre) {
 		listaActual = usuarioActual.getLista(nombre);
+	}
+	
+	public List<Cancion> getCancionesListaActual(){
+		return listaActual.getCanciones();
+	}
+	
+	public List<Cancion> getCancionesFiltro(String nombre, String interprete, String estilo){
+		if(nombre.equals("Título")) nombre = "";
+		if(interprete.equals("Intérprete")) interprete = "";
+		if(estilo.equals("Todos")) estilo = "";
+		return Filtros.getCancionesFiltro(nombre, interprete, estilo);
 	}
 
 	private void inicializarAdaptadores() {
@@ -202,7 +215,7 @@ public class AppMusic implements CancionesListener {
 	}
 
 	public void generarPdf() {
-		GeneradorPdfs.getUnicaInstancia().generarPdf(this.usuarioActual.getListas());
+		GeneradorPdfs.generarPdf(this.usuarioActual.getListas());
 	}
 
 	public void cargarCanciones(String xml) {

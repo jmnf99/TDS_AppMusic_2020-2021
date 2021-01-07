@@ -40,11 +40,12 @@ public class CatalogoEstilos {
 	}
 	
 	public String[] getNombreEstilos() {
-		String[] nombreEstilos = new String[this.estilos.values().size()];
+		String[] nombreEstilos = new String[this.estilos.values().size() + 1];
 		int i = 0;
 		for (EstiloMusical e : this.estilos.values()) {
 			nombreEstilos[i++] = e.getNombre();
 		}
+		nombreEstilos[i] = "Todos";
 		return nombreEstilos;
 	}
 

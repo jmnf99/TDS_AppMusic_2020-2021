@@ -5,12 +5,15 @@ import java.awt.BorderLayout;
 import javax.swing.JTextField;
 
 import umu.tds.controlador.AppMusic;
+import umu.tds.modelo.Cancion;
+
 import java.awt.FlowLayout;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
@@ -21,6 +24,13 @@ public class PanelExplorarCanciones extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField textInterprete;
 	private JTextField textTitulo;
+	private JComboBox<String> comboBoxEstilo;
+
+	public void reiniciarFiltros() {
+		textInterprete.setText("Intérprete");
+		textTitulo.setText("Título");
+		comboBoxEstilo.setSelectedIndex(comboBoxEstilo.getItemCount() - 1);
+	}
 
 	/**
 	 * Create the panel.
@@ -58,7 +68,7 @@ public class PanelExplorarCanciones extends JPanel {
 
 		String[] arrayEstilos = AppMusic.getInstancia().getNombresEstilos();
 
-		JComboBox<String> comboBoxEstilo = new JComboBox<String>();
+		comboBoxEstilo = new JComboBox<String>();
 		comboBoxEstilo.setToolTipText("Estilo");
 		comboBoxEstilo.setModel(new DefaultComboBoxModel<String>(arrayEstilos));
 		panelNorte.add(comboBoxEstilo);
@@ -70,6 +80,12 @@ public class PanelExplorarCanciones extends JPanel {
 		btnBuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				filtro.limpiarDatos();
+				List<Cancion> canciones = AppMusic.getInstancia().getCancionesFiltro(textTitulo.getText(),
+						textInterprete.getText(), (String) comboBoxEstilo.getSelectedItem());
+				for (Cancion c : canciones) {
+					filtro.añadirCancion(c);
+				}
 				filtro.mostrarPanel();
 			}
 		});
@@ -80,6 +96,8 @@ public class PanelExplorarCanciones extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				filtro.esconderPanel();
+				filtro.limpiarDatos();
+				reiniciarFiltros();
 			}
 		});
 		panelCentral.add(btnCancelar);

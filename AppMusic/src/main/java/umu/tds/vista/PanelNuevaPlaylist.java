@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JTextField;
 
 import umu.tds.controlador.AppMusic;
+import umu.tds.modelo.Cancion;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -14,6 +15,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 public class PanelNuevaPlaylist extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -65,6 +67,11 @@ public class PanelNuevaPlaylist extends JPanel {
 						playlist.mostrarPanel();
 						desactivarBotonCrear();
 						// TODO Cargar la playlist existente
+						
+						List<Cancion> lista = AppMusic.getInstancia().getCancionesListaActual();
+						for (Cancion cancion : lista) {
+							playlist.añadirCancionesTabla(cancion);
+						}
 
 					} else {
 						Object[] options = { "Si", "No" };
@@ -91,9 +98,9 @@ public class PanelNuevaPlaylist extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				JOptionPane.showMessageDialog(btnBorrar,
-						"Lista '" + AppMusic.getInstancia().getListaActual() + "' borrada con éxito.",
+						"Lista '" + AppMusic.getInstancia().getNombreListaActual() + "' borrada con éxito.",
 						"Borrado realizado", JOptionPane.INFORMATION_MESSAGE);
-				ventanaPrincipal.eliminarElemento(AppMusic.getInstancia().getListaActual());
+				ventanaPrincipal.eliminarElemento(AppMusic.getInstancia().getNombreListaActual());
 				AppMusic.getInstancia().eliminarUsuarioLista();
 				ocultarBotonBorrar();
 				playlist.esconderPanel();

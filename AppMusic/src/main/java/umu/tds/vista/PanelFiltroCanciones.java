@@ -24,6 +24,7 @@ public class PanelFiltroCanciones extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	int selectedRow = -1;
+	boolean reproduciendo = false;
 
 	AppMusic controlador = AppMusic.getInstancia();
 
@@ -36,15 +37,19 @@ public class PanelFiltroCanciones extends JPanel {
 	public void esconderPanel() {
 		setVisible(false);
 	}
-	
+
 	public void añadirCancion(Cancion c) {
 		tabla.añadirFila(c);
 	}
-	
-	public void actualizarTablaRecientes() {
+
+	public void limpiarDatos() {
 		tabla.limpiarDatos();
+	}
+
+	public void actualizarTablaRecientes() {
+		limpiarDatos();
 		for (Cancion c : AppMusic.getInstancia().getCancionesRecientes()) {
-			tabla.añadirFila(c);
+			añadirCancion(c);
 		}
 	}
 
@@ -71,13 +76,6 @@ public class PanelFiltroCanciones extends JPanel {
 		gbc_scrollPane.gridy = 1;
 		add(scrollPane, gbc_scrollPane);
 
-		// ELIMINAR ESTO DE AQUI CUANDO SE CREEN LA BUSQUEDA
-//		List<Cancion> lista = CatalogoCanciones.getUnicaInstancia().getCanciones();
-//
-//		for (Cancion cancion : lista) {
-//			tabla.añadirFila(cancion);
-//		}
-
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		ListSelectionModel selectionModel = table.getSelectionModel();
@@ -95,6 +93,7 @@ public class PanelFiltroCanciones extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if (selectedRow != -1) {
 					controlador.reproducirCancion(tabla.getCancionFila(selectedRow));
+					reproduciendo = true;
 				}
 			}
 		});
@@ -135,7 +134,11 @@ public class PanelFiltroCanciones extends JPanel {
 		btnPause.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controlador.pausarCancion();
+				if (reproduciendo) {
+					controlador.pausarCancion();
+					reproduciendo = false;
+				}
+					
 			}
 		});
 
