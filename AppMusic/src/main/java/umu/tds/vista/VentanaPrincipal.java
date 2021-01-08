@@ -123,6 +123,7 @@ public class VentanaPrincipal {
 				panelPrincipal.removeAll();
 				panelPrincipal.add(panelExitos, BorderLayout.CENTER);
 				// TODO actualizar tabla de panelExitos con las 10 canciones mas escuchadas
+				actualizarTablaExitos();
 				listMisListas.setVisible(false);
 				panelPrincipal.revalidate();
 				panelPrincipal.repaint();
@@ -395,6 +396,13 @@ public class VentanaPrincipal {
 
 	public void eliminarElemento(String lista) {
 		modelo.eliminarElemento(lista);
+	}
+	
+	private void actualizarTablaExitos() {
+		panelExitos.limpiarDatos();
+		for (Cancion c : AppMusic.getInstancia().getCancionesMasReproducidas()) {
+			panelExitos.añadirCancion(c);
+		}
 	}
 
 	private void actualizarTablaMisPlaylist() {

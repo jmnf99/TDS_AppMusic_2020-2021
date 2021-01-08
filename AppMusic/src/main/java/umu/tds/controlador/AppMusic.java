@@ -201,6 +201,10 @@ public class AppMusic implements CancionesListener {
 		if(estilo.equals("Todos")) estilo = "";
 		return Filtros.getCancionesFiltro(nombre, interprete, estilo);
 	}
+	
+	public List<Cancion> getCancionesMasReproducidas(){
+		return Filtros.getCancionesMasEscuchadas();
+	}
 
 	private void inicializarAdaptadores() {
 		FactoriaDAO factoria = null;
