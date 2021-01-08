@@ -7,7 +7,6 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -169,6 +168,7 @@ public class VentanaPrincipal {
 		btnNuevaPlaylist.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				reiniciarPanel();
+				panelCreacionPlaylist.reiniciarFiltros();
 				panelPrincipal.removeAll();
 				panelPrincipal.add(panelNuevaPlaylist, BorderLayout.NORTH);
 				panelPrincipal.add(panelCreacionPlaylist, BorderLayout.CENTER);

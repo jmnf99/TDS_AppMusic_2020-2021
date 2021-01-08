@@ -2,15 +2,12 @@ package umu.tds.vista;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
 import java.awt.GridBagLayout;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.util.List;
-
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
@@ -19,12 +16,9 @@ import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import umu.tds.controlador.AppMusic;
 import umu.tds.modelo.Cancion;
-import umu.tds.modelo.CatalogoCanciones;
 import umu.tds.modelo.CatalogoEstilos;
-
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -32,7 +26,7 @@ import java.awt.event.MouseEvent;
 
 public class PanelCreacionPlaylist extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private JTextField textInterprete;
+	private JTextField txtInterprete;
 	private JTextField txtTitulo;
 	private CatalogoEstilos catalogoEstilos;
 
@@ -40,6 +34,8 @@ public class PanelCreacionPlaylist extends JPanel {
 	private int selectedRowPlaylist = -1;
 	private TablaModelo tablaPlaylist;
 	private TablaModelo tablaBusqueda;
+	private String[] arrayEstilos;
+	private JComboBox<String> comboBoxEstilos;
 
 	public void mostrarPanel() {
 		setVisible(true);
@@ -48,12 +44,20 @@ public class PanelCreacionPlaylist extends JPanel {
 	public void esconderPanel() {
 		setVisible(false);
 	}
-	
+
 	public void limpiarTablas() {
-		//tablaBusqueda.limpiarDatos();
+		tablaBusqueda.limpiarDatos();
 		tablaPlaylist.limpiarDatos();
 	}
 	
+	public void reiniciarFiltros() {
+		txtInterprete.setText("Intérprete");
+		txtTitulo.setText("Título");
+		arrayEstilos = AppMusic.getInstancia().getNombresEstilos();
+		comboBoxEstilos.setModel(new DefaultComboBoxModel<String>(arrayEstilos));
+		comboBoxEstilos.setSelectedIndex(comboBoxEstilos.getItemCount() - 1);
+	}
+
 	public void añadirCancionesTabla(Cancion c) {
 		tablaPlaylist.añadirFila(c);
 	}
@@ -75,15 +79,15 @@ public class PanelCreacionPlaylist extends JPanel {
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
-		textInterprete = new JTextField();
-		textInterprete.setText("Intérprete");
+		txtInterprete = new JTextField();
+		txtInterprete.setText("Intérprete");
 		GridBagConstraints gbc_textInterprete = new GridBagConstraints();
 		gbc_textInterprete.insets = new Insets(0, 0, 5, 5);
 		gbc_textInterprete.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textInterprete.gridx = 2;
 		gbc_textInterprete.gridy = 1;
-		add(textInterprete, gbc_textInterprete);
-		textInterprete.setColumns(10);
+		add(txtInterprete, gbc_textInterprete);
+		txtInterprete.setColumns(10);
 
 		txtTitulo = new JTextField();
 		txtTitulo.setText("Título");
@@ -96,9 +100,9 @@ public class PanelCreacionPlaylist extends JPanel {
 		add(txtTitulo, gbc_txtTitulo);
 		txtTitulo.setColumns(10);
 
-		String[] arrayEstilos = catalogoEstilos.getNombreEstilos();
+		arrayEstilos = catalogoEstilos.getNombreEstilos();
 
-		JComboBox<String> comboBoxEstilos = new JComboBox<String>();
+		comboBoxEstilos = new JComboBox<String>();
 		comboBoxEstilos.setModel(new DefaultComboBoxModel<String>(arrayEstilos));
 		GridBagConstraints gbc_comboBoxEstilos = new GridBagConstraints();
 		gbc_comboBoxEstilos.fill = GridBagConstraints.HORIZONTAL;
@@ -108,6 +112,17 @@ public class PanelCreacionPlaylist extends JPanel {
 		add(comboBoxEstilos, gbc_comboBoxEstilos);
 
 		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				tablaBusqueda.limpiarDatos();
+				List<Cancion> lista = AppMusic.getInstancia().getCancionesFiltro(txtTitulo.getText(),
+						txtInterprete.getText(), (String) comboBoxEstilos.getSelectedItem());
+				for (Cancion c : lista) {
+					tablaBusqueda.añadirFila(c);
+				}
+			}
+		});
 		GridBagConstraints gbc_btnBuscar = new GridBagConstraints();
 		gbc_btnBuscar.insets = new Insets(0, 0, 5, 5);
 		gbc_btnBuscar.gridx = 7;
@@ -136,12 +151,6 @@ public class PanelCreacionPlaylist extends JPanel {
 				selectedRowSearch = tablaMusica.getSelectedRow();
 			}
 		});
-
-		List<Cancion> lista = CatalogoCanciones.getUnicaInstancia().getCanciones();
-
-		for (Cancion cancion : lista) {
-			tablaBusqueda.añadirFila(cancion);
-		}
 
 		JButton btnDerecha = new JButton(">>");
 		GridBagConstraints gbc_btnDerecha = new GridBagConstraints();
@@ -197,19 +206,19 @@ public class PanelCreacionPlaylist extends JPanel {
 				if (!AppMusic.getInstancia().existePlaylistUsuario(AppMusic.getInstancia().getNombreListaActual())) {
 					JOptionPane.showMessageDialog(btnAceptar, "Playlist creada con éxito", "Creación playlist",
 							JOptionPane.INFORMATION_MESSAGE);
-					//solo se añade a la lista de mis listas si la playlist es nueva
+					// solo se añade a la lista de mis listas si la playlist es nueva
 					ventanaPrincipal.anadirElemento(AppMusic.getInstancia().getNombreListaActual());
 					AppMusic.getInstancia().confirmarListaCanciones(tablaPlaylist.getCanciones());
 
 				} else {
 					JOptionPane.showMessageDialog(btnAceptar, "Playlist modificada con éxito", "Modificación playlist",
 							JOptionPane.INFORMATION_MESSAGE);
-					//TODO modificar la playlist existente
 					AppMusic.getInstancia().modificarListaCanciones(tablaPlaylist.getCanciones());
 				}
 				setVisible(false);
 				ventanaPrincipal.reiniciarPanel();
 				limpiarTablas();
+				reiniciarFiltros();
 			}
 		});
 		GridBagConstraints gbc_btnAceptar = new GridBagConstraints();
@@ -226,6 +235,7 @@ public class PanelCreacionPlaylist extends JPanel {
 				setVisible(false);
 				ventanaPrincipal.reiniciarPanel();
 				limpiarTablas();
+				reiniciarFiltros();
 			}
 		});
 		GridBagConstraints gbc_btnCancelar = new GridBagConstraints();

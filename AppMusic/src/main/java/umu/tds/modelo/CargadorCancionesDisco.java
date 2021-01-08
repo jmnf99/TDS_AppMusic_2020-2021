@@ -91,12 +91,12 @@ public class CargadorCancionesDisco {
 		for (int i = 0; i < listado.length; i++) {
 			// Para cada estilo
 			String estiloActual = listado[i];
-			File archivos = new File(rutaCancionesDisco + "/" + estiloActual);
+			File archivos = new File(rutaCancionesDisco + File.separator + estiloActual);
 
 			String[] canciones = archivos.list();
 			for (int j = 0; j < canciones.length; j++) {
 				// System.out.println(canciones[j]);
-				guardarCancion(canciones[j], rutaCancionesDisco + "/" + estiloActual + "/" + canciones[j],
+				guardarCancion(canciones[j], rutaCancionesDisco + File.separator + estiloActual + File.separator + canciones[j],
 						estiloActual);
 			}
 		}
