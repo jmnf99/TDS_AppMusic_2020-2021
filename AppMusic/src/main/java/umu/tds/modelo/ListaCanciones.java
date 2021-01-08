@@ -13,24 +13,21 @@ public class ListaCanciones {
 		this.nombrePlaylist = nombrePlaylist;
 		this.canciones = new LinkedList<Cancion>();
 	}
-	
-	//Metodos
-	public boolean addCancion(Cancion c){
-		if(canciones.contains(c)) {
-			return false;
-		}
-		else
-			canciones.add(c);
-			return true;
+
+	// Metodos
+	public boolean addCancion(Cancion c) {
+		return canciones.add(c);
 	}
-	
+
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
-	//Getters
+
+	// Getters
 	public int getCodigo() {
 		return codigo;
 	}
+
 	public String getNombrePlaylist() {
 		return nombrePlaylist;
 	}
