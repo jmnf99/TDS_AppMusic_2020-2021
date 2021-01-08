@@ -95,30 +95,10 @@ public class CargadorCancionesDisco {
 
 			String[] canciones = archivos.list();
 			for (int j = 0; j < canciones.length; j++) {
-				// System.out.println(canciones[j]);
 				guardarCancion(canciones[j], rutaCancionesDisco + File.separator + estiloActual + File.separator + canciones[j],
 						estiloActual);
 			}
 		}
-
-//		List<Cancion> canciones = catalogoCanciones.getCanciones();
-
-//		int i = 0;
-//		for (Cancion cancion : canciones) {
-//			System.out.println(cancion.getCodigo());
-//
-//			System.out.println(cancion.getEstilo().getNombre());
-//
-//			System.out.println(cancion.getTitulo());
-//
-//			System.out.println(cancion.getInterpretes());
-//
-//			System.out.println(cancion.getRutaFichero());
-//
-//			System.out.println();
-//			i++;
-//		}
-//		System.out.println(i);
 
 	}
 
@@ -143,15 +123,6 @@ public class CargadorCancionesDisco {
 			catalogoCanciones.addCancion(cancionActual);
 		}
 
-//		System.out.println(estilo);
-//
-//		System.out.println(titulo);
-//
-//		System.out.println(campos[0]);
-//
-//		System.out.println(ruta);
-//
-//		System.out.println();
 	}
 
 	private EstiloMusical cargarEstilos(String estilo) {

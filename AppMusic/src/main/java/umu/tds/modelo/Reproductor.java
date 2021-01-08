@@ -51,11 +51,9 @@ public class Reproductor {
 					System.setProperty("java.io.tmpdir", tempPath);
 					Path mp3 = Files.createTempFile("now-playing", ".mp3");
 
-					// System.out.println("ruta: " + mp3);
 					try (InputStream stream = uri.openStream()) {
 						Files.copy(stream, mp3, StandardCopyOption.REPLACE_EXISTING);
 					}
-					// System.out.println("finished-copy: " + mp3.getFileName());
 
 					Media media = new Media(mp3.toFile().toURI().toString());
 					mediaPlayer = new MediaPlayer(media);

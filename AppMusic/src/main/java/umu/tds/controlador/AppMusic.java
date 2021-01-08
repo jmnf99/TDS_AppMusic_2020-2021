@@ -230,7 +230,6 @@ public class AppMusic implements CancionesListener {
 		}
 		adaptadorUsuario = factoria.getUsuarioDAO();
 		adaptadorListaCanciones = factoria.getListaCancionesDAO();
-		System.out.println();
 	}
 
 	private void inicializarCatalogos() {
