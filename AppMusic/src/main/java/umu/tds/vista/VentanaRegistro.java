@@ -32,6 +32,8 @@ import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.Toolkit;
 
 public class VentanaRegistro {
@@ -70,7 +72,7 @@ public class VentanaRegistro {
 		frame.setTitle(Constantes.titulo);
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaRegistro.class.getResource(Constantes.icono)));
 
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBounds(100, 100, Constantes.x_size, Constantes.y_size);
 		frame.setResizable(false);
 		contentPane = new JPanel();
@@ -270,6 +272,13 @@ public class VentanaRegistro {
 		gbc_btnRegistrar.gridx = 4;
 		gbc_btnRegistrar.gridy = 8;
 		panel.add(btnRegistrar, gbc_btnRegistrar);
+		
+		frame.addWindowListener(new WindowAdapter() {
+	        public void windowClosing(WindowEvent e) {
+	    		AppMusic.getInstancia().modificarCancionesNumReproducciones();
+	            AppMusic.getInstancia().eliminarCacheCanciones();
+	        }
+	    });
 	}
 
 	private boolean fieldsOK() {

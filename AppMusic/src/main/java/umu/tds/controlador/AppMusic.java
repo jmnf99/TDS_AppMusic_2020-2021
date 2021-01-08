@@ -158,7 +158,7 @@ public class AppMusic implements CancionesListener {
 			recientes.poll();
 		}
 		recientes.add(c);
-		catalogoCanciones.actualizarReproduccionCancion(c);
+		c.escuchada();
 	}
 
 	public List<Cancion> getCancionesRecientes() {

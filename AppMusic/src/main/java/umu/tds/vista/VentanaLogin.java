@@ -1,7 +1,5 @@
 package umu.tds.vista;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import java.awt.FlowLayout;
 import javax.swing.JPanel;
@@ -23,6 +21,8 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
@@ -30,25 +30,10 @@ import java.awt.Toolkit;
 
 public class VentanaLogin {
 
+	private VentanaPrincipal vPrincipal;
 	private JFrame frame;
 	private JTextField textUsuario;
 	private JPasswordField textPassword;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaLogin window = new VentanaLogin();
-					window.mostrarVentana();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public void mostrarVentana() {
 		frame.setLocationRelativeTo(null);
@@ -157,6 +142,8 @@ public class VentanaLogin {
 
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
+			
+
 			public void actionPerformed(ActionEvent e) {
 				// leer datos de la pantalla
 				String usuario = textUsuario.getText();
@@ -172,9 +159,7 @@ public class VentanaLogin {
 							"Fallo login", JOptionPane.ERROR_MESSAGE, null);
 
 				} else {
-					// AppMusic.getInstancia().setUsuarioActual(usuarioActual);
-					// DONE crear ventanaMain y hacerla visible (ocultar la de login)
-					VentanaPrincipal vPrincipal = new VentanaPrincipal();
+					vPrincipal = new VentanaPrincipal();
 					vPrincipal.mostrarVentana();
 					frame.dispose();
 				}
@@ -192,6 +177,13 @@ public class VentanaLogin {
 		gbc_btnRegistro.gridx = 4;
 		gbc_btnRegistro.gridy = 7;
 		panelFormulario.add(btnRegistro, gbc_btnRegistro);
+		
+		frame.addWindowListener(new WindowAdapter() {
+	        public void windowClosing(WindowEvent e) {
+	    		AppMusic.getInstancia().modificarCancionesNumReproducciones();
+	            AppMusic.getInstancia().eliminarCacheCanciones();
+	        }
+	    });
 	}
 
 }

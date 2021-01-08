@@ -11,7 +11,7 @@ import umu.tds.persistencia.IAdaptadorCancionDAO;
 public class CatalogoCanciones {
 
 	private Map<Integer, Cancion> canciones;
-	private static CatalogoCanciones unicaInstancia = null;
+	private static CatalogoCanciones unicaInstancia = new CatalogoCanciones();;
 
 	private FactoriaDAO dao;
 	private IAdaptadorCancionDAO adaptadorCanciones;
@@ -25,12 +25,9 @@ public class CatalogoCanciones {
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public static CatalogoCanciones getUnicaInstancia() {
-		if (unicaInstancia == null)
-			return new CatalogoCanciones();
 		return unicaInstancia;
 	}
 
@@ -39,11 +36,6 @@ public class CatalogoCanciones {
 		for (Cancion c : canciones.values())
 			lista.add(c);
 		return lista;
-	}
-	
-	public void actualizarReproduccionCancion(Cancion c) {
-		c.escuchada();
-		getCancion(c.getCodigo()).escuchada();
 	}
 
 	public boolean existeCancion(int codigo) {

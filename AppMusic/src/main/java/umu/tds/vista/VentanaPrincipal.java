@@ -355,6 +355,7 @@ public class VentanaPrincipal {
 		btnLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AppMusic.getInstancia().logout();
+				AppMusic.getInstancia().pausarCancion();
 				VentanaLogin vLogin = new VentanaLogin();
 				vLogin.mostrarVentana();
 				frame.dispose();
@@ -373,7 +374,7 @@ public class VentanaPrincipal {
 		
 		frame.addWindowListener(new WindowAdapter() {
 	        public void windowClosing(WindowEvent e) {
-	        	AppMusic.getInstancia().modificarCancionesNumReproducciones();
+	    		AppMusic.getInstancia().modificarCancionesNumReproducciones();
 	            AppMusic.getInstancia().eliminarCacheCanciones();
 	        }
 	    });
