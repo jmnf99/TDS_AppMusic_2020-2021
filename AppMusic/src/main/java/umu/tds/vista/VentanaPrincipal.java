@@ -198,7 +198,10 @@ public class VentanaPrincipal {
 			public void actionPerformed(ActionEvent e) {
 				panelPrincipal.removeAll();
 				panelPrincipal.add(panelRecientes, BorderLayout.CENTER);
-				panelRecientes.actualizarTablaRecientes();
+				panelRecientes.limpiarDatos();
+				for (Cancion c : AppMusic.getInstancia().getCancionesRecientes()) {
+					panelRecientes.añadirCancion(c);
+				}
 				listMisListas.setVisible(false);
 				panelPrincipal.revalidate();
 				panelPrincipal.repaint();
