@@ -13,6 +13,7 @@ import umu.tds.componente.CancionesListener;
 import umu.tds.componente.CargadorCanciones;
 import umu.tds.modelo.Cancion;
 import umu.tds.modelo.CargadorCancionesDisco;
+import umu.tds.modelo.CatalogoCanciones;
 import umu.tds.modelo.CatalogoEstilos;
 import umu.tds.modelo.CatalogoUsuarios;
 import umu.tds.modelo.Descuento;
@@ -34,6 +35,7 @@ public class AppMusic implements CancionesListener {
 	private IAdaptadorUsuarioDAO adaptadorUsuario;
 	private CatalogoUsuarios catalogoUsuarios;
 	private CatalogoEstilos catalogoEstilos;
+	private CatalogoCanciones catalogoCanciones;
 	private IAdaptadorListaCancionesDAO adaptadorListaCanciones;
 	private CargadorCancionesDisco cargadorCancionesDisco = CargadorCancionesDisco.getInstancia();
 	private Queue<Cancion> recientes;
@@ -124,20 +126,26 @@ public class AppMusic implements CancionesListener {
 		adaptadorListaCanciones.registrarListaCanciones(listaActual);
 		adaptadorUsuario.modificarListas(usuarioActual);
 	}
-	
-	public void eliminarCacheCanciones() {
-		reproductor.eliminarCache();
+
+	public boolean eliminarCacheCanciones() {
+		return reproductor.eliminarCache();
 	}
 
-	public void seleccionarDescuento(LocalDate now) {
+	public int seleccionarDescuento() {
+		int d = -1;
+		LocalDate now = LocalDate.now();
 		if ((now.getMonthValue() == 1 && now.getDayOfMonth() <= 6)
 				|| (now.getMonthValue() == 12 && now.getDayOfMonth() >= 25)) {
-			this.usuarioActual.setDescuento(Descuento.NAVIDAD);
+			d = Descuento.NAVIDAD;
+			this.usuarioActual.setDescuento(d);
 		} else if (this.usuarioActual.isEstudianteUMU()) {
-			this.usuarioActual.setDescuento(Descuento.ESTUDIANTE);
+			d = Descuento.ESTUDIANTE;
+			this.usuarioActual.setDescuento(d);
 		} else if (this.usuarioActual.isMayor(now.getYear())) {
-			this.usuarioActual.setDescuento(Descuento.MAYORES);
+			d = Descuento.MAYORES;
+			this.usuarioActual.setDescuento(d);
 		}
+		return d;
 	}
 
 	public double calcularDescuento() {
@@ -150,7 +158,7 @@ public class AppMusic implements CancionesListener {
 			recientes.poll();
 		}
 		recientes.add(c);
-		c.escuchada();
+		catalogoCanciones.actualizarReproduccionCancion(c);
 	}
 
 	public List<Cancion> getCancionesRecientes() {
@@ -173,6 +181,10 @@ public class AppMusic implements CancionesListener {
 		adaptadorUsuario.modificarListas(this.usuarioActual);
 	}
 
+	public void modificarCancionesNumReproducciones() {
+		catalogoCanciones.modificarCancionesNumReproducciones();
+	}
+
 	public void eliminarUsuarioLista() {
 		this.usuarioActual.eliminarLista(listaActual);
 		adaptadorUsuario.eliminarLista(usuarioActual, listaActual);
@@ -190,19 +202,22 @@ public class AppMusic implements CancionesListener {
 	public void setListaActual(String nombre) {
 		listaActual = usuarioActual.getLista(nombre);
 	}
-	
-	public List<Cancion> getCancionesListaActual(){
+
+	public List<Cancion> getCancionesListaActual() {
 		return listaActual.getCanciones();
 	}
-	
-	public List<Cancion> getCancionesFiltro(String nombre, String interprete, String estilo){
-		if(nombre.equals("Título")) nombre = "";
-		if(interprete.equals("Intérprete")) interprete = "";
-		if(estilo.equals("Todos")) estilo = "";
+
+	public List<Cancion> getCancionesFiltro(String nombre, String interprete, String estilo) {
+		if (nombre.equals("Título"))
+			nombre = "";
+		if (interprete.equals("Intérprete"))
+			interprete = "";
+		if (estilo.equals("Todos"))
+			estilo = "";
 		return Filtros.getCancionesFiltro(nombre, interprete, estilo);
 	}
-	
-	public List<Cancion> getCancionesMasReproducidas(){
+
+	public List<Cancion> getCancionesMasReproducidas() {
 		return Filtros.getCancionesMasEscuchadas();
 	}
 
@@ -221,6 +236,7 @@ public class AppMusic implements CancionesListener {
 	private void inicializarCatalogos() {
 		catalogoEstilos = CatalogoEstilos.getUnicaInstancia();
 		catalogoUsuarios = CatalogoUsuarios.getUnicaInstancia();
+		catalogoCanciones = CatalogoCanciones.getUnicaInstancia();
 	}
 
 	public void generarPdf() {
@@ -233,11 +249,12 @@ public class AppMusic implements CancionesListener {
 
 	@Override
 	public void enteradoNuevasCanciones(EventObject evento) {
-		if(evento instanceof CancionesEvent) {
+		if (evento instanceof CancionesEvent) {
 			Canciones nuevasCanciones = ((CancionesEvent) evento).getNuevasCanciones();
 			for (CancionXML cxml : nuevasCanciones.getCancion()) {
-				cargadorCancionesDisco.cargarCancionesXML(cxml.getTitulo(), cxml.getInterprete(), cxml.getURL(), cxml.getEstilo());
-			}		
+				cargadorCancionesDisco.cargarCancionesXML(cxml.getTitulo(), cxml.getInterprete(), cxml.getURL(),
+						cxml.getEstilo());
+			}
 		}
 	}
 }

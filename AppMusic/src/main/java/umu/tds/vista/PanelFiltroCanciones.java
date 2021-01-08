@@ -109,7 +109,9 @@ public class PanelFiltroCanciones extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (selectedRow > 0)
-					controlador.reproducirCancion(tabla.getCancionFila(--selectedRow));
+					--selectedRow;
+				table.setRowSelectionInterval(selectedRow, selectedRow);
+				controlador.reproducirCancion(tabla.getCancionFila(selectedRow));
 			}
 		});
 		btnRetroceder.setIcon(new ImageIcon(
@@ -132,7 +134,7 @@ public class PanelFiltroCanciones extends JPanel {
 		btnPause.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-					controlador.pausarCancion();
+				controlador.pausarCancion();
 			}
 		});
 
@@ -141,7 +143,9 @@ public class PanelFiltroCanciones extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (selectedRow < tabla.getRowCount() - 1) {
-					controlador.reproducirCancion(tabla.getCancionFila(++selectedRow));
+					++selectedRow;
+					table.setRowSelectionInterval(selectedRow, selectedRow);
+					controlador.reproducirCancion(tabla.getCancionFila(selectedRow));
 				}
 
 			}

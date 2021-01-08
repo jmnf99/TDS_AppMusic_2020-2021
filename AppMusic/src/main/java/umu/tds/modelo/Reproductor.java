@@ -51,11 +51,11 @@ public class Reproductor {
 					System.setProperty("java.io.tmpdir", tempPath);
 					Path mp3 = Files.createTempFile("now-playing", ".mp3");
 
-					//System.out.println("ruta: " + mp3);
+					// System.out.println("ruta: " + mp3);
 					try (InputStream stream = uri.openStream()) {
 						Files.copy(stream, mp3, StandardCopyOption.REPLACE_EXISTING);
 					}
-					//System.out.println("finished-copy: " + mp3.getFileName());
+					// System.out.println("finished-copy: " + mp3.getFileName());
 
 					Media media = new Media(mp3.toFile().toURI().toString());
 					mediaPlayer = new MediaPlayer(media);
@@ -78,7 +78,7 @@ public class Reproductor {
 		reproduciendo = true;
 	}
 
-	public void eliminarCache() {
+	public boolean eliminarCache() {
 		if (mediaPlayer != null) {
 			mediaPlayer.stop();
 			mediaPlayer.dispose();
@@ -89,7 +89,7 @@ public class Reproductor {
 			File fichero = new File(tempPath + File.separator + archivo);
 			fichero.delete();
 		}
-		directorio.delete();
+		return directorio.delete();
 	}
 
 	public void pausarCancion() {

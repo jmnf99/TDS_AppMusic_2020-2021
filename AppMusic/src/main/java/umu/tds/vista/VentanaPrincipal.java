@@ -23,7 +23,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -328,7 +327,7 @@ public class VentanaPrincipal {
 		btnPremium.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Comprobar que descuentos son aplicables
-				AppMusic.getInstancia().seleccionarDescuento(LocalDate.now());
+				AppMusic.getInstancia().seleccionarDescuento();
 
 				VentanaPagoPremium ventanaPagoPremium = new VentanaPagoPremium(frame, true);
 				ventanaPagoPremium.mostrarVentana();
@@ -374,6 +373,7 @@ public class VentanaPrincipal {
 		
 		frame.addWindowListener(new WindowAdapter() {
 	        public void windowClosing(WindowEvent e) {
+	        	AppMusic.getInstancia().modificarCancionesNumReproducciones();
 	            AppMusic.getInstancia().eliminarCacheCanciones();
 	        }
 	    });

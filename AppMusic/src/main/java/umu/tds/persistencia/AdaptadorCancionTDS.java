@@ -109,6 +109,13 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO {
 		}
 		return canciones;
 	}
+	
+	public void modificarNumReproducciones(Cancion cancion) {
+		Entidad eCancion = servPersistencia.recuperarEntidad(cancion.getCodigo());
+		
+		servPersistencia.eliminarPropiedadEntidad(eCancion, "numReproducciones");
+		servPersistencia.anadirPropiedadEntidad(eCancion, "numReproducciones", Integer.toString(cancion.getNumReproducciones()));
+	}
 
 	public void borrarCancion(Cancion cancion) {
 		Entidad eCancion;

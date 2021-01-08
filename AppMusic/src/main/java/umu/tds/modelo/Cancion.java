@@ -54,4 +54,17 @@ public class Cancion {
 	public void escuchada() {
 		this.numReproducciones++;
 	}
+	
+	@Override
+	public String toString() {
+		String res = titulo + ": " + interpretes + " - " + estilo + " _ " + rutaFichero;
+		return res;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+//		boolean interprete_igual = ((Cancion) obj).getInterpretes().equals(this.getInterpretes());
+//		return interprete_igual;
+		return true;
+	}
 }

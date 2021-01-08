@@ -21,13 +21,15 @@ import umu.tds.modelo.Cancion;
 import umu.tds.modelo.CatalogoEstilos;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class PanelCreacionPlaylist extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private JTextField txtInterprete;
-	private JTextField txtTitulo;
+	private JTextField textInterprete;
+	private JTextField textTitulo;
 	private CatalogoEstilos catalogoEstilos;
 
 	private int selectedRowSearch = -1;
@@ -49,10 +51,10 @@ public class PanelCreacionPlaylist extends JPanel {
 		tablaBusqueda.limpiarDatos();
 		tablaPlaylist.limpiarDatos();
 	}
-	
+
 	public void reiniciarFiltros() {
-		txtInterprete.setText("Intérprete");
-		txtTitulo.setText("Título");
+		textInterprete.setText("Intérprete");
+		textTitulo.setText("Título");
 		arrayEstilos = AppMusic.getInstancia().getNombresEstilos();
 		comboBoxEstilos.setModel(new DefaultComboBoxModel<String>(arrayEstilos));
 		comboBoxEstilos.setSelectedIndex(comboBoxEstilos.getItemCount() - 1);
@@ -79,26 +81,38 @@ public class PanelCreacionPlaylist extends JPanel {
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
-		txtInterprete = new JTextField();
-		txtInterprete.setText("Intérprete");
+		textInterprete = new JTextField();
+		textInterprete.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				textInterprete.setText("");
+			}
+		});
+		textInterprete.setText("Intérprete");
 		GridBagConstraints gbc_textInterprete = new GridBagConstraints();
 		gbc_textInterprete.insets = new Insets(0, 0, 5, 5);
 		gbc_textInterprete.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textInterprete.gridx = 2;
 		gbc_textInterprete.gridy = 1;
-		add(txtInterprete, gbc_textInterprete);
-		txtInterprete.setColumns(10);
+		add(textInterprete, gbc_textInterprete);
+		textInterprete.setColumns(10);
 
-		txtTitulo = new JTextField();
-		txtTitulo.setText("Título");
+		textTitulo = new JTextField();
+		textTitulo.setText("Título");
+		textTitulo.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				textTitulo.setText("");
+			}
+		});
 		GridBagConstraints gbc_txtTitulo = new GridBagConstraints();
 		gbc_txtTitulo.gridwidth = 3;
 		gbc_txtTitulo.insets = new Insets(0, 0, 5, 5);
 		gbc_txtTitulo.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtTitulo.gridx = 3;
 		gbc_txtTitulo.gridy = 1;
-		add(txtTitulo, gbc_txtTitulo);
-		txtTitulo.setColumns(10);
+		add(textTitulo, gbc_txtTitulo);
+		textTitulo.setColumns(10);
 
 		arrayEstilos = catalogoEstilos.getNombreEstilos();
 
@@ -116,8 +130,8 @@ public class PanelCreacionPlaylist extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				tablaBusqueda.limpiarDatos();
-				List<Cancion> lista = AppMusic.getInstancia().getCancionesFiltro(txtTitulo.getText(),
-						txtInterprete.getText(), (String) comboBoxEstilos.getSelectedItem());
+				List<Cancion> lista = AppMusic.getInstancia().getCancionesFiltro(textTitulo.getText(),
+						textInterprete.getText(), (String) comboBoxEstilos.getSelectedItem());
 				for (Cancion c : lista) {
 					tablaBusqueda.añadirFila(c);
 				}

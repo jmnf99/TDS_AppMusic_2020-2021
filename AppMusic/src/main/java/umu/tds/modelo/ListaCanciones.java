@@ -6,7 +6,7 @@ import java.util.List;
 public class ListaCanciones {
 	private int codigo;
 	private String nombrePlaylist;
-	List<Cancion> canciones;
+	private List<Cancion> canciones;
 
 	public ListaCanciones(String nombrePlaylist) {
 		this.codigo = 0;
