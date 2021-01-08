@@ -32,6 +32,8 @@ import javax.swing.ListSelectionModel;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 
 public class VentanaPrincipal {
@@ -368,6 +370,12 @@ public class VentanaPrincipal {
 		panelPrincipal = new JPanel();
 		panelPrincipal.setLayout(new BorderLayout(0, 0));
 		frame.getContentPane().add(panelPrincipal, BorderLayout.CENTER);
+		
+		frame.addWindowListener(new WindowAdapter() {
+	        public void windowClosing(WindowEvent e) {
+	            AppMusic.getInstancia().eliminarCacheCanciones();
+	        }
+	    });
 	}
 
 	public void mostrarVentana() {
