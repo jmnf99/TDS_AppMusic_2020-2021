@@ -1,6 +1,8 @@
 package umu.tds.modelo;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class Filtros {
@@ -23,6 +25,16 @@ public class Filtros {
 					.filter(c -> c.getEstilo().getNombre().toLowerCase().contains(estilo.toLowerCase()))
 					.filter(c -> c.getTitulo().toLowerCase().contains(titulo.toLowerCase()))
 					.filter(c -> interpreteComparador(c.getInterpretes(), interprete))
+					.collect(Collectors.toList());
+	}
+	
+	public static List<Cancion> getCancionesMasEscuchadas(){
+		List<Cancion> lista = catalogoCanciones.getCanciones();
+		int numeroCanciones = lista.size();
+		return lista.stream()
+					.sorted(Comparator.comparing(Cancion::getNumReproducciones))
+					.skip(numeroCanciones-10)
+					.filter(c->c.getNumReproducciones()>0)
 					.collect(Collectors.toList());
 	}
 }

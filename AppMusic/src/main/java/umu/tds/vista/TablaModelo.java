@@ -68,4 +68,8 @@ public class TablaModelo extends AbstractTableModel {
 		return new LinkedList<>(data);
 	}
 	
+//	public void voltearTabla() {
+//		
+//	}
+	
 }

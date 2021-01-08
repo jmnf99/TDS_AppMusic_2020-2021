@@ -124,6 +124,10 @@ public class AppMusic implements CancionesListener {
 		adaptadorListaCanciones.registrarListaCanciones(listaActual);
 		adaptadorUsuario.modificarListas(usuarioActual);
 	}
+	
+	public void eliminarCacheCanciones() {
+		reproductor.eliminarCache();
+	}
 
 	public void seleccionarDescuento(LocalDate now) {
 		if ((now.getMonthValue() == 1 && now.getDayOfMonth() <= 6)
@@ -146,6 +150,7 @@ public class AppMusic implements CancionesListener {
 			recientes.poll();
 		}
 		recientes.add(c);
+		c.escuchada();
 	}
 
 	public List<Cancion> getCancionesRecientes() {
@@ -195,6 +200,10 @@ public class AppMusic implements CancionesListener {
 		if(interprete.equals("Intérprete")) interprete = "";
 		if(estilo.equals("Todos")) estilo = "";
 		return Filtros.getCancionesFiltro(nombre, interprete, estilo);
+	}
+	
+	public List<Cancion> getCancionesMasReproducidas(){
+		return Filtros.getCancionesMasEscuchadas();
 	}
 
 	private void inicializarAdaptadores() {

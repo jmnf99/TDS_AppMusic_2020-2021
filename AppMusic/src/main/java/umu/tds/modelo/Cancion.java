@@ -16,6 +16,7 @@ public class Cancion {
 		this.estilo = estilo;
 		this.rutaFichero = rutaFichero;
 		this.interpretes = interpretes;
+		this.numReproducciones = 0;
 	}
 
 	public void setCodigo(int codigo) {
@@ -48,5 +49,9 @@ public class Cancion {
 
 	public void setNumReproducciones(int numReproducciones) {
 		this.numReproducciones = numReproducciones;
+	}
+	
+	public void escuchada() {
+		this.numReproducciones++;
 	}
 }
