@@ -74,6 +74,8 @@ public class AppMusic implements CancionesListener {
 
 	public void logout() {
 		setUsuarioActual(null);
+		pausarCancion();
+		limpiarListaRecientes();
 	}
 
 	public Usuario registrarUsuario(String usuario, String clave, String nombre, String apellidos, String mail,
@@ -131,6 +133,10 @@ public class AppMusic implements CancionesListener {
 		reproductor.eliminarCache();
 	}
 
+	public void limpiarListaRecientes() {
+		recientes.clear();
+	}
+
 	public int seleccionarDescuento() {
 		int d = -1;
 		LocalDate now = LocalDate.now();
@@ -153,12 +159,14 @@ public class AppMusic implements CancionesListener {
 	}
 
 	public void reproducirCancion(Cancion c) {
-		reproductor.reproducirCancion(c.getRutaFichero());
-		if (recientes.size() == 10) {
-			recientes.poll();
+		if (reproductor.isNuevaReproduccion(c.getRutaFichero())) {
+			if (recientes.size() == 10) {
+				recientes.poll();
+			}
+			recientes.add(c);
+			c.escuchada();
 		}
-		recientes.add(c);
-		c.escuchada();
+		reproductor.reproducirCancion(c.getRutaFichero());
 	}
 
 	public List<Cancion> getCancionesRecientes() {

@@ -358,7 +358,6 @@ public class VentanaPrincipal {
 		btnLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AppMusic.getInstancia().logout();
-				AppMusic.getInstancia().pausarCancion();
 				VentanaLogin vLogin = new VentanaLogin();
 				vLogin.mostrarVentana();
 				frame.dispose();

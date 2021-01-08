@@ -39,11 +39,15 @@ public class Reproductor {
 		f.mkdir();
 	}
 
+	public boolean isNuevaReproduccion(String ruta) {
+		return (cancionActual == null || !cancionActual.equals(ruta));
+	}
+
 	public void reproducirCancion(String ruta) {
 		// Si todavia no se ha reproducido ninguna cancion o
 		// la cancion que queremos reproducir es distinta a la que estaba sonando
 		// generamos un nuevo media player, si no reproducimos el anterior
-		if (cancionActual == null || !cancionActual.equals(ruta)) {
+		if (isNuevaReproduccion(ruta)) {
 			if (ruta.toLowerCase().contains("http")) {
 				URL uri;
 				try {
