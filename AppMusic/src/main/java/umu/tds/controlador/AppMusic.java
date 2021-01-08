@@ -127,8 +127,8 @@ public class AppMusic implements CancionesListener {
 		adaptadorUsuario.modificarListas(usuarioActual);
 	}
 
-	public boolean eliminarCacheCanciones() {
-		return reproductor.eliminarCache();
+	public void eliminarCacheCanciones() {
+		reproductor.eliminarCache();
 	}
 
 	public int seleccionarDescuento() {

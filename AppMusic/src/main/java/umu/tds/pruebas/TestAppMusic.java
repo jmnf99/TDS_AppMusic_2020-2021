@@ -31,6 +31,7 @@ public class TestAppMusic {
 
 	@Test
 	public void testLogin() {
+		//Para que funcione el login este usuario debe estar creado en la BD
 		assertTrue("Resultado testLogin", AppMusic.getInstancia().login(u.getNusuario(), u.getClave()));
 	}
 	

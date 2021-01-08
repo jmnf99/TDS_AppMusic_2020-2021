@@ -76,7 +76,7 @@ public class Reproductor {
 		reproduciendo = true;
 	}
 
-	public boolean eliminarCache() {
+	public void eliminarCache() {
 		if (mediaPlayer != null) {
 			mediaPlayer.stop();
 			mediaPlayer.dispose();
@@ -87,7 +87,7 @@ public class Reproductor {
 			File fichero = new File(tempPath + File.separator + archivo);
 			fichero.delete();
 		}
-		return directorio.delete();
+		directorio.delete();
 	}
 
 	public void pausarCancion() {
