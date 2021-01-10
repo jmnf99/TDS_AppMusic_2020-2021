@@ -5,7 +5,6 @@ import java.util.EventObject;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-
 import umu.tds.componente.CancionXML;
 import umu.tds.componente.Canciones;
 import umu.tds.componente.CancionesEvent;
@@ -16,7 +15,6 @@ import umu.tds.modelo.CargadorCancionesDisco;
 import umu.tds.modelo.CatalogoCanciones;
 import umu.tds.modelo.CatalogoEstilos;
 import umu.tds.modelo.CatalogoUsuarios;
-import umu.tds.modelo.Descuento;
 import umu.tds.modelo.Filtros;
 import umu.tds.modelo.GeneradorPdfs;
 import umu.tds.modelo.ListaCanciones;
@@ -28,7 +26,7 @@ import umu.tds.persistencia.IAdaptadorListaCancionesDAO;
 import umu.tds.persistencia.IAdaptadorUsuarioDAO;
 
 public class AppMusic implements CancionesListener {
-	private final double precioPremium = 10;
+	private static final double PRECIO_PREMIUM = 10;
 	private Usuario usuarioActual;
 	private ListaCanciones listaActual;
 	private static AppMusic unicaInstancia = null;
@@ -101,7 +99,7 @@ public class AppMusic implements CancionesListener {
 	}
 
 	public double getPrecioPremium() {
-		return precioPremium;
+		return PRECIO_PREMIUM;
 	}
 
 	public void crearListaCanciones(String nombrePlaylist) {
@@ -137,25 +135,12 @@ public class AppMusic implements CancionesListener {
 		recientes.clear();
 	}
 
-	public int seleccionarDescuento() {
-		int d = -1;
-		LocalDate now = LocalDate.now();
-		if ((now.getMonthValue() == 1 && now.getDayOfMonth() <= 6)
-				|| (now.getMonthValue() == 12 && now.getDayOfMonth() >= 25)) {
-			d = Descuento.NAVIDAD;
-			this.usuarioActual.setDescuento(d);
-		} else if (this.usuarioActual.isEstudianteUMU()) {
-			d = Descuento.ESTUDIANTE;
-			this.usuarioActual.setDescuento(d);
-		} else if (this.usuarioActual.isMayor(now.getYear())) {
-			d = Descuento.MAYORES;
-			this.usuarioActual.setDescuento(d);
-		}
-		return d;
+	public int seleccionarDescuentoUsuario() {
+		return usuarioActual.seleccionarDescuento();
 	}
 
-	public double calcularDescuento() {
-		return usuarioActual.getDescuento().calcDescuento(this.precioPremium);
+	public double calcularDescuentoUsuario() {
+		return usuarioActual.calcularDescuento(PRECIO_PREMIUM);
 	}
 
 	public void reproducirCancion(Cancion c) {

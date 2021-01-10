@@ -99,7 +99,7 @@ public class VentanaPagoPremium extends JDialog {
 		gbc_lblDescuentos.gridy = 2;
 		panelDescuentos.add(lblDescuentos, gbc_lblDescuentos);
 
-		JLabel lblPrecioFinal = new JLabel("Precio final: " + AppMusic.getInstancia().calcularDescuento() + " €");
+		JLabel lblPrecioFinal = new JLabel("Precio final: " + AppMusic.getInstancia().calcularDescuentoUsuario() + " €");
 		GridBagConstraints gbc_lblPrecioFinal = new GridBagConstraints();
 		gbc_lblPrecioFinal.anchor = GridBagConstraints.WEST;
 		gbc_lblPrecioFinal.insets = new Insets(0, 0, 5, 5);

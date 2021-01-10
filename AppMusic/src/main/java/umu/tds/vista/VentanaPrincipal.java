@@ -90,6 +90,10 @@ public class VentanaPrincipal {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		frame.setTitle(Constantes.titulo);
+		
+		panelPrincipal = new JPanel();
+		panelPrincipal.setLayout(new BorderLayout(0, 0));
+		frame.getContentPane().add(panelPrincipal, BorderLayout.CENTER);
 
 		JPanel panelFuncionalidad = new JPanel();
 		panelFuncionalidad.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -120,7 +124,7 @@ public class VentanaPrincipal {
 			public void mouseClicked(MouseEvent e) {
 				panelPrincipal.removeAll();
 				panelPrincipal.add(panelExitos, BorderLayout.CENTER);
-				// TODO actualizar tabla de panelExitos con las 10 canciones mas escuchadas
+				// actualizar tabla de panelExitos con las 10 canciones mas escuchadas
 				actualizarTablaExitos();
 				listMisListas.setVisible(false);
 				panelPrincipal.revalidate();
@@ -192,7 +196,8 @@ public class VentanaPrincipal {
 		gbc_btnNuevaPlaylist.gridx = 1;
 		gbc_btnNuevaPlaylist.gridy = 2;
 		panelFuncionalidad.add(btnNuevaPlaylist, gbc_btnNuevaPlaylist);
-
+		
+		panelPrincipal.add(panelRecientes, BorderLayout.CENTER);
 		JButton btnReciente = new JButton("Reciente");
 		btnReciente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -330,7 +335,7 @@ public class VentanaPrincipal {
 		btnPremium.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Comprobar que descuentos son aplicables
-				AppMusic.getInstancia().seleccionarDescuento();
+				AppMusic.getInstancia().seleccionarDescuentoUsuario();
 
 				VentanaPagoPremium ventanaPagoPremium = new VentanaPagoPremium(frame, true);
 				ventanaPagoPremium.mostrarVentana();
@@ -370,10 +375,6 @@ public class VentanaPrincipal {
 		gbc_btnLogout.gridy = 1;
 		panel.add(btnLogout, gbc_btnLogout);
 
-		panelPrincipal = new JPanel();
-		panelPrincipal.setLayout(new BorderLayout(0, 0));
-		frame.getContentPane().add(panelPrincipal, BorderLayout.CENTER);
-		
 		frame.addWindowListener(new WindowAdapter() {
 	        public void windowClosing(WindowEvent e) {
 	    		AppMusic.getInstancia().modificarCancionesNumReproducciones();

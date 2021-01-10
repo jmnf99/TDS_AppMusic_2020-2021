@@ -100,7 +100,7 @@ public class Usuario {
 	}
 
 	public String getTipoDescuento() {
-		return this.tipoDescuento;
+		return tipoDescuento;
 	}
 
 	public boolean login(String clave) {
@@ -115,26 +115,6 @@ public class Usuario {
 		return nombreListas;
 	}
 
-	public void setDescuento(int codigoDescuento) {
-		switch (codigoDescuento) {
-		case Descuento.NAVIDAD:
-			this.descuento = new DescuentoNavidad();
-			this.tipoDescuento = "Navidad";
-			break;
-		case Descuento.ESTUDIANTE:
-			this.descuento = new DescuentoEstudiante();
-			this.tipoDescuento = "Estudiante";
-			break;
-		case Descuento.MAYORES:
-			this.descuento = new DescuentoMayores();
-			this.tipoDescuento = "Mayor de " + DescuentoMayores.EDAD + " años";
-
-			break;
-		default:
-			throw new IllegalArgumentException("Codigo de Descuento incorrecto");
-		}
-	}
-
 	public void eliminarLista(ListaCanciones l) {
 		this.listas.remove(l);
 	}
@@ -144,5 +124,29 @@ public class Usuario {
 			if (l.getNombrePlaylist().equals(nombre))
 				return true;
 		return false;
+	}
+
+	public double calcularDescuento(double precio) {
+		return descuento.calcDescuento(precio);
+	}
+
+	public int seleccionarDescuento() {
+		int d = -1;
+		LocalDate now = LocalDate.now();
+		if ((now.getMonthValue() == 1 && now.getDayOfMonth() <= 6)
+				|| (now.getMonthValue() == 12 && now.getDayOfMonth() >= 25)) {
+			d = Descuento.NAVIDAD;
+			this.descuento = new DescuentoNavidad();
+			this.tipoDescuento = "Navidad";
+		} else if (this.isEstudianteUMU()) {
+			d = Descuento.ESTUDIANTE;
+			this.descuento = new DescuentoEstudiante();
+			this.tipoDescuento = "Estudiante";
+		} else if (this.isMayor(now.getYear())) {
+			d = Descuento.MAYORES;
+			this.descuento = new DescuentoMayores();
+			this.tipoDescuento = "Mayor de " + DescuentoMayores.EDAD + " años";
+		}
+		return d;
 	}
 }
